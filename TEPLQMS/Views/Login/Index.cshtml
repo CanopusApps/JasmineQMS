@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "DMS Login";
+    Layout = "~/Views/Shared/_Empty.cshtml";
+}
+<!--Warning Modal Templates-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-warning").Fade().HtmlAttributes(new { @class = "modal-message modal-warning" })))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <i class="fa fa-warning"></i>
+    }
+    using (var title = modal.BeginTitle())
+    {
+        <text>Below Fields are Missing</text>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <text>Is something wrong?</text>
+    }
+    using (var footer = modal.BeginFooter())
+    {
+        @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Warning).HtmlAttributes(new { data_dismiss = "modal" })
+    }
+}
+<!--End Warning Modal Templates-->
+<!--Danger Modal Templates-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-danger").Fade().HtmlAttributes(new { @class = "modal-message modal-danger" })))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <i class="glyphicon glyphicon-fire"></i>
+    }
+    using (var title = modal.BeginTitle())
+    {
+        <text>Error</text>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <text>Message unable to send, Please try again later.</text>
+    }
+    using (var footer = modal.BeginFooter())
+    {
+        @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Danger).HtmlAttributes(new { data_dismiss = "modal" })
+    }
+}
+<!--End Danger Modal Templates-->
+<!--Success Modal Templates-->
+@using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-success").Fade().HtmlAttributes(new { @class = "modal-message modal-success" })))
+{
+    using (var header = modal.BeginHeader())
+    {
+        <i class="glyphicon glyphicon-check"></i>
+    }
+    using (var title = modal.BeginTitle())
+    {
+        <text>Success</text>
+    }
+    using (var body = modal.BeginBody())
+    {
+        <text>Customer Saved Successfully.</text>
+    }
+    using (var footer = modal.BeginFooter())
+    {
+        @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Success).Id("btnOKSucess").HtmlAttributes(new { data_dismiss = "modal" })
+    }
+}
+<div class="login-container animated fadeIn" style="margin: 8% auto !important;">
+    <div class="logobox btn-azure" style="color:white;text-align: center;font-size:xx-large;">
+        DMS Login
+    </div>
+    <br />
+    <div class="loginbox bg-white" style="border:#2dc3e8 1px solid">
+        <div class="loginbox-title">SIGN IN</div>
+        <div class="loginbox-or">
+            <div class="or-line"></div>
+        </div>
+        
+        <div class="loginbox-textbox">
+            @Html.Bootstrap().TextBox("txtUserName").Placeholder("User Name")
+        </div>
+        <div class="loginbox-textbox">
+            @Html.Bootstrap().Password("txtPassword").Placeholder("Password")
+        </div>
+        <!--<div class="loginbox-forgot">-->
+            @*<a href="">Forgot Password?</a>*@
+            <!--@Html.ActionLink("Forgot Password?", "ForgotPassword")
+        </div>-->
+        <div class="loginbox-submit">
+            @Html.Bootstrap().SubmitButton().Text("Login").Color(BootstrapColors.Azure).ButtonBlock()
+        </div>
+        @*<div class="loginbox-signup">
+            @Html.ActionLink("Sign Up With Email", "Register")
+        </div>*@
+    </div>
+    
+</div>
+<div style="display:none;">
+    <button class="btn btn-danger" data-toggle="modal" data-target="#modal-danger">Danger</button>
+    <button class="btn btn-warning" data-toggle="modal" data-target="#modal-warning">Warning</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#modal-success">Success</button>
+</div>
+@section PageScripts{    
+<script>
+    $(document).ready(function () {
+        //alert('In Load...');
+        //$('#txtUserName').val('dms.canopus');
+        //$('#txtPassword').val('Tepl@2023#6');
+        $('html').bind('keypress', function (e) {
+            if (e.keyCode == 13) {
+                //Raise button click event on Enter button
+                $('.btn-block').click();
+            }
+        });
+    });
+
+    $('.btn-block').on('click', function () {
+        $('#txtUserName').removeClass('manfieldredborder'); $('#txtPassword').removeClass('manfieldredborder');
+        if ($('#txtUserName').val().trim() != '' && $('#txtPassword').val().trim() != '') {
+            $.ajax({
+                url: "/Login/LoginUsingPrincipalContext", //LoginUsingDirectorySearch  &  LoginUsingPrincipalContext
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+                data: JSON.stringify({ LoginId: $('#txtUserName').val().trim(), password: $('#txtPassword').val().trim() }),
+                success: function (data) {
+                    if (data.success) {
+                        if (data.message == 'accessdenied')
+                            window.location = "/AccessDenied";
+                        else
+                            window.location = "/Dashboard";
+                    }
+                    else {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Username/Password wrong...');
+                    }
+                },
+                error: function (xhr) {
+                    //alert('error');
+                }
+            });
+        }
+        else
+        {
+            var ermsg = '';
+            if ($('#txtUserName').val().trim() == '') {
+                $('#txtUserName').addClass('manfieldredborder');
+                ermsg = 'User Name<br/>';
+            }
+            else
+                $('#txtUserName').removeClass('manfieldredborder');
+            if ($('#txtPassword').val().trim() == '') {
+                ermsg += 'Password<br/>';
+                $('#txtPassword').addClass('manfieldredborder');
+            }
+            else
+                $('#txtPassword').removeClass('manfieldredborder');
+            //alert(ermsg);
+            if (ermsg != '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(ermsg);
+            }
+            else {
+                $('.modal-body').html('');
+            }
+
+            $('#txtUserName').val($('#txtUserName').val().trim());
+            $('#txtPassword').val($('#txtPassword').val().trim());
+        }
+
+  });
+</script>
+}
+

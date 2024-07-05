@@ -1,0 +1,698 @@
+﻿@{
+    ViewBag.Title = "Replace User";
+}
+<div class="modal fade modal-message modal-warning in" id="modal-workitems">
+    <div class="modal-dialog" style="width:100% !important;" id="modladialogWF">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>PENDING WORK ITEMS</span>
+            </div>
+        <div class="modal-body-1">
+            <div class="widget-body">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <table class="table table-striped table-hover table-bordered" id="editabledatatableWFItems_1">
+                            <thead>
+                                <tr role="row">
+                                    <th>ID</th>
+                                    <th nowrap>
+                                        Document Number
+                                    </th>
+                                    <th>
+                                        Department
+                                    </th>
+                                    <th>
+                                        Section
+                                    </th>
+                                    <th>
+                                        Project
+                                    </th>
+                                    <th nowrap>
+                                        Category
+                                    </th>
+                                    <th>
+                                        Created By
+                                    </th>
+                                    <th>
+                                        Created Date
+                                    </th>
+                                    <th>
+                                        Stage
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning " data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b>Replace User</b></span>
+            </div>            
+            <div>
+                <div class="widget-body ">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label">Project Type<span class="mandatory">*</span></label>
+                                                <div class="col-lg-8">
+                                                    <select class="form-control manfield" name="projecttype" data-bv-field="projecttype" id="ddlProjectType" title="Project Type">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label">Project<span class="mandatory">*</span></label>
+                                                <div class="col-lg-8">
+                                                    <select class="form-control manfield" name="project" data-bv-field="project" id="ddlProject" title="Project">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label">Search User<span class="mandatory">*</span></label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" value="" class="form-control" name="searchword" id="txtSearchWord" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                                            <div class="form-group">                                                
+                                                <div class="col-lg-2">
+                                                    <button class="btn btn-azure" id="btnGet" type="button">Get Data</button>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <button style="display:none;" class="btn btn-azure" id="btnShow" type="button" data-toggle="modal"
+                                                            data-target="#modal-workitems">
+                                                        Show Popup
+                                                    </button>
+                                                    <button class="btn btn-azure" id="btnGetWFItems" type="button">View Work Items</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="divNewUser">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-5 col-sm-5 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">New User<span class="mandatory">*</span></label>
+                                        <div class="col-lg-8">
+                                            <input type="text" value="" class="form-control" name="searchword" id="txtNewSearchWord" />
+                                        </div>                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-sm-5 col-xs-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-1">
+                                            <button class="btn btn-azure" id="btnReplaceuser" type="button">Replace user</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                        <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>
+                                    Project Type
+                                </th>
+                                <th>
+                                    Project
+                                </th>
+                                <th>
+                                    Stage
+                                </th>
+                                <th>
+                                    Document Level
+                                </th>
+                                <th>
+                                    Department
+                                </th>
+                                <th>
+                                    Section
+                                </th>
+                                <th>
+                                    Approval Users
+                                </th>
+                                <th>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="chk_all">
+                                            <span class="text">Select</span>
+                                        </label>
+                                    </div>
+                                </th>
+                                <th>Project Type ID</th>
+                                <th>Project ID</th>
+                                <th>Stage ID</th>
+                                <th>Section ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div style="display:none;">
+    <div id="divselectedUserID"></div>
+    <div id="divselectedLoginID"></div>
+    <div id="divselectedName"></div>
+    <div id="divselectedEmail"></div>
+    <div id="divselectedNewUserID"></div>
+</div>
+
+<div style="display:none;">
+    <div class="widget-body ">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-xs-12">                    
+                    <table class="table table-striped table-hover table-bordered" id="editabledatatableWFItems">
+                        <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th nowrap>
+                                    Document Number
+                                </th>
+                                <th>
+                                    Department
+                                </th>
+                                <th>
+                                    Section
+                                </th>
+                                <th>
+                                    Project
+                                </th>
+                                <th nowrap>
+                                    Category
+                                </th>
+                                <th>
+                                    Created By
+                                </th>
+                                <th>
+                                    Created Date
+                                </th>
+                                <th>
+                                    Stage
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section PageScripts{
+    <link href="~/assets/css/multiple-select.css" rel="stylesheet" />
+    <link href="~/assets/css/sol.css" rel="stylesheet" />
+
+    <script src="~/Scripts/multiple-select.js"></script>
+    <script src="~/Scripts/sol.js"></script>
+
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <!--Bootstrap Time Picker-->
+    <script src="~/assets/js/datetime/bootstrap-timepicker.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            //$("#divWorkItems").hide();
+            InitiateUserApprovalMatrixTable.init();
+            //InitiateWFItemsDataTable.init();
+            InitiateWFItemsDataTable_1.init();
+            BindDropDownBoxes_Admin('/ApprovalMatrix/GetDropDownValues', $('#ddlProjectType'), '', '', '', '', '', 'Select a value');
+
+            $("#divNewUser").hide();
+            $("#btnGetWFItems").hide();
+
+            $("#txtSearchWord").autocomplete({
+                source: function (request, response) {
+                    var projGUID = '00000000-0000-0000-0000-000000000000'; var isValid = false;
+                    var projTypeGUID = '00000000-0000-0000-0000-000000000000';
+                    if ($("#ddlProjectType option:selected").val() != '0') {
+                        projTypeGUID = $("#ddlProjectType option:selected").val();
+                    }
+                    if ($("#ddlProject option:selected").val() != '0') {
+                        projGUID = $("#ddlProject option:selected").val();
+                    }
+                    $.ajax({
+                        url: "/ApprovalMatrix/SearchProjectUsers",
+                        type: "POST",
+                        dataType: "json",
+                        data: { ProjectTypeID: projTypeGUID, ProjectID: projGUID, UserName: request.term },
+                         success: function (data) {
+                            response($.map(data.message, function (item) {
+                                //alert(item.DisplayName);
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    $("#divselectedUserID").text(ui.item.id);
+                    $("#divselectedName").text(ui.item.label);
+                    $("#divselectedEmail").text(ui.item.email);
+                    $("#divselectedLoginID").text(ui.item.loginid);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+            $("#txtNewSearchWord").autocomplete({
+                source: function (request, response) {
+                    var projGUID = '00000000-0000-0000-0000-000000000000'; var isValid = false;
+                    var projTypeGUID = '00000000-0000-0000-0000-000000000000';
+                    if ($("#ddlProjectType option:selected").val() != '0') {
+                        projTypeGUID = $("#ddlProjectType option:selected").val();
+                    }
+                    if ($("#ddlProject option:selected").val() != '0') {
+                        projGUID = $("#ddlProject option:selected").val();
+                    }
+                   $.ajax({
+                       url: "/ApprovalMatrix/SearchProjectUsers",
+                        type: "POST",
+                        dataType: "json",
+                       data: { ProjectTypeID: projTypeGUID, ProjectID: projGUID, UserName: request.term },
+                       success: function (data) {
+                            response($.map(data.message, function (item) {
+                                //alert(item.DisplayName);
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $("#divselectedNewUserID").text(ui.item.id);                    
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
+
+        function clearAllFields() {
+            $("#editabledatatable").dataTable().fnDeleteRow();
+            $("#divselectedUserID").text('');
+            $("#divselectedName").text('');
+            $("#divselectedEmail").text('');
+            $("#divselectedLoginID").text('');
+            $("#divselectedNewUserID").text('');
+            $("#txtNewSearchWord").val('');
+            $("#txtSearchWord").val('');
+            $("#divNewUser").hide();
+            $("#btnGetWFItems").hide();
+        }
+
+        $("#ddlProjectType").change(function () {
+            BindProjStagesForPType('/ApprovalMatrix/GetProjectsandStages', '', $("#ddlProject"), $("#ddlProjectType option:selected").val(), $("#ddlProjectType option:selected").attr('workflowid'), 'Select a value');
+            clearAllFields();
+        });
+        $("#ddlProject").change(function () {
+            clearAllFields();
+        });
+        
+        $('#chk_all').change(function () {
+            var rowsCount = $("#editabledatatable").find('tr').length; //$("#editabledatatable").find('tr').not(':first').length;            
+            for (var z = 1; z < rowsCount; z++) {
+                //var row = $("#editabledatatable").find('tr')[z];
+                //var chkBOX = $("#editabledatatable").find('tr:eq(' + z + ')').find('td:eq(7)').find('div.checkbox');
+                if ($('#chk_all').prop('checked'))
+                    $("#editabledatatable").find('tr:eq(' + z + ')').find('td:eq(7)').find('input[type=checkbox]').prop('checked', true);
+                else
+                    $("#editabledatatable").find('tr:eq(' + z + ')').find('td:eq(7)').find('input[type=checkbox]').prop('checked', false);                
+            }
+        });
+
+        
+        function ValidateFields4Data() {
+            $("#ddlProjectType").removeClass("manfieldredborder");
+            $("#ddlProject").removeClass("manfieldredborder");
+            $("#txtSearchWord").removeClass("manfieldredborder");
+            var errMsg = '';
+            if ($("#ddlProjectType").val() == 0) {
+                $("#ddlProjectType").addClass("manfieldredborder");
+                errMsg = 'Project Type';
+            }
+            else
+                $("#ddlProjectType").removeClass("manfieldredborder");
+
+            if ($("#ddlProject").val() == 0) {
+                $("#ddlProject").addClass("manfieldredborder");
+                errMsg += '<br/>';
+                errMsg += 'Project';
+            }
+            else
+                $("#ddlProject").removeClass("manfieldredborder");
+            if ($("#txtSearchWord").val() == '') {
+                $("#txtSearchWord").addClass("manfieldredborder");
+                errMsg += '<br/>';
+                errMsg += 'Search User';
+            }
+            else
+                $("#txtSearchWord").removeClass("manfieldredborder");
+
+            if (errMsg != '') {
+                $("#divNewUser").hide();
+                $("#btnGetWFItems").hide();
+
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(errMsg);
+                return false;
+            }
+
+            return true;
+        }
+
+        $("#btnGet").click(function () {
+            $('#chk_all').prop('checked', false);            
+
+            if (ValidateFields4Data()) {
+                if ($("#divselectedUserID").text() != '') {
+
+                    var projGUID = '00000000-0000-0000-0000-000000000000'; 
+                    var projTypeGUID = '00000000-0000-0000-0000-000000000000';
+                    if ($("#ddlProjectType option:selected").val() != '0') {
+                        projTypeGUID = $("#ddlProjectType option:selected").val();
+                    }
+                    if ($("#ddlProject option:selected").val() != '0') {
+                        projGUID = $("#ddlProject option:selected").val();
+                    }
+
+                    //Delete all existing records
+                    //var table = $("#editabledatatable").dataTable();
+                    //var rowsCount = table.$('tr').length;
+                    //for (var z = 0; z < rowsCount; z++) {
+                    //    var nRow = table.$('tr')[z];
+                    //    table.fnDeleteRow(nRow);
+                    //}
+                    $("#editabledatatable").dataTable().fnDeleteRow();
+
+                    var userGUID = $("#divselectedUserID").text();
+                    $.ajax({
+                        url: '/ApprovalMatrix/GetApprovalMatrixForUser',
+                        dataType: "json",
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        beforeSend: ShowProgressBar(),
+                        complete: HideProgressBar(),
+                        cache: false,
+                        async: true,
+                        data: JSON.stringify({ UserID: userGUID, projectTypeID: projTypeGUID, projectID: projGUID }),
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.message.length > 0) { $("#divNewUser").show(); $("#btnGetWFItems").show(); }
+                                else {
+                                    $("#divNewUser").hide(); $("#btnGetWFItems").hide();
+                                    $('.btn-blueberry').trigger('click');
+                                    $('.modal-body').html('No Approval Matrix Configured for the User to Replace.');
+                                }
+                                for (var z = 0; z < data.message.length; z++) {
+                                    var chkID = 'chk_' + z;
+                                    var actions = '<div class="checkbox"><label><input  id="' + chkID + '" type="checkbox"><span class="text"></span></label></div >';
+                                    var record = [data.message[z].ID, data.message[z].ProjectTypeName, data.message[z].ProjectName, data.message[z].StageName, data.message[z].DocumentLevel, data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].ApprovalUsers, actions, data.message[z].ProjectTypeID, data.message[z].ProjectID, data.message[z].StageID, data.message[z].SectionID];
+                                    $("#editabledatatable").dataTable().fnAddData(record);
+
+                                    $("#editabledatatable").find('[type="checkbox"]').bind('change', function () {
+                                        if ($(this).prop('id') != 'chk_all') {
+                                            if ($(this).prop('checked') == false)
+                                                $("#editabledatatable").find('#chk_all').prop('checked', false);
+                                            else {
+                                                //checkall records and make checked main checkbox
+                                                var rowsCount = $("#editabledatatable").find('tr').length; //$("#editabledatatable").find('tr').not(':first').length;    
+                                                var chkMain = true;
+                                                for (var j = 1; j < rowsCount; j++) {
+                                                    if ($("#editabledatatable").find('tr:eq(' + j + ')').find('td:eq(7)').find('input[type=checkbox]').prop('checked') == false) {
+                                                        chkMain = false;
+                                                    }
+                                                }
+                                                if (chkMain)
+                                                    $("#editabledatatable").find('#chk_all').prop('checked', true);
+                                            }
+                                        }
+
+                                    });
+                                }
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('error ' + xhr.message);
+                        }
+                    });
+
+                }
+                else {
+                    $("#divNewUser").hide();
+                    $("#btnGetWFItems").hide();
+
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('User not found...');
+                }
+            }
+        });
+
+        function IsSelected() {
+            var IsSelected = false;
+            if ($('#chk_all').prop('checked') == true)
+                IsSelected = true;
+            else {
+                //checkall records and see if any one selected at least
+                var rowsCount = $("#editabledatatable").find('tr').length;
+                for (var j = 1; j < rowsCount; j++) {
+                    if ($("#editabledatatable").find('tr:eq(' + j + ')').find('td:eq(7)').find('input[type=checkbox]').prop('checked') == true) {
+                        IsSelected = true;
+                    }
+                }
+            }
+            return IsSelected;
+        }
+
+        $("#btnGetWFItems").click(function () {
+            if (IsSelected()) {                
+                //$("#editabledatatableWFItems").find('tr:gt(0)').each(function () {
+                //    var nRow = $(this).parents('tr')[0];
+                //    $("#editabledatatableWFItems").dataTable().fnDeleteRow(nRow);
+                //});
+                $("#editabledatatableWFItems_1").find('tr:gt(0)').each(function () {
+                    var nRow = $(this).parents('tr')[0];
+                    $("#editabledatatableWFItems_1").dataTable().fnDeleteRow(nRow);
+                });
+                var obj = getSelectedItems();
+                console.log(JSON.stringify(obj));                
+                var userGUID = $("#divselectedUserID").text();
+                console.log(JSON.stringify({ strCondition: JSON.stringify(obj), UserID: userGUID }));
+                $.ajax({
+                    url: '/ApprovalMatrix/GetUserApprovalItemsForReplace',
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    async: false,
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    data: JSON.stringify({ strCondition: JSON.stringify(obj), UserID: userGUID }),
+                    success: function (data) {
+                        if (data.success) {
+                            //Bind the data                          
+                            if (data.message.length > 0) {
+                                for (var z = 0; z < data.message.length; z++) {
+                                    var record = [data.message[z].DocumentID, data.message[z].DocumentNo, data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].ProjectName, data.message[z].DocumentCategoryName, data.message[z].UploadedUserName, ToJavaScriptDate(data.message[z].CreatedDate), data.message[z].CurrentStage];
+                                    //$("#editabledatatableWFItems").dataTable().fnAddData(record);
+                                    $("#editabledatatableWFItems_1").dataTable().fnAddData(record);                                    
+                                }
+                                $("#btnShow").click();
+                            }
+                            else {
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html('There are no Work Items...');
+                            }                            
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving.');
+                    }
+                });
+            }
+            else {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please select atleast one approval matrix configuration from below.');
+                return false;
+            }
+        });
+
+        function getSelectedItems() {
+            var obj = [];
+            var rowsCount = $("#editabledatatable").find('tr').length;
+            for (var j = 1; j < rowsCount; j++) {
+                if ($("#editabledatatable").find('tr:eq(' + j + ')').find('td:eq(7)').find('input[type=checkbox]').prop('checked') == true) {
+                    var oTable = $("#editabledatatable").dataTable();
+                    var nRow = $("#editabledatatable").find('tr:eq(' + j + ')');
+                    var aData = oTable.fnGetData(nRow);
+
+                    const props = [
+                        ['AMID', aData[0]],
+                        ['ProjectTypeID', aData[9]],
+                        ['ProjectID', aData[10]],
+                        ['StageID', aData[11]],
+                        ['Level', aData[4]],
+                        ['SectionID', aData[12]]
+                    ]
+                    obj[j - 1] = Object.fromEntries(props)
+                }
+            }
+            return obj;
+        }
+
+        $("#btnReplaceuser").click(function () {
+            if (!IsSelected()) {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please select atleast one project.');
+            }
+            else if ($("#txtNewSearchWord").val().trim() == '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please search user...');
+            }
+            else if ($("#txtNewSearchWord").val().trim() != '' && $("#divselectedUserID").text() == $("#divselectedNewUserID").text())
+            {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please change the user to Update');
+            }
+            else {
+                if ($("#divselectedNewUserID").text() != '') {
+                    var obj = getSelectedItems();
+                    console.log(JSON.stringify(obj));                    
+                    var userGUID = $("#divselectedUserID").text();
+                    var newUserGUID = $("#divselectedNewUserID").text();
+                    console.log(JSON.stringify({ strCondition: JSON.stringify(obj), CurrentUserID: userGUID, NewUserID: newUserGUID }));
+                    $.ajax({
+                        url: '/ApprovalMatrix/UpdateUserApprovalItemsForReplace',
+                        dataType: "json",
+                        type: "POST",
+                        beforeSend: function () {
+                            $("#overlay").show();
+                            $("#overlay").addClass('modal-backdrop fade in');
+                            $("#sidebar").addClass('modal-backdrop fade in');
+                        },
+                        complete: function () {
+                            $("#overlay").hide();
+                            $("#overlay").removeClass('modal-backdrop fade in');
+                            $("#sidebar").removeClass('modal-backdrop fade in');
+                        },
+                        async: false,
+                        contentType: 'application/json; charset=utf-8',
+                        cache: false,
+                        data: JSON.stringify({ strCondition: JSON.stringify(obj), CurrentUserID: userGUID, NewUserID: newUserGUID }),
+                        success: function (data) {
+                            if (data.success) {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);                                
+                                //redirect after success altert close
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/ApprovalMatrix/ReplaceUser';
+                                })
+                            }
+                        },
+                        error: function (xhr) {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error while updating the user.');
+                        }
+                    });
+                }
+                else {
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('User not found...');
+                }
+            }
+        });
+
+        //$("#btnShow").click(function () {
+        //    $('.btn-warning').trigger('click');
+        //    $('.modal-workitems').html('Please search user...');
+        //});
+        
+    </script>
+
+
+    <style>
+        .modal-message .modal-body-1 {
+            color: #737373;
+        }
+        .modal-message .modal-body-1 {
+            background: 0 0;
+            border: none;
+            margin: 0;
+            padding: 0 20px;
+            text-align: center !important;
+        }
+        .modal-body-1 {
+            position: relative;
+            padding: 15px;
+        }
+    </style>
+}
+
+
+

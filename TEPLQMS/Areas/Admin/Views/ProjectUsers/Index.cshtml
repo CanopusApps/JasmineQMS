@@ -1,0 +1,687 @@
+﻿@{
+    ViewBag.Title = "Project Users";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b>Project Users</b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a id="ancbacktoList" href="ProjectUsers" class="btn btn-azure btn-xs" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-arrow-circle-left"></i> Back to list
+                        </a>
+
+                        <a id="ancaddNew" href="javascript:displayAddDiv();" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-plus-circle"></i> Add Project User
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="divnew" class="widget-body ">
+                <div class="form-horizontal">
+                    <div class="row ">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row mantable">
+                                <div class="col-lg-3 col-sm-3 col-xs-12">
+
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" style="display:none;">
+                                        <label class="control-label col-lg-3">Project Type<span class="mandatory">*</span></label>
+                                        <div id="divID" style="display:none;"></div>
+                                        <div class=" col-lg-8">
+                                            <select class="form-control manfield" name="projecttype" data-bv-field="projecttype" id="ddlProjectType1" title="Project Type">
+                                                <option value="0">Select a value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="divProject1">
+                                        <label class="control-label col-lg-3">NPI Project<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <select class="form-control manfield" name="project" data-bv-field="project" id="ddlProject1" title="Project">
+                                                <option value="0">Select a value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div style="border: 1px #2dc3e8 solid;">
+                                        <div style="text-align: center; font-weight: bold; background: aliceblue;margin-bottom:3px;">Approvers</div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Search User<span class="mandatory">*</span></label>
+                                            <div class="col-lg-6">
+                                                <input type="text" value="" class="form-control" name="searchword" id="txtSearchWord" />
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <button class="btn btn-azure" id="btnAdd" type="button">Add</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-12 control-label" style="text-align:center !important;">
+                                                If you don't find the user, please add the user in User list
+                                                <a target="_blank" href="/Admin/Users" style="font-size:13px;font-weight:bold;text-decoration:underline;">
+                                                    Go to User List
+                                                </a>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <table class="table table-striped table-hover table-bordered" id="editabledatatable_Users">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th style="display:none;">ID</th>
+                                                        <th>
+                                                            Name
+                                                        </th>
+                                                        <th>
+                                                            EMail
+                                                        </th>
+                                                        <th>
+                                                            Is Admin
+                                                        </th>
+                                                        <th>
+                                                            Actions
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <br />
+                                        <div class="col-sm-offset-4 col-sm-12" style=" ">
+                                            <button class="btn btn-azure" id="btnCreate" type="button">Create</button>
+                                            <button class="btn btn-azure" id="btnUpdate" type="button">Update</button>
+                                            <button class="btn" id="btnCancel" type="button">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divGrid">
+                <div class="widget-body ">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-3 col-sm-3 col-xs-12" style="display:none;">
+                                            <div class="form-group">
+                                                <label>Project Type<span class="mandatory">*</span></label>
+                                                <select class="form-control" name="projecttype" data-bv-field="projecttype" id="ddlProjectType">
+                                                    <option value="0">Select a value</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="divProject">
+                                            <div class="col-lg-3 col-sm-3 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Project<span id="spnStart" class="mandatory">*</span></label>
+                                                    <select class="form-control" name="project" data-bv-field="project" id="ddlProject">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-sm-1 col-xs-12">
+
+                                        </div>
+                                        <div class="col-lg-1 col-sm-1 col-xs-12">
+                                            @*<div class="form-group">
+                                                    <label>Stage</label>
+                                                    <select class="form-control" name="Stage" data-bv-field="Stage" id="ddlStage">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>*@
+                                            <div>
+                                                <label style="color:white;">TEPL</label>
+                                                <button class="btn btn-azure" id="btnGet" type="button">Get Data</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-sm-3 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Level</label>
+                                                    <select class="form-control" name="Level" data-bv-field="Level" id="ddlLevel">
+                                                        <option value="0">Select a value</option>
+                                                        <option value="1">Level 1</option>
+                                                        <option value="2">Level 2</option>
+                                                        <option value="3">Level 3</option>
+                                                        <option value="4">Level 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-sm-1 col-xs-12">
+
+                                            </div>
+                                            <div class="col-lg-3 col-sm-3 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Department</label>
+                                                    <select class="form-control" name="Department" data-bv-field="Department" id="ddlDepartment">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-sm-1 col-xs-12">
+
+                                            </div>
+                                            <div class="col-lg-3 col-sm-3 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Section</label>
+                                                    <select class="form-control" name="Section" data-bv-field="Section" id="ddlSection">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-body">
+                    <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                        <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>Project</th>
+                                <th>
+                                    Login ID
+                                </th>
+                                <th>
+                                    Display Name
+                                </th>
+                                <th>
+                                    EMail ID
+                                </th>
+                                <th>
+                                    Is Project Admin
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+                                <th>
+                                    ProjectTypeID
+                                </th>
+                                <th>
+                                    ProjectID
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div style="display:none;">
+    <div id="divselectedUserID"></div>
+    <div id="divselectedLoginID"></div>
+    <div id="divselectedName"></div>
+    <div id="divselectedEmail"></div>
+</div>
+
+
+@section PageScripts{
+    <link href="~/assets/css/multiple-select.css" rel="stylesheet" />
+    <link href="~/assets/css/sol.css" rel="stylesheet" />
+ 
+    <script src="~/Scripts/multiple-select.js"></script>
+    <script src="~/Scripts/sol.js"></script>
+
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <!--Bootstrap Time Picker-->
+    <script src="~/assets/js/datetime/bootstrap-timepicker.js"></script>
+
+    <script>
+        function backtoList() {
+            $("#divnew").hide();
+            $("#divGrid").show();
+            $("#ancaddNew").show();
+            $("#ancbacktoList").hide();
+        }
+        $(document).ready(function () {
+            $("#divnew").hide();
+            $("#ancbacktoList").hide();
+            InitiateProjectUsersTable.init();
+            BindDropDownBoxes_Admin('/ProjectUsers/GetProjects', $('#ddlProjectType'), $('#ddlProject'), $('#ddlProjectType1'), $('#ddlProject1'), '', '', 'Select a value');
+
+
+            $("#txtSearchWord").autocomplete({
+                source: function (request, response) {
+                    var projTypeID = '';
+                    var projID = $('#ddlProject1').val();
+                    $("#ddlProjectType1 > option").each(function () {
+                        if (this.text == 'NPI') {
+                            projTypeID = this.value;
+                        }
+                    });
+
+                    $.ajax({
+                        url: "/ProjectUsers/SearchProjectUsers",
+                        type: "POST",
+                        dataType: "json",
+                        data: { ProjectTypeID: projTypeID, ProjectID: projID, UserName: request.term },
+                        success: function (data) {
+                            response($.map(data.message, function (item) {
+                                //alert(item.DisplayName);
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    $("#divselectedUserID").text(ui.item.id);
+                    $("#divselectedName").text(ui.item.label);
+                    $("#divselectedEmail").text(ui.item.email);
+                    $("#divselectedLoginID").text(ui.item.loginid);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
+
+        function DeleteUserRow(usrID) {
+            bootbox.confirm("Are you sure to Delete?", function (result) {
+                if (result) {
+                    $("#editabledatatable_Users").find('tr').each(function () {
+                        if ($(this).find('td:eq(2)') != undefined) {
+                            if (usrID == $(this).find('td:eq(0)').text()) {
+                                //Should be deleted
+                                $(this).remove();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        function removeAllUsers() {
+            $("#editabledatatable_Users").find("tr:gt(0)").remove();
+        }
+        $("#btnAdd").click(function () {
+
+            //alert($("#divselectedUserID").text());
+            if ($("#txtSearchWord").val().trim() == '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please search user...');
+            }
+            else {
+                if ($("#divselectedUserID").text() != '') {
+                    var userGUID = $("#divselectedUserID").text(); var canbeAdded = true;
+                    //var dynfun = 'DeleteUserRow("' +userGUID+'")';
+                    //var actionTD = '<a href="#" onclick=' + dynfun +' class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+                    var chkBOX = '<div class="checkbox"><label><input id="chk_isAdmin" type="checkbox"><span class="text"></span></label></div>';
+                    var actionTD = '<a href="#" onclick=DeleteUserRow("' + userGUID + '") class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+
+                    $("#editabledatatable_Users").find('tr').each(function () {
+                        if ($(this).find('td:eq(2)') != undefined) {
+                            if (userGUID == $(this).find('td:eq(0)').text()) {
+                                canbeAdded = false;
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html('User already added');
+                            }
+                        }
+                    });
+                    if (canbeAdded == true) {
+                        $('#editabledatatable_Users tr:last').after('<tr><td style="display:none;">' + userGUID + '</td><td>' + $("#divselectedName").text() + '</td><td>' + $("#divselectedEmail").text() + '</td><td>' + chkBOX + '</td><td>' + actionTD + '</td></tr>');
+                        $("#divselectedUserID").text('');
+                        $("#divselectedName").text('');
+                        $("#divselectedEmail").text('');
+                        $("#divselectedLoginID").text('');
+                        $("#txtSearchWord").val('');
+                    }
+                }
+                else {
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('User not found...');
+                }
+            }
+        });
+        $("#ddlProjectType").change(function () {
+            if ($("#ddlProjectType option:selected").text() == 'NPI') {
+                //$("#ddlProject").prop("disabled", false);
+                $("#divProject").show();
+                $("#spnStart").show();
+            }
+            else if ($("#ddlProjectType option:selected").text() == 'MP') {
+                $("#ddlProject").val('0');//.prop("disabled", true);
+                $("#divProject").hide();
+                $("#spnStart").hide();
+                //write logic to get the stages info
+                BindStagesForWorkflow('/ApprovalMatrix/GetWorkflowStage', $("#ddlStage"), $("#ddlProjectType option:selected").attr('workflowid'), 'Select a value');
+            }
+            else {
+                $("#ddlProject").val('0');//.prop("disabled", true);
+                $("#divProject").hide();
+                $("#spnStart").hide();
+            }
+        });
+        $("#ddlProjectType1").change(function () {
+            removeAllUsers();
+            if ($("#ddlProjectType1 option:selected").text() == 'NPI') {
+                $("#divProject1").show();
+            }
+            else if ($("#ddlProjectType1 option:selected").text() == 'MP') {
+                $("#divProject1").hide();
+                //write logic to get the stages info
+                BindStagesForWorkflow('/ApprovalMatrix/GetWorkflowStage', $("#ddlStage1"), $("#ddlProjectType1 option:selected").attr('workflowid'), 'Select a value');
+            }
+            else {
+                $("#divProject1").hide();
+            }
+        });
+        $("#ddlStage").change(function () {
+            var cond = $("#ddlStage option:selected").attr('condition')
+            if (cond.includes('Level')) {
+                $("#ddlLevel").show();
+            }
+            else { $("#ddlLevel").hide(); }
+            if (cond.includes('Section')) {
+                $("#ddlDepartment").show();
+                $("#ddlSection").show();
+            }
+            else { $("#ddlDepartment").hide(); $("#ddlSection").hide(); }
+        });
+        $("#ddlStage1").change(function () {
+            var cond = $("#ddlStage1 option:selected").attr('condition')
+            if (cond.includes('Level')) {
+                $("#divLevel1").show();
+            }
+            else { $("#divLevel1").hide(); }
+            if (cond.includes('Section')) {
+                $("#divDepartment1").show();
+                $("#divSection1").show();
+            }
+            else { $("#divDepartment1").hide(); $("#divSection1").hide(); }
+        });
+
+        //$("#ddlProject").change(function () {
+        //    BindStagesForWorkflow("/ApprovalMatrix/GetWorkflowStage", $('#ddlStage'), $("#ddlProject option:selected").attr('workflowid'));
+        //});
+        $("#ddlProject1").change(function () {
+            removeAllUsers();
+            //BindStagesForWorkflow("/ApprovalMatrix/GetWorkflowStage", $('#ddlStage1'), $("#ddlProject1 option:selected").attr('workflowid'));
+        });
+
+        function ValidateFields() {
+            $("#ddlProjectType").removeClass("manfieldredborder");
+            $("#ddlProject").removeClass("manfieldredborder");
+
+            if ($("#ddlProject").val() == 0) {
+                $("#ddlProject").addClass("manfieldredborder");
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Project');
+                return false;
+            }
+            else {
+                return true;
+            }
+            return false;
+        }
+
+        $("#btnGet").click(function () {
+            //Delete all existing records
+            var table = $("#editabledatatable").dataTable();
+            var rowsCount = table.$('tr').length;
+            for (var z = 0; z < rowsCount; z++) {
+                var nRow = table.$('tr')[z];
+                table.fnDeleteRow(nRow);
+            }
+
+            if (ValidateFields()) {
+                var projGUID = '00000000-0000-0000-0000-000000000000';
+                var projText = '';
+                var projTypeID = '';//$("#ddlProjectType option:selected").val();
+                var projTypeText = '';//$("#ddlProjectType option:selected").text();
+                //if ($("#ddlProjectType option:selected").text() == 'NPI') {
+
+                //}
+
+                projGUID = $("#ddlProject option:selected").val();
+                projText = $("#ddlProject option:selected").text();
+
+                $("#ddlProjectType > option").each(function () {
+                    //alert(this.text + ' ' + this.value);
+                    if (this.text == 'NPI') {
+                        projTypeID = this.value;
+                        projTypeText = this.text;
+                    }
+                });
+
+                $.ajax({
+                    url: '/ProjectUsers/GetProjectUsersData',
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    beforeSend: ShowProgressBar(),
+                    complete: HideProgressBar(),
+                    cache: false,
+                    async: true,
+                    data: JSON.stringify({ ProjectTypeID: projTypeID, projectID: projGUID }), //'0A8D017F-B8C8-4E0C-84EB-77BD7D6E052C'
+                    success: function (data) {
+                        if (data.success) {
+                            for (var z = 0; z < data.message.length; z++) {
+                                //var actions = '<a href="#" class="btn btn-azure btn-xs edit"><i class="fa fa-edit"></i></a><a style="margin-left:5px;" href="#" class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i></a>';
+                                var actions = '<a style="margin-left:5px;" href="#" class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i></a>';
+                                var record = [data.message[z].ID, projText, data.message[z].LoginID, data.message[z].DisplayName, data.message[z].EmailID, data.message[z].IsProjectAdmin, actions, data.message[z].ProjectTypeID, data.message[z].ProjectID];
+                                $("#editabledatatable").dataTable().fnAddData(record);
+                            }
+                            
+                            if ($("#ddlProjectType option:selected").text() == 'NPI') {
+                                $("#editabledatatable").dataTable().fnSetColumnVis(1, true);
+                            }
+                            else {
+                                $("#editabledatatable").dataTable().fnSetColumnVis(1, false);
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error ' + xhr.message);
+                    }
+                });
+            }
+        });
+
+        //function getAllValues() {
+        //    var arrData = new Array();
+        //    arrData[0] = "";
+
+        //    arrData[1] = $("#ddlProjectType1 option:selected").val();
+        //    arrData[2] = $("#ddlProjectType1 option:selected").text();
+        //    arrData[3] = '';
+
+
+        //    return arrData;
+        //}
+
+        function ValidateFieldValues() {
+            var ermsg = '';
+            //if ($("#ddlProjectType1").val() == '0') {
+            //    ermsg += $("#ddlProjectType1").prop("title") + '<br />';
+            //    $("#ddlProjectType1").addClass("manfieldredborder");
+            //}
+            //else {
+            //    $("#ddlProjectType1").removeClass("manfieldredborder");
+            //    if ($("#ddlProjectType1 option:selected").text() == 'NPI') {
+            //        if ($("#ddlProject1").val() == '0') {
+            //            ermsg += $("#ddlProject1").prop("title") + '<br />';
+            //            $("#ddlProject1").addClass("manfieldredborder");
+            //        }
+            //        else {
+            //            $("#ddlProject1").removeClass("manfieldredborder");
+            //        }
+            //    }
+            //    else
+            //        $("#ddlProject1").removeClass("manfieldredborder");
+            //}
+            if ($("#ddlProject1").val() == '0') {
+                ermsg += $("#ddlProject1").prop("title") + '<br />';
+                $("#ddlProject1").addClass("manfieldredborder");
+            }
+            else {
+                $("#ddlProject1").removeClass("manfieldredborder");
+            }
+
+            if ($("#editabledatatable_Users").find('tr').length == 1) {
+                ermsg += 'Users' + '<br />';
+                $("#txtSearchWord").addClass("manfieldredborder");
+            }
+            else
+                $("#txtSearchWord").removeClass("manfieldredborder");
+
+            if (ermsg != '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(ermsg);
+                return false;
+            }
+            return true;
+        }
+
+        $("#btnCreate").click(function () {
+            if (ValidateFieldValues()) {
+                //alert('Validated');
+                //var arry = getAllFormValues();
+                var arrData = new Array();
+                arrData[0] = ""; //We will keep empty this and we can use at the time of update of item.
+                //arrData[1] = $("#ddlProjectType1").val();
+
+                $("#ddlProjectType > option").each(function () {
+                    //alert(this.text + ' ' + this.value);
+                    if (this.text == 'NPI') {
+                        arrData[1] = this.value;
+                        //projTypeText = this.text;
+                    }
+                });
+                arrData[2] = $("#ddlProject1").val();
+                //if ($("#ddlProjectType1 option:selected").text() == 'NPI') {
+                //    arrData[2] = $("#ddlProject1").val();
+                //}
+                //else
+                //    arrData[2] = "00000000-0000-0000-0000-000000000000";
+
+                var userGuIDs = ''; var adminGuIDs = '';
+                $("#editabledatatable_Users").find('tr:gt(0)').each(function () {
+                    //alert($(this).find('td:eq(3)').find('#chk_isAdmin').prop('checked'));
+                    if ($(this).find('td:eq(0)') != undefined) {
+                        if ($(this).find('td:eq(3)').find('#chk_isAdmin').prop('checked')) {
+                            adminGuIDs += $(this).find('td:eq(0)').text() + ',';
+                        }
+                        userGuIDs += $(this).find('td:eq(0)').text() + ',';
+                    }
+                });
+                arrData[3] = userGuIDs.trim(',');
+                arrData[4] = adminGuIDs.trim(',');
+
+                //alert(arrData[3]);
+
+                $.ajax({
+                    url: '/ProjectUsers/InsertRecord',
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: ShowProgressBar(),
+                    complete: HideProgressBar(),
+                    async: false,
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    data: JSON.stringify({ arr: arrData }),
+                    success: function (data) {
+                        if (data.success) {
+                            retmsg = data.message;
+                            var mesge = '';
+
+                            $('.btn-success').trigger('click');
+                            $('.modal-body').html(data.message);
+
+                            ClearFieldValues();
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving ' + entity + '.');
+                    }
+                });
+            }
+        });
+        $("#btnUpdate").click(function () {
+            if (ValidateFormFields()) {
+                var arry = getAllFormValues();
+                var arrData = new Array(); var i = 1;
+                arrData[0] = $("#divID").html().trim();
+                $.each(arry, function (key, value) {
+                    arrData[i] = value;
+                    i = i + 1;
+                });
+                //var ctrl = '<a href="#" class="btn btn-azure btn-xs edit"><i class="fa fa-edit"></i> Edit</a><a href="#" class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i> Delete</a>';
+                //var newRow = ["-1", arrData[1], arrData[4], arrData[2], arrData[5], ctrl];
+                //$("#editabledatatable").dataTable().fnAddData(newRow);
+
+                var oTable = $("#editabledatatable").dataTable();
+                $('#editabledatatable tbody tr').each(function () {
+                    var nRow = $(this);
+                    var aData = oTable.fnGetData(nRow);
+                    if (aData[0] == $("#divID").html().trim()) {
+                        oTable.fnUpdate(arrData[1], nRow, 1, false);
+                        oTable.fnUpdate(arrData[4], nRow, 2, false);
+                        oTable.fnUpdate(arrData[2], nRow, 3, false);
+                        oTable.fnUpdate(arrData[5], nRow, 4, false);
+                    }
+                });
+                SaveEntitytoDB(oTable, "/AppUser/SaveEntity", $("#divID").html().trim(), arrData, GetIDsFromMultipleSelected("#ddlMultiple"), "", "User");
+            }
+        });
+
+        $("#btnCancel").click(function () {
+            $("#divnew").hide();
+            $("#divGrid").show();
+            $("#ancaddNew").show();
+        });
+        function displayAddDiv() {
+            $("#ancbacktoList").show();
+
+            $("#ancaddNew").hide();
+            $("#divnew").show();
+            $("#divGrid").hide();
+            $("#btnUpdate").hide();
+            $("#btnCreate").show();
+
+
+            //resetAllValues();
+        }
+
+        function ClearFieldValues() {
+            $("#ddlProjectType1").val('0');
+            $("#ddlProject1").val('0');
+            $("#editabledatatable_Users").find("tr:gt(0)").remove();
+        }
+    </script>
+}
+

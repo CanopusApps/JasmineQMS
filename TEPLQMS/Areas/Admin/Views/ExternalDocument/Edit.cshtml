@@ -1,0 +1,629 @@
+﻿@{
+    ViewBag.Title = "DMS External Document - Edit";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b>Edit External Document</b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a href="/Admin/ExternalDocument" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-step-backward"></i> Back To List
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div id="divExternalDocumentID" style="display:none;">@ViewBag.ExternalDocumentID</div>
+            <div style="display:none;">
+                <div id="divOLDFileName"></div>
+                <div id="divOLDFilePath"></div>
+                <div id="divOLDDocumentName"></div>
+            </div>
+            <div class="widget-body">
+                <div class="form-group form-horizontal">
+                    <div class="row mantable">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Category<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <select class="form-control manfield" name="Category" data-bv-field="Category" id="Category" title="Category">
+                                                <option value="0">Select a value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Sub Category</label>
+                                        <div class=" col-lg-8">
+                                            <select class="form-control" name="SubCategory" data-bv-field="SubCategory" id="SubCategory" title="SubCategory">
+                                                <option value="0">Select a value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Title<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <input title="Title" class="form-control manfield" id="txtTitle" name="txtTitle" type="text" maxlength="200" placeholder="Title">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Organization<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <input title="Organization" class="form-control manfield" id="txtOrganization" name="txtVersion" type="text" maxlength="200" placeholder="Organization">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">TEPL Document No<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <input title="Document No" class=" form-control manfield" id="txtDocumentNo" name="txtDocumentNo" type="text" maxlength="100" placeholder="Document No">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">External Document No</label>
+                                        <div class=" col-lg-8">
+                                            <input title="External Document No" class=" form-control manfield" id="txtExternalDocumentNo" name="txtExternalDocumentNo" type="text" maxlength="100" placeholder="External Document No">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Version<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <input title="Version" class="form-control manfield" id="txtVersion" name="txtVersion" type="text" maxlength="10" placeholder="Version">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Version Date<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-6" style="padding-right:0px;">
+                                            <input readonly="readonly" class="form-control date-picker" id="date1" type="text" data-date-format="dd-mm-yyyy" placeholder=" Version Date">
+                                        </div>
+                                        <div class=" col-lg-1" style="padding-left:0px;">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Department SPOC<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <input title="Department SPOC" class="form-control manfield" id="txtResponsibleUser"  
+                                                   name="txtResponsible User" type="text" maxlength="100" placeholder="Department SPOC">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Department</label>
+                                        <div class=" col-lg-8">
+                                            <input title="Department" class="form-control manfield" id="txtDepartment" name="txtDepartment" type="text" maxlength="100" placeholder="Department">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Document Source<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <div class="control-group">
+                                                <div class="col-lg-4 col-sm-2 col-xs-2">
+                                                    <div class="radio"><label><input checked="checked" name="listtype" type="radio" id="rbnUpload" value="upload"><span class="text"> Upload </span></label></div>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-2 col-xs-2">
+                                                    <div class="radio"><label><input name="listtype" type="radio" id="rbnURL" value="url"><span class="text"> URL </span></label></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" id="divUpload">
+                                        <label class="control-label col-lg-4">Upload Document<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <input class="form-control manfield" id="DOCFile" name="DOC" type="file" value="" title="Upload Document">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="divURL">
+                                        <label class="control-label col-lg-4">File URL<span class="mandatory">*</span></label>
+                                        <div class=" col-lg-8">
+                                            <input title="File URL" class="form-control manfield" id="txtFileURL" name="txtFileURL" type="text"
+                                                   maxlength="999" placeholder="File URL">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row " style="display:none;">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">File</label>
+                                        <div class=" col-lg-8" style="margin-top:7px;">
+                                            <input id="File" name="File" type="File" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Is Active</label>
+                                        <div class=" col-lg-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input id="chk1" type="checkbox">
+                                                    <span class="text"></span>
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="col-sm-offset-4 col-sm-12" style=" margin-left: 40%;">
+                                        <button class="btn btn-azure" id="btnUpdate" type="button">Update</button>
+                                        <button class="btn" id="btnCancel" type="button">Cancel</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display:none;">
+    <div id="divselectedUserID"></div>
+    <div id="divselectedLoginID"></div>
+    <div id="divselectedName"></div>
+    <div id="divselectedEmail"></div>
+</div>
+@section PageScripts{
+
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    <script>
+        $('#date1').datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+
+        $(document).ready(function () {
+            
+            $("#divUpload").show(); $("#divURL").hide();            
+
+            $("#txtResponsibleUser").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/ExternalDocument/SearchUser",
+                        type: "POST",
+                        dataType: "json",
+                        data: { UserName: request.term },
+                        success: function (data) {
+                            response($.map(data.message, function (item) {
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    $("#divselectedUserID").text(ui.item.id);
+                    $("#divselectedName").text(ui.item.label);
+                    $("#divselectedEmail").text(ui.item.email);
+                    $("#divselectedLoginID").text(ui.item.loginid);
+                    GetUserDepartment(ui.item.loginid);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+
+            BindDropDownBoxes('/ExternalSubCategory/GetActiveCategories', $('#Category'), '', '', 'Select a value');
+
+            LoadExternalDocument();
+        });
+        $("#Category").change(function () {
+            BindSubCatsForCategory("/ExternalDocument/GetSubCategoriesForCategory", $('#SubCategory'), $('#Category').val(), 'Select a value');
+        });
+        $("#rbnUpload").click(function () {
+            $("#divUpload").show(); $("#divURL").hide();
+        })
+        $("#rbnURL").click(function () {
+            $("#divUpload").hide(); $("#divURL").show();
+        })
+
+        function GetUserDepartment(loginID) {
+            $.ajax({
+                url: "/ExternalDocument/GetUserDepartmentUsingPrinContext", //GetUserDepartment & GetUserDepartmentUsingPrinContext
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                beforeSend: ShowProgressBar(),
+                complete: HideProgressBar(),
+                cache: false,
+                async: true,
+                data: JSON.stringify({ loginID: loginID }),
+                success: function (data) {
+                    if (data.success) {
+                        $("#txtDepartment").val(data.message);
+                        //if (retmsg.indexOf("exists") >= 0) {
+                        //    $('.btn-warning').trigger('click');
+                        //    $('.modal-body').html('Document Number Already Exists');
+                        //}
+                        //else if (retmsg.indexOf("Error") >= 0) {
+                        //    $('.btn-danger').trigger('click');
+                        //    $('.modal-body').html('Error While Saving External Document');
+                        //}
+                        //else {
+                        //    $('.btn-success').trigger('click');
+                        //    $('.modal-body').html('External Document Saved Successfully.');
+                        //    ClearFields();
+                        //}
+                    }
+                },
+                error: function (xhr) {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Error while saving ' + entity + '.');
+                }
+            });
+        }
+
+        function LoadExternalDocument() {
+            $.ajax({
+                url: '/ExternalDocument/GetExternalDocumentForID',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ ExternalDocumentID: $("#divExternalDocumentID").text() }),
+                beforeSend: ShowProgressBar(),
+                complete: HideProgressBar(),
+                cache: false,
+                async: true,
+                success: function (data) {
+                    if (data.success) {
+                        $("#txtTitle").val(data.message.Title);
+                        //alert(data.message.CategoryID);
+                        //alert(data.message.SubCategoryID);
+                        $("#Category").val(data.message.CategoryID).prop("disabled","disabled");
+                        BindSubCatsForCategory("/ExternalDocument/GetSubCategoriesForCategory", $('#SubCategory'), data.message.CategoryID, 'Select a value');
+                        
+                        if (data.message.SubCategoryName != '' && data.message.SubCategoryName != null)
+                            $("#SubCategory").val(data.message.SubCategoryID);
+                        $("#SubCategory").prop("disabled", "disabled");
+                        $("#txtDocumentNo").val(data.message.DocumentNo).prop("readonly", "readonly");
+                        $("#txtExternalDocumentNo").val(data.message.ExternalDocumentNo);
+                        $("#txtVersion").val(data.message.Version);
+                        $("#date1").val(ToJavaScriptDateWithFormat(data.message.VersionDate));
+                        $("#txtOrganization").val(data.message.Organization);
+                        $("#txtResponsibleUser").val(data.message.ResponsibleUser);
+                        $("#divselectedUserID").text(data.message.ResponsibleUserID);
+                        $("#txtDepartment").val(data.message.Department);
+                        if (data.message.FileName == "") {
+                            $("#rbnURL").prop("checked", true);
+                            $("#divUpload").hide(); $("#divURL").show();
+                            $("#txtFileURL").val(data.message.FileURL);
+                        }
+                        else {
+                            $("#rbnUpload").prop("checked", true);
+                            $("#divUpload").show(); $("#divURL").hide();
+                            $("#divOLDFileName").text(data.message.FileName);
+                            $("#divOLDFilePath").text(data.message.FilePath);
+                            $("#divOLDDocumentName").text(data.message.DocumentName);
+                        }
+
+                        //if (data.message.IsActive == true)
+                        //    $("#chk1").prop("checked", "checked");
+                        //else
+                        //    $("#chk1").prop("checked", "");
+                    }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        }
+
+        $('.numberonly').keypress(function (e) {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g))
+                return false;
+        });
+        $("#btnCancel").click(function () {
+            window.location.assign("/Admin/ExternalDocument/");
+        });
+
+        $("#btnUpdate").click(function () {
+            var ValidationMsg = '';
+            if ($("#txtTitle").val().trim() == '') {
+                ValidationMsg = 'Title';
+                ValidationMsg += '<br />';
+                $("#txtTitle").addClass('manfieldredborder');
+            }
+            else {
+                $("#txtTitle").removeClass('manfieldredborder');
+            }
+            if ($("#txtVersion").val().trim() == '') {
+                ValidationMsg += 'Version';
+                ValidationMsg += '<br />';
+                $("#txtVersion").addClass('manfieldredborder');
+            }
+            else {
+                $("#txtVersion").removeClass('manfieldredborder');
+            }
+            if ($("#date1").val() == '') {
+                ValidationMsg += 'Version Date';
+                ValidationMsg += '<br />';
+                $("#date1").addClass('manfieldredborder');
+            }
+            else {
+                $("#date1").removeClass('manfieldredborder');
+            }
+
+            //if ($("#date1").val() != '') {
+            //    // Check date is greater than today, then show the message
+            //    if (IsDateLessThanToDay($("#date1").val()) == false) {
+            //        ValidationMsg += 'Invalid Version Date';
+            //        ValidationMsg += '<br />';
+            //        $("#date1").addClass('manfieldredborder');
+            //    }
+            //    else {
+            //        $("#date1").removeClass('manfieldredborder');
+            //    }
+            //}
+            if ($("#txtDocumentNo").val().trim() == '') {
+                ValidationMsg += 'Document No';
+                ValidationMsg += '<br />';
+                $("#txtDocumentNo").addClass('manfieldredborder');
+            }
+            else {
+                $("#txtDocumentNo").removeClass('manfieldredborder');
+            }
+            if ($("#txtOrganization").val().trim() == '') {
+                ValidationMsg += 'Organization';
+                ValidationMsg += '<br />';
+                $("#txtOrganization").addClass('manfieldredborder');
+            }
+            else {
+                $("#txtOrganization").removeClass('manfieldredborder');
+            }
+            if ($("#txtResponsibleUser").val().trim() == '') {
+                ValidationMsg += 'Responsible User';
+                ValidationMsg += '<br />';
+                $("#txtResponsibleUser").addClass('manfieldredborder');
+            }
+            else {
+                $("#txtResponsibleUser").removeClass('manfieldredborder');
+            }
+            //if ($("#txtDepartment").val().trim() == '') {
+            //    ValidationMsg += 'Department';
+            //    ValidationMsg += '<br />';
+            //    $("#txtDepartment").addClass('manfieldredborder');
+            //}
+            //else {
+            //    $("#txtDepartment").removeClass('manfieldredborder');
+            //}
+
+
+            //File
+            var fileUpload = $("#DOCFile").get(0);
+            var files = fileUpload.files;
+
+            var ext = ''; var isProceed = false; var fileSize = 0;
+            for (var i = 0; i < files.length; i++) {
+                ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                fileSize = files[i].size;
+            }
+            $("#DOCFile").removeClass('manfieldredborder');
+            $("#txtFileURL").removeClass('manfieldredborder');
+
+            if ($("input[name='listtype']:checked").val() == 'upload') {
+                if (files.length == 0 && $("#divOLDFileName").text() == '') {
+                    ValidationMsg += 'Upload Document';
+                    ValidationMsg += '<br />';
+                    $("#DOCFile").addClass('manfieldredborder');
+                }
+                else {
+                    //File Type Check
+                    isProceed = IsFileTypeAllowedorNot('pdf', ext);
+                    if (isProceed == false) {
+                        ValidationMsg += 'Only PDF Files Allowed';
+                        ValidationMsg += '<br />';
+                        $("#DOCFile").addClass('manfieldredborder');
+                    }
+                    else {
+                        $("#DOCFile").removeClass('manfieldredborder');
+                    }
+                }
+            }
+            else {
+                if ($("#txtFileURL").val().trim() == '') {
+                    ValidationMsg += 'File URL';
+                    ValidationMsg += '<br />';
+                    $("#txtFileURL").addClass('manfieldredborder');
+                }
+                else {
+                    $("#txtFileURL").removeClass('manfieldredborder');
+                }
+            }
+            //$('#chk1').change(function () {
+            //    alert('Checkbox checked!');
+            //});
+
+            if (ValidationMsg != '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(ValidationMsg);
+                return false;
+            }
+            else {
+
+                //External Document
+                var fileData = new FormData();
+                var docnamenoext = ''; var oldDocName = ''; var oldFilePath = '';
+                fileData.append("Category", $("#Category").val());
+                fileData.append("SubCategory", $("#SubCategory").val());
+                fileData.append("Title", $("#txtTitle").val());
+                fileData.append("Version", $("#txtVersion").val());
+                fileData.append("VersionDate", $("#date1").val());
+                fileData.append("DocumentNo", $("#txtDocumentNo").val());
+                fileData.append("ExternalDocumentNo", $("#txtExternalDocumentNo").val());
+                fileData.append("Organization", $("#txtOrganization").val());
+                fileData.append("ResponsibleUser", $("#txtResponsibleUser").val());
+                fileData.append("ResponsibleUserID", $("#divselectedUserID").text());
+                fileData.append("Department", $("#txtDepartment").val());
+                //fileData.append("OLDFileName", $("#divOLDFileName").text());
+                fileData.append("ExternalDocumentID", $("#divExternalDocumentID").text());
+                var oldfileName = $("#divOLDFileName").text();
+                oldDocName = $("#divOLDDocumentName").text();
+                oldFilePath = $("#divOLDFilePath").text();
+                
+                var ext = '';
+                if ($("input[name='listtype']:checked").val() == 'upload') {
+                    fileData.append("FileURL", '');
+                    //File
+                    var fileUpload = $("#DOCFile").get(0);
+                    var files = fileUpload.files;
+                    var isProceed = false; var fileSize = 0;
+                    for (var i = 0; i < files.length; i++) {
+                        ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                        docnamenoext = files[i].name.substr(0, files[i].name.lastIndexOf('.'));
+                        fileSize = files[i].size;
+                        fileData.append(files[i].name, files[i]);
+                    }
+                }
+                else {
+                    fileData.append("FileURL", $("#txtFileURL").val());
+                    oldfileName = '';
+                    docnamenoext = '';
+                    ext = '';
+                    oldFilePath = '';
+                    oldDocName = '';
+                }
+
+                fileData.append("OLDFileName", oldfileName);
+                fileData.append("DocNameNoExt", docnamenoext);
+                fileData.append("DocNameExt", ext);
+                fileData.append("FilePath", oldFilePath);
+                fileData.append("OldDocumentName", oldDocName);
+
+                $.ajax({
+                    url: "/ExternalDocument/UpdateExternalDocument",
+                    dataType: "json",
+                    type: "POST",
+                    //beforeSend: ShowProgressBar(),
+                    //complete: HideProgressBar(),
+                    //async: false,
+                    contentType: false, //'application/json; charset=utf-8',
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            retmsg = data.message;
+                            if (retmsg.indexOf("Exists") >= 0) {
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html(' Version Already Exists');
+                            }
+                            else if (retmsg.indexOf("Error") >= 0) {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While Update External Document');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html('External Document Updated Successfully.');
+                                $("#modal-success").on('hide.bs.modal', function () {
+                                    window.location = "/Admin/ExternalDocument";
+                                });
+
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving .');
+                    }
+                });
+
+            }
+
+
+        });
+
+        function IsFileTypeAllowedorNot(ftypes, fext) {
+            var IsAllowed = false;
+            var result = ftypes.indexOf(fext);
+            if (result != -1) {
+                IsAllowed = true;
+            }
+            else {
+                IsAllowed = false;
+                //$('.btn-warning').trigger('click');
+                //var msg = 'File Type <b>' + fext + '</b> is not supported. </br> Allowed File Types are <b>' + ftypes + ' </b>';
+                //$('.modal-body').html(msg);
+            }
+            return IsAllowed;
+        }
+
+        function ClearFields() {
+
+            $("#txtTitle").val('');
+            $("#txtDocumentNo").val('');
+            $("#txtVersion").val('');
+            $("#date1").val('');
+            $("#txtOrganization").val('');
+            $("#txtResponsibleUser").val('');
+            $("#txtDepartment").val('');
+            $("#txtFileURL").val('');
+            $("#File").val('');
+            $("#chk1").val('');
+
+        }
+
+    </script>
+}
+

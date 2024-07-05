@@ -1,0 +1,869 @@
+﻿@{
+    ViewBag.Title = "DMS - Approve Request";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="cuwidget-header bordered-bottom bordered-blue">
+                @if (@ViewBag.Data.CurrentStage == "Document Controller")
+                {
+                    <span class="cuwidget-caption" style="font-size:25px !important;"><b>Publish Document</b></span>
+                }
+                else
+                {
+                    <span class="cuwidget-caption" style="font-size:25px !important;"><b>Approve Request </b></span>
+                }
+                <div style="display:inline-block;line-height:36px;background-color:antiquewhite;">
+                    <span class="cuwidget-caption" style="font-size:24px !important;padding-left:5px;padding-right:5px;"> <b>Pending Stage - @ViewBag.Data.CurrentStage</b></span>
+                </div>
+            </div>
+            <div class="widget-body">
+                @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
+                {
+                    if (ViewBag.Data != null)
+                    {
+                <div style="display:none;">
+                    <div id="divDocumentID">@ViewBag.Data.DocumentID</div>
+                    <div id="divEditableDocumentName">@ViewBag.Data.EditableDocumentName</div>
+                    <div id="divReadableDocumentName">@ViewBag.Data.ReadableDocumentName</div>
+                    <div id="divDocumentNo">@ViewBag.Data.DocumentNo</div>
+                    <div id="divEditableFilePath">@ViewBag.Data.EditableFilePath</div>
+                    <div id="divReadableFilePath">@ViewBag.Data.ReadableFilePath</div>
+                    <div id="divDraftVersion">@ViewBag.Data.DraftVersion</div>
+                    <div id="divEditVersion">@ViewBag.Data.EditVersion</div>
+                    <div id="divOriginalVersion">@ViewBag.Data.OriginalVersion</div>
+                    <div id="divCurrentStageID">@ViewBag.Data.CurrentStageID</div>
+                    <div id="divCurrentStage">@ViewBag.Data.CurrentStage</div>
+                    <div id="divWFExecutionID">@ViewBag.Data.WFExecutionID</div>
+                    <div id="divWorkflowID">@ViewBag.Data.WorkflowID</div>
+                    <div id="divAct">@ViewBag.Data.Action</div>
+                    <div id="divUploadedUserID">@ViewBag.Data.UploadedUserID</div>
+                    <div id="divDocumentCategoryCode">@ViewBag.Data.DocumentCategoryCode</div>
+                    <div id="divDocumentCategoryName">@ViewBag.Data.DocumentCategoryName</div>
+                    <div id="divDepartmentCode">@ViewBag.Data.DepartmentCode</div>
+                    <div id="divDepartmentName">@ViewBag.Data.DepartmentName</div>
+                    <div id="divSectionCode">@ViewBag.Data.SectionCode</div>
+                    <div id="divSectionName">@ViewBag.Data.SectionName</div>
+                    <div id="divProjectCode">@ViewBag.Data.ProjectCode</div>
+                    <div id="divProjectName">@ViewBag.Data.ProjectName</div>
+                    <div id="divProjectTypeID">@ViewBag.Data.ProjectTypeID</div>
+                    <div id="divProjectID">@ViewBag.Data.ProjectID</div>
+                    <div id="divSectionID">@ViewBag.Data.SectionID</div>
+                    <div id="divFileTypes">@ViewBag.FileTypes</div>
+                    <div id="divFormsFileTypes">@ViewBag.FormsFileTypes</div>
+                    <div id="divReadableFileTypes">@ViewBag.ReadableFileTypes</div>
+                    <div id="divAllowedFileSize">@ViewBag.AllowedFileSize</div>
+                    <div id="divRevisionReason">@ViewBag.Data.RevisionReason</div>
+                    <div id="divIsMultipleApprovers">@ViewBag.Data.IsMultipleApprovers</div>
+                    <div id="divMultipleApprovers">@Html.Raw(Json.Encode(@ViewBag.Data.MultipleApprovers))</div>
+                    <div id="divMultipleApproversDisplay">@Html.Raw(Json.Encode(@ViewBag.Data.MultipleApproversDisplay))</div>
+                </div>
+
+                        if (@ViewBag.Data.CurrentStage == "Document Controller")
+                        {
+                            @Html.Partial("DocControllerView")
+                        }
+                        else if (@ViewBag.Data.CurrentStage == "QMS Reviewer")
+                        {
+                            @Html.Partial("QMSReviewerView")
+                        }
+                        else
+                        {
+                            @Html.Partial("OtherView")
+                        }
+                    }
+                }
+            </div>
+            <div>
+                @Html.Partial("WFHistoryView")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+
+    <script>
+        var action = '';
+        $(document).ready(function () {
+            InitiateWFHistoryDataTable.init();
+            if ($("#divIsMultipleApprovers").text() == "True")
+                $("#divApprovers").show();
+            else
+                $("#divApprovers").hide();
+
+            //Doc Reviewer
+            $("#txtDocReviewer").autocomplete({
+                source: function (request, response) {
+                    var projTypeGUID = $("#divProjectTypeID").text();
+                    var projGUID = $("#divProjectID").text();
+                    $.ajax({
+                        url: "/ApprovalMatrix/SearchProjectUsers",
+                        type: "POST",
+                        dataType: "json",
+                        data: { ProjectTypeID: projTypeGUID, ProjectID: projGUID, UserName: request.term },
+                        success: function (data) {
+                            response($.map(data.message, function (item) {
+                                //alert(item.DisplayName);
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    $("#divselectedDocRUserID").text(ui.item.id);
+                    $("#divselectedDocRLoginID").text(ui.item.loginid);
+                    $("#divselectedDocRName").text(ui.item.label);
+                    $("#divselectedDocREmail").text(ui.item.email);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+
+            //Doc Approver
+            $("#txtDocApprover").autocomplete({
+                source: function (request, response) {
+                    var projTypeGUID = $("#divProjectTypeID").text();
+                    var projGUID = $("#divProjectID").text();
+                    $.ajax({
+                        url: "/ApprovalMatrix/SearchProjectUsers",
+                        type: "POST",
+                        dataType: "json",
+                        data: { ProjectTypeID: projTypeGUID, ProjectID: projGUID, UserName: request.term },
+                        success: function (data) {
+                            response($.map(data.message, function (item) {
+                                //alert(item.DisplayName);
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    $("#divselectedDocAUserID").text(ui.item.id);
+                    $("#divselectedDocALoginID").text(ui.item.loginid);
+                    $("#divselectedDocAName").text(ui.item.label);
+                    $("#divselectedDocAEmail").text(ui.item.email);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+
+            if ($("#divCurrentStage").text() == "QMS Reviewer" && $("#divMultipleApproversDisplay").text() != null && $("#divMultipleApproversDisplay").text() != '') {
+                var jsonObject = jQuery.parseJSON($("#divMultipleApproversDisplay").text());
+                var docReviewers = jsonObject.DocumentReviewers;
+                var docApprovers = jsonObject.DocumentApprovers;
+                if (docReviewers != null) {
+                    for (i = 0; i < docReviewers.length; i++) {
+                        var actionTD = '<a href="#" onclick=DeleteDocRRow("' + docReviewers[i].ID + '") class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+                        $('#editabledatatable_Reviewers tr:last').after('<tr><td style="display:none;">' + docReviewers[i].ID + '</td><td>' + docReviewers[i].DisplayName + '</td><td>' + docReviewers[i].EmailID + '</td><td>' + actionTD + '</td></tr>');
+                    }
+                }
+                if (docApprovers != null) {
+                    for (k = 0; k < docApprovers.length; k++) {
+                        var actionTD = '<a href="#" onclick=DeleteDocARow("' + docApprovers[k].ID + '") class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+                        $('#editabledatatable_Approvers tr:last').after('<tr><td style="display:none;">' + docApprovers[k].ID + '</td><td>' + docApprovers[k].DisplayName + '</td><td>' + docApprovers[k].EmailID + '</td><td>' + actionTD + '</td></tr>');
+                    }
+                }                
+            }
+        });
+        $("#rbnYes").click(function () {
+            $("#divApprovers").show();
+        });
+        $("#rbnNo").click(function () {
+            $("#divApprovers").hide();
+        });
+        function DeleteDocRRow(usrID) {
+            bootbox.confirm("Are you sure to Delete?", function (result) {
+                if (result) {
+                    $("#editabledatatable_Reviewers").find('tr').each(function () {
+                        if ($(this).find('td:eq(2)') != undefined) {
+                            if (usrID == $(this).find('td:eq(0)').text()) {
+                                //Should be deleted
+                                $(this).remove();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        $("#btnDocReviewers").click(function () {
+            if ($("#txtDocReviewer").val().trim() == '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please search user for Document Reviewer');
+            }
+            else {
+                if ($("#divselectedDocRUserID").text() != '') {
+                    var userGUID = $("#divselectedDocRUserID").text(); var canbeAdded = true;
+                    var actionTD = '<a href="#" onclick=DeleteDocRRow("' + userGUID + '") class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+
+                    $("#editabledatatable_Reviewers").find('tr').each(function () {
+                        if ($(this).find('td:eq(3)') != undefined) {
+                            if (userGUID == $(this).find('td:eq(0)').text()) {
+                                canbeAdded = false;
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html('User already added');
+                            }
+                        }
+                    });
+                    if (canbeAdded == true) {
+                        $('#editabledatatable_Reviewers tr:last').after('<tr><td style="display:none;">' + userGUID + '</td><td style="display:none;">' + $("#divselectedDocRLoginID").text() + '</td><td>' + $("#divselectedDocRName").text() + '</td><td>' + $("#divselectedDocREmail").text() + '</td><td>' + actionTD + '</td></tr>');
+                        $("#divselectedDocRUserID").text('');
+                        $("#divselectedDocRLoginID").text('');
+                        $("#divselectedDocRName").text('');
+                        $("#divselectedDocREmail").text('');
+                        $("#txtDocReviewer").val('');
+                    }
+                }
+                else {
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('User not found...');
+                }
+            }
+        });
+
+        function DeleteDocARow(usrID) {
+            bootbox.confirm("Are you sure to Delete?", function (result) {
+                if (result) {
+                    $("#editabledatatable_Approvers").find('tr').each(function () {
+                        if ($(this).find('td:eq(3)') != undefined) {
+                            if (usrID == $(this).find('td:eq(0)').text()) {
+                                //Should be deleted
+                                $(this).remove();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        $("#btnDocApprovers").click(function () {
+            if ($("#txtDocApprover").val().trim() == '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please search user for Document Approver');
+            }
+            else {
+                if ($("#divselectedDocAUserID").text() != '') {
+                    var userGUID = $("#divselectedDocAUserID").text(); var canbeAdded = true;
+                    var actionTD = '<a href="#" onclick=DeleteDocARow("' + userGUID + '") class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+
+                    $("#editabledatatable_Approvers").find('tr').each(function () {
+                        if ($(this).find('td:eq(3)') != undefined) {
+                            if (userGUID == $(this).find('td:eq(0)').text()) {
+                                canbeAdded = false;
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html('User already added');
+                            }
+                        }
+                    });
+                    if (canbeAdded == true) {
+                        $('#editabledatatable_Approvers tr:last').after('<tr><td style="display:none;">' + userGUID + '</td><td style="display:none;">' + $("#divselectedDocALoginID").text() + '</td><td>' + $("#divselectedDocAName").text() + '</td><td>' + $("#divselectedDocAEmail").text() + '</td><td>' + actionTD + '</td></tr>');
+                        $("#divselectedDocAUserID").text('');
+                        $("#divselectedDocALoginID").text('');
+                        $("#divselectedDocAName").text('');
+                        $("#divselectedDocAEmail").text('');
+                        $("#txtDocApprover").val('');
+                    }
+                }
+                else {
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('User not found...');
+                }
+            }
+        });
+
+        function PublishRequest() {
+            $("#DOCFile").removeClass("manfieldredborder"); $("#DOCFile2").removeClass("manfieldredborder");
+            var catCode = '';
+            catCode = $("#divDocumentCategoryCode").text();
+
+            //Files Validation
+            var fileUpload = $("#DOCFile").get(0);
+            var files = fileUpload.files;
+            var fileUpload2 = $("#DOCFile2").get(0);
+            var files2;
+            if (fileUpload2 != undefined)
+                files2 = fileUpload2.files;
+            if (catCode != "FR") {
+                if ((files.length > 0 && files2.length == 0) || (files.length == 0 && files2.length > 0)) {
+                    if (files.length == 0) {
+                        $("#DOCFile").addClass("manfieldredborder");
+                        $('.btn-warning').trigger('click');
+                        $('.modal-body').html('Please upload Editable Document also');
+                    }
+                    else if (files2.length == 0) {
+                        $("#DOCFile2").addClass("manfieldredborder");
+                        $('.btn-warning').trigger('click');
+                        $('.modal-body').html('Please upload Readable Document also');
+                    }
+                    return false;
+                }
+            }                    
+            
+            var fileData = new FormData();
+            fileData.append("DocumentID", $("#divDocumentID").text());
+            fileData.append("DocumentNo", $("#divDocumentNo").text());
+            fileData.append("EditableDocumentName", $("#divEditableDocumentName").text());
+            fileData.append("EditableFilePath", $("#divEditableFilePath").text());
+            fileData.append("ReadableDocumentName", $("#divReadableDocumentName").text());
+            fileData.append("ReadableFilePath", $("#divReadableFilePath").text());
+            fileData.append('ActionComments', $("#txtComments").val().trim());
+            fileData.append('DraftVersion', $("#divDraftVersion").text());
+            fileData.append('EditVersion', $("#divEditVersion").text());
+            fileData.append('OriginalVersion', $("#divOriginalVersion").text());
+            fileData.append('CurrentStageID', $("#divCurrentStageID").text());
+            fileData.append('CurrentStage', $("#divCurrentStage").text());
+            fileData.append('ProjectTypeID', $("#divProjectTypeID").text());
+            fileData.append('ProjectID', $("#divProjectID").text());
+            fileData.append('SectionID', $("#divSectionID").text());
+            fileData.append('WFExecutionID', $("#divWFExecutionID").text());
+            fileData.append('WorkflowID', $("#divWorkflowID").text());
+            fileData.append('DocumentCategoryCode', $("#divDocumentCategoryCode").text());
+            fileData.append('DocumentCategoryName', $("#divDocumentCategoryName").text());
+            fileData.append('DepartmentCode', $("#divDepartmentCode").text());
+            fileData.append('DepartmentName', $("#divDepartmentName").text());
+            fileData.append('SectionCode', $("#divSectionCode").text());
+            fileData.append('SectionName', $("#divSectionName").text());
+            fileData.append('ProjectCode', $("#divProjectCode").text());
+            fileData.append('ProjectName', $("#divProjectName").text());
+            fileData.append('DocumentDescription', $("#divDocumentDescription").text());
+            fileData.append('UploadedUserID', $("#divUploadedUserID").text());
+
+            if ($("#RevisionReason").text() != undefined)
+                fileData.append('RevisionReason', $("#RevisionReason").text());
+            else
+                fileData.append('RevisionReason', '');
+
+
+            //File - Editable            
+            var ext = ''; var isExist = 'no'; var fileSize = 0; var isProceed = true;
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);
+                    isExist = 'yes';
+                }
+                if (isExist == 'yes') {
+                    //File Type Check
+                    if (catCode == 'FR')
+                        isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext);
+                    else
+                        isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                    if (isProceed == false) { return false; }
+
+                    //File Size Check
+                    isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                    if (isProceed == false) { return false; }
+                }
+            }
+            fileData.append('EditableDocumentUploaded', isExist);
+            isExist = 'no';
+            //Files - Readable Document            
+            var ext2 = ''; var fileSize2 = 0;
+            if (files2 != undefined) {
+                if (files2.length > 0) {
+                    for (var z = 0; z < files2.length; z++) {
+                        ext2 = files2[z].name.substr(files2[z].name.lastIndexOf('.') + 1).toLowerCase();
+                        fileSize2 = files2[z].size;
+                        fileData.append(files2[z].name, files2[z]);
+                        isExist = 'yes';
+                    }
+                    //File Type Check
+                    //isProceed = IsFileTypeAllowed($("#divReadableFileTypes").text(), ext2);
+                    if (catCode == 'FR')
+                        isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext2);
+                    else
+                        isProceed = IsFileTypeAllowed($("#divReadableFileTypes").text(), ext2);
+                    if (isProceed == false) { return false; }
+                    //File Size Check
+                    isProceed = IsFileSizeAllowed(fileSize2, $("#divAllowedFileSize").text());
+                    if (isProceed == false) { return false; }
+                }
+            }            
+            fileData.append('ReadableDocumentUploaded', isExist);            
+            if (isProceed == true) {
+                $.ajax({
+                    url: "/ApproveRequest/PublishDocument",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While Publishing.');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html('Document Published Successfully.');
+                                $("#DOCFile").val(''); $("#txtComments").val();
+                                //redirect after success altert close
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Inbox';
+                                })
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while Publishing document.');
+                    }
+                });
+            }
+            else {
+                alert('Something is wrong while Publishing.');
+                return false;
+            }
+
+            //else {
+            //    $("#DOCFile").addClass("manfieldredborder");
+            //    $('.btn-warning').trigger('click');
+            //    $('.modal-body').html('Published Document is Mandatory');
+            //}
+            return false;
+        }
+        $("#btnPublish").click(function () {
+            PublishRequest();
+            return false;
+        });
+
+        $("#btnConvertFile").click(function () {
+            ConvertToPDF();
+        });
+
+        function ConvertToPDF() {
+            var fileData = new FormData();
+            fileData.append("DocumentID", $("#divDocumentID").text());
+            fileData.append("DocumentNo", $("#divDocumentNo").text());
+            fileData.append("FilePath", $("#divFilePath").text());
+            fileData.append('DraftVersion', $("#divDraftVersion").text());
+            fileData.append('OriginalVersion', $("#divOriginalVersion").text());
+
+            //Files
+            var fileUpload = $("#DOCEditableFile").get(0);
+            var files = fileUpload.files;
+            var ext = ''; var isExist = 'no'; var fileSize = 0; var isProceed = true; var fileName = '';
+            for (var i = 0; i < files.length; i++) {
+                ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                fileSize = files[i].size;
+                fileName = files[i].name.substr(0, files[i].name.lastIndexOf('.'));
+                fileData.append(files[i].name, files[i]);
+                isExist = 'yes';
+            }
+            if (isExist == 'yes') {
+                //File Type Check
+                isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                if (isProceed == false) { return false; }
+
+                //File Size Check
+                isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                if (isProceed == false) { return false; }
+            }
+            else {
+                isProceed = false;
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Document is Mandatory');
+                return false;
+            }
+            if (isProceed == true) {
+
+                $.ajax({
+                    url: "/ApproveRequest/ConvertToPDF",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While converting document.');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html('Document Conversion Successfull.');
+                                $("#ancConvertedDocLink").prop('href', data.message).html(fileName + '.pdf');
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while approving document.');
+                    }
+                });
+            }
+            return false;
+        }
+
+        function ValidateMultipleApprovers() {
+            if ($("#rbnYes").prop("checked")) {
+                var rCount = $("#editabledatatable_Reviewers").find('tr').length;
+                var aCount = $("#editabledatatable_Approvers").find('tr').length;
+                if (rCount == 1 && aCount == 1) {
+                    $("#txtDocReviewer").addClass("manfieldredborder");
+                    $("#txtDocApprover").addClass("manfieldredborder");
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Add atleast one Reviewer or Approver');
+                    return false;
+                }
+                else {
+                    $("#txtDocReviewer").removeClass("manfieldredborder");
+                    $("#txtDocApprover").removeClass("manfieldredborder");
+                }
+            }
+            return true;
+        }
+
+
+        function ApproveRequest() {            
+            var fileData = new FormData();
+            if ($("#RevisionReason").val() != undefined) {
+                if ($("#RevisionReason").val().trim() == '') {
+                    $("#RevisionReason").addClass("manfieldredborder");
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Revision Reason is Mandatory');
+                    return false;
+                }
+                else {
+                    $("#RevisionReason").removeClass("manfieldredborder");
+                    fileData.append('RevisionReason', $("#RevisionReason").val().trim());
+                }
+            }
+            else {
+                fileData.append('RevisionReason', '');
+            }
+            fileData.append("DocumentID", $("#divDocumentID").text());
+            fileData.append("DocumentNo", $("#divDocumentNo").text());
+            fileData.append("EditableFilePath", $("#divEditableFilePath").text());
+            fileData.append("ReadableFilePath", $("#divReadableFilePath").text());
+            fileData.append('ActionComments', $("#txtComments").val().trim());
+            fileData.append('DraftVersion', $("#divDraftVersion").text());
+            fileData.append('OriginalVersion', $("#divOriginalVersion").text());
+            fileData.append('EditVersion', $("#divEditVersion").text());
+            fileData.append('CurrentStageID', $("#divCurrentStageID").text());
+            fileData.append('CurrentStage', $("#divCurrentStage").text());
+            fileData.append('ProjectTypeID', $("#divProjectTypeID").text());
+            fileData.append('ProjectID', $("#divProjectID").text());
+            fileData.append('SectionID', $("#divSectionID").text());
+            fileData.append('WFExecutionID', $("#divWFExecutionID").text());
+            fileData.append('WorkflowID', $("#divWorkflowID").text());
+            fileData.append('DocumentCategoryCode', $("#divDocumentCategoryCode").text());
+            fileData.append('DepartmentCode', $("#divDepartmentCode").text());
+            fileData.append('SectionCode', $("#divSectionCode").text());
+            fileData.append('DocumentDescription', $("#DocumentDescription").val().trim());
+            fileData.append('EditableDocumentName', $("#divEditableDocumentName").text());
+            fileData.append('ReadableDocumentName', $("#divReadableDocumentName").text());
+            fileData.append('UploadedUserID', $("#divUploadedUserID").text());
+            console.log(JSON.stringify(JSON.parse($("#divMultipleApprovers").text())));
+            //Multiple Approvals
+            if ($("#divCurrentStage").text() == "QMS Reviewer") {
+                if ($("#rbnYes").prop("checked") == true) {
+                    var userRGuIDs = '', userAGuIDs = ''; var multiReviewerDisplay = []; var multiApproversDisplay = [];
+                    $("#editabledatatable_Reviewers").find('tr:gt(0)').each(function () {
+                        if ($(this).find('td:eq(0)') != undefined) {
+                            userRGuIDs += $(this).find('td:eq(0)').text() + ',';
+                            item = {};
+                            item["ID"] = $(this).find('td:eq(0)').text();
+                            item["LoginID"] = $(this).find('td:eq(1)').text();
+                            item["DisplayName"] = $(this).find('td:eq(2)').text();
+                            item["EmailID"] = $(this).find('td:eq(3)').text();
+                            multiReviewerDisplay.push(item);
+                        }
+                    });
+                    userRGuIDs = userRGuIDs.slice(0, -1);
+                    $("#editabledatatable_Approvers").find('tr:gt(0)').each(function () {
+                        if ($(this).find('td:eq(0)') != undefined) {
+                            userAGuIDs += $(this).find('td:eq(0)').text() + ',';
+                            item = {};
+                            item["ID"] = $(this).find('td:eq(0)').text();
+                            item["LoginID"] = $(this).find('td:eq(1)').text();
+                            item["DisplayName"] = $(this).find('td:eq(2)').text();
+                            item["EmailID"] = $(this).find('td:eq(3)').text();
+                            multiApproversDisplay.push(item);
+                        }
+                    });
+                    userAGuIDs = userAGuIDs.slice(0, -1);
+                    var multiApprovers = { "DocumentReviewers": userRGuIDs, "DocumentApprovers": userAGuIDs };
+                    var multiApproversDisplay = { "DocumentReviewers": multiReviewerDisplay, "DocumentApprovers": multiApproversDisplay };
+
+                    fileData.append('IsMultipleApprovers', $("#rbnYes").prop("checked"));
+                    fileData.append('MultipleApprovers', JSON.stringify(multiApprovers));
+                    fileData.append('MultipleApproversDisplay', JSON.stringify(multiApproversDisplay));
+                    fileData.append('IsMultiApproversChanged', true);
+                }
+                else {
+                    fileData.append('IsMultipleApprovers', $("#rbnYes").prop("checked"));
+                    fileData.append('MultipleApprovers', '');
+                    fileData.append('MultipleApproversDisplay', '');
+                    fileData.append('IsMultiApproversChanged', true);
+                }
+                
+            }
+            else {
+                if ($("#divIsMultipleApprovers").text() == "True") {
+                    fileData.append('IsMultipleApprovers', true);
+                    fileData.append('MultipleApprovers', $("#divMultipleApprovers").text());
+                    fileData.append('MultipleApproversDisplay', $("#divMultipleApproversDisplay").text());
+                }
+                else {
+                    fileData.append('IsMultipleApprovers', false);
+                    fileData.append('MultipleApprovers', $("#divMultipleApprovers").text());
+                    fileData.append('MultipleApproversDisplay', $("#divMultipleApproversDisplay").text());
+                }
+                fileData.append('IsMultiApproversChanged', false);
+            }
+
+            //Files
+            //var fileUpload = $("#DOCFile").get(0);
+            //var files = fileUpload.files;
+            //var ext = ''; var isExist = 'no'; var fileSize = 0; var isProceed = true;
+            //for (var i = 0; i < files.length; i++) {
+            //    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+            //    fileSize = files[i].size;
+            //    fileData.append(files[i].name, files[i]);
+            //    isExist = 'yes';
+            //}
+            //if (isExist == 'yes') {
+            //    //File Type Check
+            //    isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+            //    if (isProceed == false) { return false; }
+
+            //    //File Size Check
+            //    isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+            //    if (isProceed == false) { return false; }
+            //}
+            $.ajax({
+                url: "/ApproveRequest/ApproveDocument",
+                dataType: "json",
+                type: "POST",
+                beforeSend: function () {
+                    $("#overlay").show();
+                    $("#overlay").addClass('modal-backdrop fade in');
+                    $("#sidebar").addClass('modal-backdrop fade in');
+                },
+                complete: function () {
+                    $("#overlay").hide();
+                    $("#overlay").removeClass('modal-backdrop fade in');
+                    $("#sidebar").removeClass('modal-backdrop fade in');
+                },
+                contentType: false,
+                processData: false,
+                cache: false,
+                data: fileData,
+                success: function (data) {
+                    if (data.success) {
+                        if (data.message == 'failed') {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html(data.message);
+                        }
+                        else {
+                            $('.btn-success').trigger('click');
+                            $('.modal-body').html('Document Approved Successfully.');
+                            $("#DOCFile").val(''); $("#txtComments").val();
+                            //redirect after success altert close
+                            $('#modal-success').on('hide.bs.modal', function () {
+                                window.location = '/Inbox';
+                            })
+                        }
+                    }
+                    else {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html(data.message);
+                    }
+                },
+                error: function (xhr) {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Error while approving document.');
+                }
+            });
+            return false;
+        }
+
+        $("#rbnYes").change(function () {
+            $("#txtComments").removeClass("manfieldredborder");
+            action = '';
+            $("#divSection1").hide(); $("#divSection2").hide();
+        });
+        $("#rbnNo").change(function () {
+            $("#txtComments").removeClass("manfieldredborder");
+            action = '';
+            $("#divSection1").hide(); $("#divSection2").hide();
+        });
+
+        function HideMultiApprovers() {
+            $("#txtDocReviewer").removeClass("manfieldredborder");
+            $("#txtDocApprover").removeClass("manfieldredborder");
+            $("#divApprovers").hide();
+            $("#editabledatatable_Reviewers").find("tr:gt(0)").remove();
+            $("#editabledatatable_Approvers").find("tr:gt(0)").remove();
+            $("#rbnNo").prop("checked", "checked");
+
+
+        }
+
+        $("#btnApprove").click(function () {
+            //Validate for QMS Reviewer
+            if ($("#divCurrentStage").text() == "QMS Reviewer") {
+                if (!ValidateMultipleApprovers()) {
+                    $("#txtComments").removeClass("manfieldredborder");
+                    action = '';
+                    $("#divSection1").hide(); $("#divSection2").hide();
+                    return false;
+                }
+            }
+
+            $("#spanComments").html('Comments (Optional)');
+            $("#txtComments").removeClass("manfieldredborder");
+            action = 'approve';
+            $("#divSection1").show(); $("#divSection2").show();
+            return false;
+        });
+
+        function RejectRequest() {
+            if ($("#txtComments").val() != '') {
+                $("#txtComments").removeClass("manfieldredborder");
+                bootbox.confirm("Are you sure to Reject the Request?", function (result) {
+                    if (result) {
+                        var comments = $("#txtComments").val().trim();
+                        var docguid = $("#divDocumentID").text();
+                        var CurrentStageID = $("#divCurrentStageID").text();
+                        var CurrentStage = $("#divCurrentStage").text();
+                        var exeID = $("#divWFExecutionID").text();
+                        var uplodUserID = $("#divUploadedUserID").text();
+                        var docNumber = $("#divDocumentNo").text();
+                        var docDesc = $("#DocumentDescription").val().trim();
+                        var DocumentName = $("#divDocumentName").text();
+                        var DraftVersion = $("#divDraftVersion").text();
+                        var EditVersion = $("#divEditVersion").text();
+                        var OriginalVersion =  $("#divOriginalVersion").text();
+                        SubmitRequest(docNumber, docguid, comments, CurrentStageID, CurrentStage, exeID, uplodUserID, 'Document Rejected Successfully...',
+                            docDesc, DocumentName, DraftVersion, EditVersion, OriginalVersion);
+                    }
+                });
+            }
+            else {
+                $("#txtComments").addClass("manfieldredborder");
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Comments is Mandatory while Rejecting...');
+            }
+            return false;
+        }
+
+        $("#btnReject").click(function () {
+            if ($("#divCurrentStage").text() == "QMS Reviewer") {
+                HideMultiApprovers();
+            }
+
+            $("#spanComments").html('Comments (Mandatory)');
+            $("#txtComments").addClass("manfieldredborder");
+            action = 'reject';
+            $("#divSection1").show(); $("#divSection2").show();
+            return false;
+        });
+
+        $("#btnSubmit").click(function () {
+            if (action == 'approve') {
+                if ($("#DocumentDescription").val().trim() == "") {
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Document Description is Mandatory');
+                    return false;
+                }
+                else {
+                    //Validate for QMS Reviewer
+                    if ($("#divCurrentStage").text() == "QMS Reviewer") {
+                        if (ValidateMultipleApprovers()) {
+                            ApproveRequest();
+                        }
+                    }
+                    else
+                        ApproveRequest();
+                }
+            }
+            else if (action == 'reject') {
+                RejectRequest();
+            }
+            else if (action == 'publish') {
+                PublishRequest();
+            }
+            return false;
+        });
+
+        function SubmitRequest(docNumber, docguid, comments, CurrentStageID, CurrentStage, exeID, uplodUserID, message, docDesc, DocumentName, DraftVersion, EditVersion,OriginalVersion) {
+            $.ajax({
+                url: '/ApproveRequest/RejectRequest',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                beforeSend: function () {
+                    $("#overlay").show();
+                    $("#overlay").addClass('modal-backdrop fade in');
+                    $("#sidebar").addClass('modal-backdrop fade in');
+                },
+                complete: function () {
+                    $("#overlay").hide();
+                    $("#overlay").removeClass('modal-backdrop fade in');
+                    $("#sidebar").removeClass('modal-backdrop fade in');
+                },
+                cache: false,
+                async: true,
+                data: JSON.stringify({
+                    docNumber: docNumber, docGUID: docguid, comments: comments, CurrentStageID: CurrentStageID, CurrentStage: CurrentStage, exeID: exeID, uplodUserID: uplodUserID,
+                    DocumentDescription: docDesc, DocumentName: DocumentName, RevisionReason: $("#divRevisionReason").text(), DraftVersion: DraftVersion, EditVersion: EditVersion, OriginalVersion: OriginalVersion
+                }),
+                success: function (data) {
+                    if (data.success) {
+                        $('.btn-success').trigger('click');
+                        $('.modal-body').html(message);
+                        $("#DOCFile").val(''); $("#txtComments").val();
+                        //redirect after success altert close
+                        $('#modal-success').on('hide.bs.modal', function () {
+                            window.location = '/Inbox';
+                        })
+                    }
+                },
+                error: function (xhr) {
+                    alert('error ' + xhr.message);
+                }
+            });
+        }
+    </script>
+}
+

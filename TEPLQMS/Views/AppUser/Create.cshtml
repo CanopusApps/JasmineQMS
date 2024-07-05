@@ -1,0 +1,480 @@
+﻿@{
+    ViewBag.Title = "Create Application User";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="cuwidget-header bordered-bottom bordered-blue">
+                <span class="cuwidget-caption">Create Application User</span>
+                <span class="cuwidget-captionright"><a href="/User">back to list</a></span>
+            </div>
+            <div class="widget-body">
+                @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
+                {
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    @Html.Bootstrap().FormGroup().TextBox("Email New1").LabelWidthLg(3).InputWidthLg(8)
+                                    @Html.Bootstrap().FormGroup().TextBox("Email New3").LabelWidthLg(3).InputWidthLg(8)
+                                    @Html.Bootstrap().FormGroup().TextBox("Email New5").LabelWidthLg(3).InputWidthLg(8)
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Single Selection</label>
+                                        <div class="col-lg-8">
+                                            <select id="e1" style="width:100%;" class="form-control">
+                                                <option value="AL" />Alabama
+                                                <option value="AK" />Alaska
+                                                <option value="AZ" />Arizona
+                                                <option value="AR" />Arkansas
+                                                <option value="CA" />California
+                                                <option value="CO" />Colorado
+                                                <option value="CT" />Connecticut
+                                                <option value="DE" />Delaware
+                                                <option value="FL" />Florida
+                                                <option value="GA" />Georgia
+                                                <option value="HI" />Hawaii
+                                                <option value="ID" />Idaho
+                                                <option value="IL" />Illinois
+                                                <option value="IN" />Indiana
+                                                <option value="IA" />Iowa
+                                                <option value="KS" />Kansas
+                                                <option value="KY" />Kentucky
+                                                <option value="LA" />Louisiana
+                                                <option value="ME" />Maine
+                                                <option value="MD" />Maryland
+                                                <option value="MA" />Massachusetts
+                                                <option value="MI" />Michigan
+                                                <option value="MN" />Minnesota
+                                                <option value="MS" />Mississippi
+                                                <option value="MO" />Missouri
+                                                <option value="MT" />Montana
+                                                <option value="NE" />Nebraska
+                                                <option value="NV" />Nevada
+                                                <option value="NH" />New Hampshire
+                                                <option value="NJ" />New Jersey
+                                                <option value="NM" />New Mexico
+                                                <option value="NY" />New York
+                                                <option value="NC" />North Carolina
+                                                <option value="ND" />North Dakota
+                                                <option value="OH" />Ohio
+                                                <option value="OK" />Oklahoma
+                                                <option value="OR" />Oregon
+                                                <option value="PA" />Pennsylvania
+                                                <option value="RI" />Rhode Island
+                                                <option value="SC" />South Carolina
+                                                <option value="SD" />South Dakota
+                                                <option value="TN" />Tennessee
+                                                <option value="TX" />Texas
+                                                <option value="UT" />Utah
+                                                <option value="VT" />Vermont
+                                                <option value="VA" />Virginia
+                                                <option value="WA" />Washington
+                                                <option value="WV" />West Virginia
+                                                <option value="WI" />Wisconsin
+                                                <option value="WY" />Wyoming
+                                            </select>
+                                        </div>
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Date</label>
+                                        <div class="col-lg-8">
+                                            <div class="input-group">
+                                                <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Is Active</label>
+                                        <div class="col-lg-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox">
+                                                    <span class="text">Is Active</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Multi Checkboxes</label>
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().CheckBox("form-field-checkbox").Text("Basic").IsChecked(true)
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().CheckBox("form-field-checkbox").Text("Inverted").IsChecked(true).HtmlAttributes(new { @class = "inverted" })
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().CheckBox("form-field-checkbox").Text("Success").IsChecked(true).HtmlAttributes(new { @class = "colored-success" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().CheckBox("form-field-checkbox").Text("Danger").IsChecked(true).HtmlAttributes(new { @class = "colored-danger" })
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().CheckBox("form-field-checkbox").Text("Blue").IsChecked(true).HtmlAttributes(new { @class = "colored-blue" })
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().CheckBox("form-field-checkbox").Text("Warning").IsChecked(true).HtmlAttributes(new { @class = "colored-warning" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Radio Buttons</label>
+                                        <div class="col-lg-8">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().RadioButton("form-field-radio", null).Text(" Windows").HtmlAttributes(new { @class = "colored-blue" }).IsChecked(true)
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                   @Html.Bootstrap().RadioButton("form-field-radio", null).Text(" IOS").HtmlAttributes(new { @class = "colored-danger" })
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    @Html.Bootstrap().RadioButton("form-field-radio", null).Text(" Android").HtmlAttributes(new { @class = "colored-success" })
+                                                </div>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    @Html.Bootstrap().FormGroup().TextBox("Email New2").LabelWidthLg(3).InputWidthLg(8)  
+                                    @Html.Bootstrap().FormGroup().TextBox("Email New4").LabelWidthLg(3).InputWidthLg(8) 
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Country</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control" name="country" data-bv-field="country">
+                                                <option value="">Select a country</option>
+                                                <option value="FR">France</option>
+                                                <option value="DE">Germany</option>
+                                                <option value="IT">Italy</option>
+                                                <option value="JP">Japan</option>
+                                                <option value="RU">Russian</option>
+                                                <option value="US">United State</option>
+                                                <option value="GB">United Kingdom</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            </div>
+                                        </div> 
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Multi Selection</label>
+                                        <div class="col-lg-8">
+                                            <select class="form-control" id="e2" multiple="multiple" style="width: 100%;">
+                                                <option value="AL" />Alabama
+                                                <option value="AK" />Alaska
+                                                <option value="AZ" />Arizona
+                                                <option value="AR" />Arkansas
+                                                <option value="CA" />California
+                                                <option value="CO" />Colorado
+                                                <option value="CT" />Connecticut
+                                                <option value="DE" />Delaware
+                                                <option value="FL" />Florida
+                                                <option value="GA" />Georgia
+                                                <option value="HI" />Hawaii
+                                                <option value="ID" />Idaho
+                                                <option value="IL" />Illinois
+                                                <option value="IN" />Indiana
+                                                <option value="IA" />Iowa
+                                                <option value="KS" />Kansas
+                                                <option value="KY" />Kentucky
+                                                <option value="LA" />Louisiana
+                                                <option value="ME" />Maine
+                                                <option value="MD" />Maryland
+                                                <option value="MA" />Massachusetts
+                                                <option value="MI" />Michigan
+                                                <option value="MN" />Minnesota
+                                                <option value="MS" />Mississippi
+                                                <option value="MO" />Missouri
+                                                <option value="MT" />Montana
+                                                <option value="NE" />Nebraska
+                                                <option value="NV" />Nevada
+                                                <option value="NH" />New Hampshire
+                                                <option value="NJ" />New Jersey
+                                                <option value="NM" />New Mexico
+                                                <option value="NY" />New York
+                                                <option value="NC" />North Carolina
+                                                <option value="ND" />North Dakota
+                                                <option value="OH" />Ohio
+                                                <option value="OK" />Oklahoma
+                                                <option value="OR" />Oregon
+                                                <option value="PA" />Pennsylvania
+                                                <option value="RI" />Rhode Island
+                                                <option value="SC" />South Carolina
+                                                <option value="SD" />South Dakota
+                                                <option value="TN" />Tennessee
+                                                <option value="TX" />Texas
+                                                <option value="UT" />Utah
+                                                <option value="VT" />Vermont
+                                                <option value="VA" />Virginia
+                                                <option value="WA" />Washington
+                                                <option value="WV" />West Virginia
+                                                <option value="WI" />Wisconsin
+                                                <option value="WY" />Wyoming
+                                            </select>
+                                        </div>
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Date</label>
+                                        <div class="col-lg-8">
+                                            <div class="input-group">
+                                                <input class="form-control" id="timepicker1" type="text">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-clock-o"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Multi Line Text</label>
+                                        <div class="col-lg-8">
+                                            <textarea class="form-control" rows="6" id="form-field-8" placeholder="Default Text"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-offset-9 col-sm-12" style=" margin-left: 76%;">
+                                        @Html.Bootstrap().Button().Text("Create")
+                                    </div>                                
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+        </div>
+</div>
+
+@section PageScripts{
+    <!--Jquery Select2-->
+    <script src="~/assets/js/select2/select2.js"></script>
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    <!--Bootstrap Time Picker-->
+    <script src="~/assets/js/datetime/bootstrap-timepicker.js"></script>
+
+    <!--Bootstrap Date Range Picker-->
+    <script src="~/assets/js/datetime/moment.js"></script>
+    <script src="~/assets/js/datetime/daterangepicker.js"></script>
+
+    <!--Jquery Autosize-->
+    <script src="~/assets/js/textarea/jquery.autosize.js"></script>
+
+    <!--Fuelux Spinbox-->
+    <script src="~/assets/js/fuelux/spinbox/fuelux.spinbox.min.js"></script>
+
+    <!--jQUery MiniColors-->
+    <script src="~/assets/js/colorpicker/jquery.minicolors.js"></script>
+
+    <!--jQUery Knob-->
+    <script src="~/assets/js/knob/jquery.knob.js"></script>
+
+    <!--noUiSlider-->
+    <script src="~/assets/js/slider/jquery.nouislider.js"></script>
+
+    <!--jQRangeSlider-->
+    <script src="~/assets/js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="~/assets/js/slider/jQRangeSlider/jQAllRangeSliders-withRuler-min.js"></script>
+
+
+    <!--Dropzone-->
+    <script src="~/assets/js/dropzone/dropzone.min.js"></script>
+
+    <script>
+        //--Jquery Select2--
+        $("#e1").select2();
+        $("#e2").select2({
+            placeholder: "Select a State",
+            allowClear: true
+        });
+
+        //--Bootstrap Date Picker--
+        $('.date-picker').datepicker();
+
+        //--Bootstrap Time Picker--
+        $('#timepicker1').timepicker();
+
+        //--Bootstrap Date Range Picker--
+        $('#reservation').daterangepicker();
+
+        //--JQuery Autosize--
+        $('#textareaanimated').autosize({ append: "\n" });
+
+        //--Fuelux Spinbox--
+        $('.spinbox').spinbox();
+
+
+        //--jQuery MiniColors--
+        $('.colorpicker').each(function () {
+            $(this).minicolors({
+                control: $(this).attr('data-control') || 'hue',
+                defaultValue: $(this).attr('data-defaultValue') || '',
+                inline: $(this).attr('data-inline') === 'true',
+                letterCase: $(this).attr('data-letterCase') || 'lowercase',
+                opacity: $(this).attr('data-opacity'),
+                position: $(this).attr('data-position') || 'bottom left',
+                change: function (hex, opacity) {
+                    if (!hex) return;
+                    if (opacity) hex += ', ' + opacity;
+                    try {
+                        console.log(hex);
+                    } catch (e) { }
+                },
+                theme: 'bootstrap'
+            });
+
+        });
+
+
+        //---Jquery Knob--
+        $(".knob").knob();
+
+
+        //---noUiSlider--
+        $("#sample-minimal").noUiSlider({
+            range: [0, 100],
+            start: [20, 80],
+            connect: true,
+            serialization: {
+                mark: ',',
+                resolution: 0.1,
+                to: [[$("#minimal-label1"), 'html'],
+                      [$('#minimal-label2'), 'html']]
+            }
+        });
+
+        $("#sample-onehandle").noUiSlider({
+            range: [20, 100],
+            start: 40,
+            step: 20,
+            handles: 1,
+            connect: "lower",
+            serialization: {
+                to: [$("#low"), 'html']
+            }
+        });
+        $("#sample-onehandle-upper").noUiSlider({
+            range: [20, 100],
+            start: 70,
+            step: 20,
+            handles: 1,
+            connect: "upper",
+            serialization: {
+                to: [$("#low"), 'html']
+            }
+        });
+        $('.slider').noUiSlider({
+            range: [0, 255],
+            start: 127,
+            handles: 1,
+            connect: "lower",
+            orientation: "vertical",
+            serialization: {
+                resolution: 1
+            }
+            , slide: function () {
+
+                var color = 'rgb(' + $("#red").val()
+                     + ',' + $("#green").val()
+                     + ',' + $("#blue").val()
+                     + ')';
+
+                $(".result").css({
+                    background: color
+                    , color: color
+                });
+            }
+        });
+
+        $(".sized-slider").noUiSlider({
+            range: [0, 100],
+            start: 50,
+            handles: 1,
+            connect: "lower",
+            serialization: {
+                to: [$("#low"), 'html']
+            }
+        });
+
+        $(".colored-slider").noUiSlider({
+            range: [0, 100],
+            start: 30,
+            handles: 1,
+            connect: "lower",
+            serialization: {
+                to: [$("#low"), 'html']
+            }
+        });
+
+        //--jQRangeSlider--
+        $(".sized-rangeslider").rangeSlider();
+        $(".colored-rangeslider").rangeSlider();
+        $("#rangeslider").rangeSlider();
+        $("#editrangeslider").editRangeSlider();
+        $("#daterangeslider").dateRangeSlider();
+        $("#noarrowsrangeslider").rangeSlider({ arrows: false });
+        $("#boundsrangeslider").rangeSlider({ bounds: { min: 10, max: 90 } });
+        $("#dvrangeslider").rangeSlider({ defaultValues: { min: 13, max: 66 } });
+        $("#delayrangeslider").rangeSlider({ valueLabels: "change", delayOut: 4000 });
+        $("#durationrangeslider").rangeSlider({ valueLabels: "change", durationIn: 1000, durationOut: 1000 });
+        $("#disabledrangeslider").rangeSlider({ enabled: false });
+        $("#steprangeslider").rangeSlider({ step: 10 });
+        $("#labelsrangeslider").rangeSlider({ valueLabels: "hide" });
+        $("#simlescalesrangeslider").rangeSlider({
+            scales: [
+            // Primary scale
+            {
+                first: function (val) { return val; },
+                next: function (val) { return val + 10; },
+                stop: function (val) { return false; },
+                label: function (val) { return val; },
+                format: function (tickContainer, tickStart, tickEnd) {
+                    tickContainer.addClass("myCustomClass");
+                }
+            },
+            // Secondary scale
+            {
+                first: function (val) { return val; },
+                next: function (val) {
+                    if (val % 10 === 9) {
+                        return val + 2;
+                    }
+                    return val + 1;
+                },
+                stop: function (val) { return false; },
+                label: function () { return null; }
+            }]
+        });
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        $("#dateRulersExample").dateRangeSlider({
+            bounds: { min: new Date(2012, 0, 1), max: new Date(2012, 11, 31, 12, 59, 59) },
+            defaultValues: { min: new Date(2012, 1, 10), max: new Date(2012, 4, 22) },
+            scales: [{
+                first: function (value) { return value; },
+                end: function (value) { return value; },
+                next: function (value) {
+                    var next = new Date(value);
+                    return new Date(next.setMonth(value.getMonth() + 1));
+                },
+                label: function (value) {
+                    return months[value.getMonth()];
+                },
+                format: function (tickContainer, tickStart, tickEnd) {
+                    tickContainer.addClass("myCustomClass");
+                }
+            }]
+        });
+    </script>
+}

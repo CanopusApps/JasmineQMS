@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "DMS - Download Template";
+}
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1' style="font-size:25px !important;"><b><span id="spanTitle">Download Template</span></b></span>                
+            </div>
+            
+            <div class="widget-body">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                    <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>
+                                Code
+                            </th>
+                            <th>
+                               Template Name
+                            </th>
+                            <th>
+                                File Name
+                            </th>
+                            <th>
+                                Level
+                            </th>                            
+                            <th>
+                                Download
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var txt in ViewBag.Data)
+                        {
+                            if (txt.Active)
+                            {
+                                <tr>
+                                    <td>@txt.ID</td>
+                                    <td>@txt.Code</td>
+                                    <td>@txt.Name</td>    
+                                    <td>@txt.FileName</td>
+                                    <td>@txt.Level</td>
+                                    <td nowrap>
+                                        <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "DownloadTemplate", new { filePath = @txt.FilePath, fileName = @txt.FileName })'>View Document</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+@section PageScripts{
+ 
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            InitiateTemplateDownloadDataTable.init();
+        });        
+
+    </script>
+}
+

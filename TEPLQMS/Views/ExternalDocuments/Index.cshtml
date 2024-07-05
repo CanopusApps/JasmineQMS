@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "DMS - External Documents";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b>External Document List</b></span>
+                <div class="widget-buttons">
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                    <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>Category</th>
+                            <th>Sub Category</th>
+                            <th>
+                                Title
+                            </th>
+                            <th>Document No</th>
+                            <th>Version</th>                            
+                            <th>Responsible User</th>
+                            <th>Department</th>
+                            <th>File or URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var txt in ViewBag.Data)
+                        {
+
+                        <tr>
+                            <td>@txt.ID</td>
+                            <td>@txt.CategoryName</td>
+                            <td>@txt.SubCategoryName</td>
+                            <td>
+                                @txt.Title
+                                @*<a href="/Admin/ExternalDocument/Details?ID=@txt.ID">@txt.Title</a>*@
+                            </td>
+                            <td>@txt.DocumentNo</td>
+                            <td>@txt.Version</td>
+                            @*<td>
+                                @if (@txt.VersionDate != null)
+                                {
+                                    @txt.VersionDate.ToString().Substring(0, 10)
+                                }
+                            </td>
+                            <td>@txt.Organization</td>*@
+                            <td>@txt.ResponsibleUser</td>
+                            <td>@txt.Department</td>
+                            <td>
+                                @*<a style="text-decoration:underline" href="@txt.FileURL" target="_blank">Download</a>*@
+                                @if (@txt.FileName != "")
+                                {
+                                    @*<a style="text-decoration:underline" href="@txt.FileName" target="_blank">@txt.FileName</a>*@
+                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "ExternalDocument", new { filePath = @txt.FilePath,fileName=@txt.FileName })'>@txt.DocumentName</a>
+                                }
+                                else
+                                {
+                                    <a style="text-decoration:underline" href="@txt.FileURL" target="_blank">@txt.FileURL</a>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section PageScripts{
+    <link href="~/assets/css/multiple-select.css" rel="stylesheet" />
+    <link href="~/assets/css/sol.css" rel="stylesheet" />
+  
+    <script src="~/Scripts/multiple-select.js"></script>
+    <script src="~/Scripts/sol.js"></script>
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <!--Bootstrap Time Picker-->
+    <script src="~/assets/js/datetime/bootstrap-timepicker.js"></script>
+
+    <script src="~/Scripts/DataTableScript.js"></script>
+    <script>
+        $(document).ready(function () {
+            InitiateExternalDocumentsDataTable.init();
+        });
+    </script>
+}
+

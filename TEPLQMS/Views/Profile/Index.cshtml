@@ -1,0 +1,274 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-sm-6 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-top bordered-azure">
+                <span class="widget-caption">Change Profile</span>
+            </div>
+            <div class="widget-body">
+                <div class="collapse in">
+                    <form role="form">
+                        <div class="form-group" style="display:none;">
+                            <label for="definpu">ID</label>
+                            @Html.Bootstrap().TextBox("txtID")
+                            @Html.Bootstrap().TextBox("txtImg")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Name</label>
+                            @Html.Bootstrap().TextBox("txtName").Placeholder("Name")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Email</label>
+                            @Html.Bootstrap().TextBox("txtmail").Placeholder("Email")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Mobile</label>
+                            @Html.Bootstrap().TextBox("txtmob").Placeholder("Mobile")
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="definpu">Picture</label>
+                            <br />
+                            <div style="display:inline-flex;width:100%;">
+                                @Html.Bootstrap().File("filepic").Id("filepic")
+                                <div style="width:100%; text-align:end;">
+                                    @Html.Bootstrap().CheckBox("chkdelete").Text("No Picture")
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="loginbox-submit" style="width:150px;margin-left:auto;margin-right:auto">
+                            @Html.Bootstrap().SubmitButton().Text("Submit").Id("btnSubmit").Color(BootstrapColors.Primary).ButtonBlock()
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            @*<div class="widget-body">
+                    @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
+                    {
+                        @Html.Bootstrap().FormGroup().TextBox("mail").HelpText("Example block-level help text here.", HelpTextStyle.Block).LabelWidthLg(2).InputWidthLg(10)
+                        @Html.Bootstrap().FormGroup().Password("password").LabelWidthSm(2).InputWidthLg(10)
+                        @Html.Bootstrap().FormGroup().CheckBox("RememberMe").InputWidthSm(10).InputOffsetLg(2)
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                @Html.Bootstrap().Button().Text("Sign In")
+                            </div>
+                        </div>
+                    }
+                </div>*@
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-12">
+        <div class="widget">
+            <div>
+                <img id="pic" src="" alt="" class="header-avatar" />
+                @*<div class="widget-header bordered-top bordered-palegreen">
+                        <span class="widget-caption">Profile Picture</span>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .checkbox {
+    position: relative;
+    display: block;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+</style>
+@section PageScripts{
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <!--Bootstrap Time Picker-->
+    <script src="~/assets/js/datetime/bootstrap-timepicker.js"></script>
+    <script>
+
+    $('#modal-success').on('shown.bs.modal', function () {
+        //alert("Model is opening...");
+    })
+
+    $('#modal-success').on('hide.bs.modal', function () {
+        //clear the values
+        //$("#txtcPsw").val('');
+        //$("#txtnPsw1").val('');
+        //$("#txtnPsw2").val('');
+        //After changing the password redirect to login
+        //window.location = "/Login";
+    })
+
+
+
+    function ChangeProfile() {
+        // Create FormData object  
+        var fileData = new FormData();
+        fileData.append('id', $("#txtID").val().trim());
+        fileData.append('name', $("#txtName").val().trim());
+        fileData.append('mail', $("#txtmail").val().trim());
+        fileData.append('mob', $("#txtmob").val().trim());        
+
+        var newimg = $("#txtImg").val();
+        var fileUpload = $("#filepic").get(0);
+        var files = fileUpload.files;
+        
+        for (var i = 0; i < files.length; i++) {
+            //alert(files[i].name); alert(files[i]);
+            fileData.append(files[i].name, files[i]);
+            newimg = files[i].name;
+        }
+        if ($("#chkdelete")[0].checked)
+            newimg = '';      
+
+        fileData.append('picname', newimg);
+        if(newimg != '')
+            $('#pic').attr("src", "/assets/img/avatars/" + newimg);
+        else
+            $('#pic').attr("src", "/assets/img/avatars/default.jpg");        
+
+        var cururl = "/Profile/ChangeProfile";
+        $.ajax({
+            url: cururl,
+            dataType: "json",
+            type: "POST",
+            beforeSend: ShowProgressBar(),
+            complete: HideProgressBar(),
+            contentType: false,//'application/json; charset=utf-8', //define a contentType of your request
+            processData: false,
+            cache: false, //avoid caching results
+            data: fileData,//JSON.stringify({ arr: lst, fil: fileData }), // here you can pass arguments to your request if you need
+            success: function (data) {
+                //alert('Suc ' + data.message);
+                //alert(data.success);
+                if (data.success) {
+
+                    if (data.message == 'failed') {
+                        //$('#lblmessage').text('Details not found...').css('color', '1px red solid');
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error While Saving the Profile.');
+                    }
+                    else
+                    {
+                        $('.btn-success').trigger('click');
+                        $('.modal-body').html('Profile Changed Successfully.');
+                        //Need to redirect as passowrd changed
+                        //window.location = "/Login";
+                    }
+                }
+                else
+                {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Details not found...');
+                }
+            },
+            error: function (xhr) {
+                //alert('fail ' + data.message);
+                $('.btn-danger').trigger('click');
+                $('.modal-body').html('Error while saving profile.');
+            }
+        });
+    }
+
+
+    $("#btnSubmit").on('click', function () {
+        //alert($("#txtID").val());
+        var ermsg = '';
+        if ($("#txtName").val().trim() == '')
+        {
+            ermsg = 'Name<br/>';
+            $("#txtName").addClass('manfieldredborder');
+        }
+        else
+            $("#txtName").removeClass('manfieldredborder');
+        if ($("#txtmail").val().trim() == '') {
+            ermsg += 'Email<br/>';
+            $("#txtmail").addClass('manfieldredborder');
+        }
+        else
+            $("#txtmail").removeClass('manfieldredborder');
+        if ($("#txtmob").val().trim() == '') {
+            ermsg += 'Mobile<br/>';
+            $("#txtmob").addClass('manfieldredborder');
+        }
+        else
+            $("#txtmob").removeClass('manfieldredborder');
+
+        if (ermsg != '')
+        {
+            $('.btn-warning').trigger('click');
+            $('.modal-body').html(ermsg);
+        }
+        else
+        {
+            $('.modal-body').html('');
+            //Save the data to DB
+            ChangeProfile();
+        }
+        return false;
+    });
+
+    $("#filepic").change(function () {
+        //alert('yes');
+        readURL(this);
+    });
+
+    function readURL(input) {
+        //alert('hello');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                //alert('yes');
+                //alert(e.target.result);
+                $('#pic').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(document).ready(function () {
+
+        //$("#txtcPsw").attr("maxlength", "10");
+        //$("#txtnPsw1").attr("maxlength", "10");
+        //$("#txtnPsw2").attr("maxlength", "10");
+
+        var model1 = @Html.Raw(@ViewBag.cUserID);
+        var model2 = @Html.Raw(@ViewBag.cUserName);
+        var model3 = @Html.Raw(@ViewBag.cEmail);
+        var model4 = @Html.Raw(@ViewBag.cMobile);
+        var model5 = @Html.Raw(@ViewBag.cPic);
+        //alert(model1.Enable.toString());
+
+        $("#txtID").val(model1.Enable.toString()).attr("readonly", "readonly");
+        $("#txtName").val(model2.Enable.toString());
+        $("#txtmail").val(model3.Enable.toString());
+        $("#txtmob").val(model4.Enable.toString());
+        if(model5.Enable.toString() != "")
+        {
+            var nme = '/assets/img/avatars/' + model5.Enable.toString();
+            $("#pic").attr('src', nme);
+            $("#txtImg").val(model5.Enable.toString());
+        }
+        else
+        {
+            $("#pic").attr('src', '/assets/img/avatars/default.jpg');
+            $("#txtImg").val("");
+        }            
+    });
+
+       
+
+    </script>
+}
+
+
+
+

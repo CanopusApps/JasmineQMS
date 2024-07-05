@@ -1,0 +1,355 @@
+﻿
+@{
+    ViewBag.Title = "DMS - Document Category";
+}
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1' style="font-size:25px !important;"><b><span id="spanTitle">Document Category</span></b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a id="ancbacktoList" href="/Admin/Category" class="btn btn-azure btn-xs" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-arrow-circle-left"></i> Back to list
+                        </a>
+
+                        <a id="ancaddNew" href="javascript:displayAddDiv();" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-plus-circle"></i> Add Category
+                        </a>
+                    </div>
+                </div>
+            </div>            
+            <div class="widget-body" id="addDiv">
+                <div id="divID" style="display:none;"></div>
+                <div class="form-group mantable">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label><strong>Category Code</strong><span class="mandatory">*</span></label>
+                                    <input title="Category Code" class="form-control manfield" id="DocumentCategoryCode" name="Name" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label><strong>Category Name</strong><span class="mandatory">*</span></label>
+                                    <input title="Category Name" class="form-control manfield" id="DocumentCategoryName" name="Name" type="text" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="DocumentLevel"><strong>Document Level</strong><span class="mandatory">*</span></label>
+                                    <select class="form-control manfield" name="DocumentLevel" id="DocumentLevel" title="Document Level">
+                                        <option value="0">Select a value</option>
+                                        <option value="Level 1">Level 1</option>
+                                        <option value="Level 2">Level 2</option>
+                                        <option value="Level 3">Level 3</option>
+                                        <option value="Level 4">Level 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-12">
+                                @*<div class="form-group">
+            <label><strong>Folder Name</strong><span class="mandatory">*</span></label>
+            <input title="Folder Name" class="form-control manfield" id="FolderName" name="Name" type="text" value="">
+        </div>*@
+                                <div class="form-group" id="divIsActive">
+                                    <div class=" ">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label"><strong>Is Active</strong></label>
+                                            <div class="col-lg-5">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="chk1" type="checkbox" checked="checked">
+                                                        <span class="text"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-3 col-sm-3 col-xs-12">
+                                
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-12">
+                                <div class="form-group">
+                                    <button class="btn btn-azure" id="btnCreate" type="button">Create</button>
+                                    <button class="btn btn-azure" id="btnUpdate" type="button">Update</button>
+                                    <button class="btn" id="btnCancel" type="button">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-sm-1 col-xs-12">
+                                <div class="form-group">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget-body" id="divGrid">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                    <thead>
+                        <tr role="row">
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Category Code
+                            </th>
+                            <th>
+                                Category Name
+                            </th>
+                            <th>
+                                Document Level
+                            </th>
+                            @*<th>
+                                Folder Name
+                            </th>*@
+                            <th>
+                                Is Active
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var txt in ViewBag.Data)
+                        {
+                            <tr>
+                                <td>@txt.ID</td>
+                                <td>@txt.Code</td>
+                                <td>@txt.Title</td>
+                                <td>@txt.DocumentLevel</td>
+                                @*<td>@txt.FolderName</td>*@
+                                <td>@txt.Active</td>
+                                <td>
+                                    @*<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="EditCategory('@txt.ID','@txt.Title')">Edit</a> |
+        <a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DeleteCategory('@txt.ID','@txt.Title')">Delete</a>*@
+                                    <a href="#" class="btn btn-azure btn-xs edit"><i class="fa fa-edit"></i> Edit</a>
+                                    @*<a href="#" class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i> Delete</a>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section PageScripts{
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script>
+        $(document).ready(function () {
+            InitiateCategoryDataTable.init();
+            $("#addDiv").hide();
+            $("#ancbacktoList").hide();
+            $("#btnUpdate").hide();
+
+        });
+        function displayAddDiv() {
+            $("#ancbacktoList").show();
+            $("#ancaddNew").hide();
+            $("#addDiv").show();
+            $("#btnUpdate").hide();
+            $("#btnCreate").show();
+            $("#divGrid").hide();
+            $("#divIsActive").hide();
+
+            $("#divID").html('');
+            $("#DocumentCategoryCode").val('');
+            $("#DocumentCategoryName").val('');
+            $("#DocumentLevel").val('0');            
+            //$("#FolderName").val('');
+            $("#chk1").prop('checked', true);
+        }
+       
+        
+        $("#btnCreate").click(function () {
+            if (ValidateFormFields('.manfield')) {
+                var fileData = new FormData();
+                fileData.append("DocumentCategoryCode", $("#DocumentCategoryCode").val().trim());
+                fileData.append("DocumentCategoryName", $("#DocumentCategoryName").val().trim());
+                fileData.append("DocumentLevel", $("#DocumentLevel").val().trim());
+                //fileData.append("FolderName", $("#FolderName").val().trim());
+
+                $.ajax({
+                    url: "/Category/AddCategory",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While Saving the Document Category.');
+                            }
+                            else if (data.message.indexOf("exists") > 0) {
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html(data.message);
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/Category';
+                                })
+                                //clearFields();
+                            }
+                        }
+                    }
+                });
+            }            
+        });
+
+
+        $("#btnUpdate").click(function () {
+            if (ValidateFormFields('.manfield')) {
+                var fileData = new FormData();
+                fileData.append("DocumentCategoryID", $("#divID").text().trim());
+                fileData.append("DocumentCategoryName", $("#DocumentCategoryName").val().trim());
+                fileData.append("DocumentLevel", $("#DocumentLevel").val().trim());
+                //fileData.append("FolderName", $("#FolderName").val().trim());
+                var isActive = false;
+                if ($("#chk1").prop("checked")) {
+                    isActive = true;
+                }
+                fileData.append("IsActive", isActive);
+
+                $.ajax({
+                    url: "/Category/UpdateCategory",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While updating the Document Category.');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/Category';
+                                })
+                                //clearFields();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#btnCancel").click(function () {
+            window.location = '/Admin/Category';
+        });
+        function resetValue() {
+            $("#ddlDepartment").val(0);
+            $("#ddlSection").val(0);
+            $("#ddlSection").find("option").remove();
+            $("#ddlSection").append('<option title="All" value="0">All</option>');
+            $("#ddlDocCategory").val(0);
+            $("#ddlProject").val(0);
+        }
+        function DeleteCategory(ID,Name)
+        {
+            var result = confirm('Are sure wants to delete document category \'' + Name + '\'?');
+            if (result) {
+                var fileData = new FormData();
+                fileData.append("ID", ID);
+
+                $.ajax({
+                    url: "/Category/DeleteCategory",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While Deleting the Document Category.');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/Category';
+                                })
+                                //clearFields();
+                            }
+                        }
+                    }
+                });
+            }
+     }
+    </script>
+
+}
+

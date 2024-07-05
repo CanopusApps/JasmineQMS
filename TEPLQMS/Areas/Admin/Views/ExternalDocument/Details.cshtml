@@ -1,0 +1,223 @@
+﻿
+@{
+    ViewBag.Title = "DMS - External Document - Details";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b>View External Document</b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a href="/Admin/ExternalDocument" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-step-backward"></i> Back To List
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div id="divExternalDocumentID" style="display:none;">@ViewBag.ExternalDocumentID</div>
+
+            <div class="widget-body">
+                <div class="form-group form-horizontal">
+                    <div class="row mantable">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Title</label>
+                                        <div class=" col-lg-8">
+                                            <input readonly="readonly" title="Title" class="form-control manfield" id="txtTitle" name="txtTitle" type="text" maxlength="200" placeholder="Title">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Document No</label>
+                                        <div class=" col-lg-8">
+                                            <input readonly="readonly" title="Document No" class=" form-control manfield" id="txtDocumentNo" name="txtDocumentNo" type="text" maxlength="100" placeholder="Document No">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Version</label>
+                                        <div class=" col-lg-8">
+                                            <input readonly="readonly" title="Version" class="numberonly form-control manfield" id="txtVersion" name="txtVersion" type="text" maxlength="10" placeholder="Version">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Version Date</label>
+                                        <div class=" col-lg-6" style="padding-right:0px;">
+                                            <input readonly="readonly" class="form-control date-picker" id="date1" type="text" data-date-format="dd-mm-yyyy" placeholder=" Version Date">
+                                        </div>
+                                        @*<div class=" col-lg-1" style="padding-left:0px;">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Organization</label>
+                                        <div class=" col-lg-8">
+                                            <input readonly="readonly" title="Organization" class="form-control manfield" id="txtOrganization" name="txtVersion" type="text" maxlength="200" placeholder="Organization">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Department SPOC</label>
+                                        <div class=" col-lg-8">
+                                            <input readonly="readonly" title="Department SPOC" class="form-control manfield" id="txtResponsibleUser" name="txtResponsible User" type="text" maxlength="100" placeholder="Responsible User">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Department</label>
+                                        <div class=" col-lg-8">
+                                            <input readonly="readonly" title="Department" class="form-control manfield" id="txtDepartment" name="txtDepartment" type="text" maxlength="100" placeholder="Department">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">File URL</label>
+                                        <div class=" col-lg-8">
+                                            <input readonly="readonly" title="File URL" class="form-control manfield" id="txtFileURL" name="txtFileURL" type="text" maxlength="500" placeholder="File URL">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row " style="display:none;">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">File</label>
+                                        <div class=" col-lg-8" style="margin-top:7px;">
+                                            <input id="File" name="File" type="File" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Is Active</label>
+                                        <div class=" col-lg-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input id="chk1" type="checkbox">
+                                                    <span class="text"></span>
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="col-sm-offset-4 col-sm-12" style=" margin-left: 40%;">
+                                        <button class="btn" id="btnCancel" type="button">Cancel</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display:none;">
+    <div id="divselectedUserID"></div>
+    <div id="divselectedLoginID"></div>
+    <div id="divselectedName"></div>
+    <div id="divselectedEmail"></div>
+</div>
+@section PageScripts{
+
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //$('#date1').datepicker({
+            //    dateFormat: 'dd-mm-yy'
+            //});
+            LoadExternalDocument();
+        });
+
+        function LoadExternalDocument() {
+            $.ajax({
+                url: '/ExternalDocument/GetExternalDocumentForID',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ ExternalDocumentID: $("#divExternalDocumentID").text() }),
+                beforeSend: ShowProgressBar(),
+                complete: HideProgressBar(),
+                cache: false,
+                async: true,
+                success: function (data) {
+                    if (data.success) {
+
+                        $("#txtTitle").val(data.message.Title);
+                        $("#txtDocumentNo").val(data.message.DocumentNo);
+                        $("#txtVersion").val(data.message.Version);
+                        $("#date1").val(ToJavaScriptDateWithFormat(data.message.VersionDate));
+                        $("#txtOrganization").val(data.message.Organization);
+                        $("#txtResponsibleUser").val(data.message.ResponsibleUser);
+                        $("#divselectedUserID").text(data.message.ResponsibleUserID)
+                        $("#txtDepartment").val(data.message.Department);
+                        $("#txtFileURL").val(data.message.FileURL);
+
+                        //if (data.message.IsActive == true)
+                        //    $("#chk1").prop("checked", "checked");
+                        //else
+                        //    $("#chk1").prop("checked", "");
+                    }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        }
+
+        $("#btnCancel").click(function () {
+            window.location.assign("/Admin/ExternalDocument/");
+        });
+
+        
+
+    </script>
+}
+

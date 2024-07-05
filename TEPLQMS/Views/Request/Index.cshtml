@@ -1,0 +1,674 @@
+﻿@{
+    ViewBag.Title = "DMS - Request Details";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="cuwidget-header bordered-bottom bordered-blue">
+                <span class="cuwidget-caption" style="font-size:25px !important;"> <b>Request Details </b></span>
+                <div style="display:inline-block;line-height:36px;">
+                    <span class="cuwidget-caption" style="font-size: 24px !important; padding-left: 5px; padding-right: 5px; background-color: antiquewhite;"> <b>Stage - @ViewBag.Data.CurrentStage</b></span>
+                    @{
+                        if (ViewBag.isQMSAdmin == true || ViewBag.isProjectAdmin == true)
+                        {
+                            <a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-xs add" style="font-size:13px;font-weight:bold;">
+                                <i class="fa fa-remove"></i>Delete Document
+                            </a>
+                        }
+                    }
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="widget-body">
+                @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
+                {
+                    if (ViewBag.Data != null)
+                    {
+                <div style="display:none;">
+                    <div id="divDocumentID">@ViewBag.Data.DocumentID</div>
+                    <div id="divDocumentNo">@ViewBag.Data.DocumentNo</div>
+                    <div id="divEditableDocumentName">@ViewBag.Data.EditableDocumentName</div>
+                    <div id="divEditableFilePath">@ViewBag.Data.EditableFilePath</div>
+                    <div id="divReadableDocumentName">@ViewBag.Data.ReadableDocumentName</div>
+                    <div id="divReadableFilePath">@ViewBag.Data.ReadableFilePath</div>
+                    <div id="divDraftVersion">@ViewBag.Data.DraftVersion</div>
+                    <div id="divWFExecutionID">@ViewBag.Data.WFExecutionID</div>
+                    <div id="divFileTypes">@ViewBag.FileTypes</div>
+                    <div id="divFormsFileTypes">@ViewBag.FormsFileTypes</div>
+                    <div id="divReadableFileTypes">@ViewBag.ReadableFileTypes</div>
+                    <div id="divAllowedFileSize">@ViewBag.AllowedFileSize</div>
+
+                    <div id="divCatCode">@ViewBag.Data.DocumentCategoryCode</div>
+                    <div id="divCatName">@ViewBag.Data.DocumentCategoryName</div>
+                    <div id="divDeptCode">@ViewBag.Data.DepartmentCode</div>
+                    <div id="divDeptName">@ViewBag.Data.DepartmentName</div>
+                    <div id="divSecCode">@ViewBag.Data.SectionCode</div>
+                    <div id="divSecName">@ViewBag.Data.SectionName</div>
+                    <div id="divProjCode">@ViewBag.Data.ProjectCode</div>
+                    <div id="divProjName">@ViewBag.Data.ProjectName</div>
+                    <div id="divProjectTypeID">@ViewBag.Data.ProjectTypeID</div>
+                    <div id="divProjectTypeCode">@ViewBag.Data.ProjectTypeCode</div>
+                    <div id="divProjectID">@ViewBag.Data.ProjectID</div>
+
+                </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Upload Type</strong></label>
+                                            @*@if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000" || @ViewBag.Data.DraftVersion.ToString().Split('.')[0] == 1)
+        {
+            <label class="col-lg-7 control-label text-align-left">New Document</label>
+        }
+        else
+        {
+            <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
+        }*@
+                                            @if (Convert.ToDouble(@ViewBag.Data.DraftVersion.ToString()) > 1)
+                                            {
+                                                <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
+
+                                            }
+                                            else
+                                            {
+                                                <label class="col-lg-7 control-label text-align-left">New Document</label>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Document Category</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.DocumentCategoryName
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Department</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">@ViewBag.Data.DepartmentName</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Section</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.SectionName
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Project</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.ProjectName
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Document Number</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.DocumentNo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>New Version</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.DraftVersion
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Stage</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.CurrentStage
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong> Created By @*@(@ViewBag.Data.CurrentStage == "Initiated" ? "Created By" : "Uploaded By")*@</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.UploadedUserName
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Created On @*@(@ViewBag.Data.CurrentStage == "Initiated" ? "Created On" : "Uploaded On")*@</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.CreatedDate
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Editable Document</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @{
+                                                    @ViewBag.Data.EditableDocumentName
+
+                                                    if (@ViewBag.isQMSAdmin == true)
+                                                    {
+                                                        <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.EditableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.EditableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                                                    }
+                                                }
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Readable Document</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @{
+                                                    if (@ViewBag.Data.CurrentStage == "Completed")
+                                                    {
+                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        if (ViewBag.isQMSAdmin == true)
+                                                        {
+                                                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.OriginalVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Draft&version=@ViewBag.Data.DraftVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        if (ViewBag.isQMSAdmin == true)
+                                                        {
+                                                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                                                        }
+                                                    }
+                                                }
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (ViewBag.LoggedUsedID == @ViewBag.Data.UploadedUserID && (@ViewBag.Data.CurrentStage == "Initiated" || @ViewBag.Data.CurrentStage == "Re-Initiated"))//Initiator - If it is rejected, allow user to upload the doc and enter comments
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Editable Document</strong><span class="mandatory">*</span></label>
+                                                <div class=" col-lg-7">
+                                                    <input class="form-control" id="DOCFile" name="DOC" type="file" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Readable Document</strong><span class="mandatory">*</span></label>
+                                                <div class=" col-lg-7">
+                                                    <input class="form-control" id="DOCFile2" name="DOC2" type="file" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Document Description</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @if (ViewBag.LoggedUsedID == @ViewBag.Data.UploadedUserID && (@ViewBag.Data.CurrentStage == "Initiated" || @ViewBag.Data.CurrentStage == "Re-Initiated"))
+                                                {
+                                                    <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text" value="@ViewBag.Data.DocumentDescription">
+                                                }
+                                                else
+                                                {
+                                                    @ViewBag.Data.DocumentDescription
+                                                }
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                                    </div>
+                                </div>
+
+                                @if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000")
+                                {
+                                    <span></span>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2" style="">
+                                                    <strong>Revision Reason</strong>
+                                                    @if (ViewBag.LoggedUsedID == @ViewBag.Data.UploadedUserID && (@ViewBag.Data.CurrentStage == "Initiated" || @ViewBag.Data.CurrentStage == "Re-Initiated"))
+                                                    {
+                                                        <span class="mandatory">*</span>
+                                                    }
+                                                </label>
+                                                <label class=" col-lg-9 control-label text-align-left" style="">
+                                                    @if (ViewBag.LoggedUsedID == @ViewBag.Data.UploadedUserID && (@ViewBag.Data.CurrentStage == "Initiated" || @ViewBag.Data.CurrentStage == "Re-Initiated"))
+                                                    {
+                                                        @*<input title="Revision Reason" class="form-control manfield" id="RevisionReason" name="Name" type="text" value="@ViewBag.Data.RevisionReason">*@
+                                                        <textarea class="form-control manfield" rows="4" id="RevisionReason" style="resize:none;" placeholder="">@ViewBag.Data.RevisionReason</textarea>
+                                                    }
+                                                    else
+                                                    {
+                                                        @ViewBag.Data.RevisionReason
+                                                    }
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
+                                            <label class=" col-lg-9 control-label text-align-left" style="">
+                                                @ViewBag.Data.Comments
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if (ViewBag.LoggedUsedID == @ViewBag.Data.UploadedUserID && (@ViewBag.Data.CurrentStage == "Initiated" || @ViewBag.Data.CurrentStage == "Re-Initiated"))//Initiator - If it is rejected, allow user to upload the doc and enter comments
+                                {
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label" style=""><strong>Comments</strong></label>
+                                                <div class="col-lg-9" style="">
+                                                    <textarea class="form-control" rows="8" placeholder="Comments..." style="resize:none;" id="txtComments"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-10 col-sm-10 col-xs-12">
+
+                                        </div>
+                                        <div class="col-lg-1 col-sm-1 col-xs-12">
+                                            @if (@ViewBag.Data.CurrentStage == "Initiated")
+                                            {
+                                                <button class="btn btn-azure " type="submit" id="btnSubmit">Submit</button>
+                                            }
+                                            else if (@ViewBag.Data.CurrentStage == "Re-Initiated")
+                                            {
+                                                <button class="btn btn-azure " type="submit" id="btnReSubmit">Re-Submit</button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div>
+                @Html.Partial("~/Views/ApproveRequest/WFHistoryView.cshtml")
+            </div>            
+        </div>
+    </div>
+</div>
+
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            InitiateWFHistoryDataTable.init();
+        });
+
+        $("#btnSubmit").click(function () {            
+            if ($("#DOCFile").val() != "" && $("#DOCFile2").val() != "") {
+                $("#DOCFile").removeClass("manfieldredborder");
+                $("#DOCFile2").removeClass("manfieldredborder");
+                var fileData = new FormData();
+                var catCode = '';
+                catCode = $("#divCatCode").text();
+                fileData.append("documentguid", $("#divDocumentID").text());
+                fileData.append("WFExecutionID", $("#divWFExecutionID").text());
+                fileData.append('doccategorycode', $("#divCatCode").text());
+                fileData.append('doccategoryname', $("#divCatName").text());
+                fileData.append('departmentcode', $("#divDeptCode").text());
+                fileData.append('departmentname', $("#divDeptName").text());
+                fileData.append('sectioncode', $("#divSecCode").text());
+                fileData.append('sectionname', $("#divSecName").text());
+                fileData.append('projectcode', $("#divProjCode").text());
+                fileData.append('projectname', $("#divProjName").text());
+                fileData.append('ProjectTypeID', $("#divProjectTypeID").text());
+                fileData.append('ProjectTypeCode', $("#divProjectTypeCode").text());
+                fileData.append('ProjectID', $("#divProjectID").text());
+                fileData.append('DocumentNo', $("#divDocumentNo").text());
+                fileData.append('comments', $("#txtComments").val().trim());
+                fileData.append('DocumentDescription', $("#DocumentDescription").val().trim());
+                fileData.append('EditableDocumentName', $("#divEditableDocumentName").text());
+                fileData.append('ReadableDocumentName', $("#divReadableDocumentName").text());
+                fileData.append('RevisionReason', '');
+                
+                //Files
+                var fileUpload = $("#DOCFile").get(0);
+                var files = fileUpload.files;
+                var ext = ''; var fileSize = 0; var isProceed = false;
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);
+                }
+                //File Type Check                
+                if (catCode == 'FR')
+                    isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext);
+                else
+                    isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                if (isProceed == false) { return false; }
+                //File Size Check
+                isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                if (isProceed == false) { return false; }
+
+
+                //Files - Readable Document
+                var fileUpload2 = $("#DOCFile2").get(0);
+                var files2 = fileUpload2.files;
+                var ext2 = ''; var fileSize2 = 0;
+                for (var z = 0; z < files2.length; z++) {
+                    ext2 = files2[z].name.substr(files2[z].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize2 = files2[z].size;
+                    fileData.append(files2[z].name, files2[z]);
+                }
+                //File Type Check
+                isProceed = IsFileTypeAllowed($("#divReadableFileTypes").text(), ext2);
+                if (isProceed == false) { return false; }
+                //File Size Check
+                isProceed = IsFileSizeAllowed(fileSize2, $("#divAllowedFileSize").text());
+                if (isProceed == false) { return false; }
+
+                if (isProceed == true) {
+                    $.ajax({
+                        url: "/DocumentInitiate/SubmitDocument",
+                        dataType: "json",
+                        type: "POST",
+                        beforeSend: function () {
+                            $("#overlay").show();
+                            $("#overlay").addClass('modal-backdrop fade in');
+                            $("#sidebar").addClass('modal-backdrop fade in');
+                        },
+                        complete: function () {
+                            $("#overlay").hide();
+                            $("#overlay").removeClass('modal-backdrop fade in');
+                            $("#sidebar").removeClass('modal-backdrop fade in');
+                        },
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        data: fileData,
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.message == 'failed') {
+                                    $('.btn-danger').trigger('click');
+                                    $('.modal-body').html('Error While Saving the Document.');
+                                }
+                                else {
+                                    $('.btn-success').trigger('click');
+                                    $('.modal-body').html('Document Submitted Successfully.');
+                                    $("#DOCFile").val(''); $("#txtComments").val();
+                                    //redirect after success altert close
+                                    $('#modal-success').on('hide.bs.modal', function () {
+                                        window.location = '/Inbox';
+                                    })
+                                }
+                            }
+                        },
+                        error: function (xhr) {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error while saving document. ' + xhr.message);
+                        }
+                    });
+                }
+                else {
+                    alert('Something wrong with File Type or File Size');
+                    return false;
+                }
+            }
+            else {
+                $("#DOCFile").removeClass("manfieldredborder"); $("#DOCFile2").removeClass("manfieldredborder");
+                if ($("#DOCFile").val() == "" && $("#DOCFile2").val() == "") {
+                    $("#DOCFile").addClass("manfieldredborder"); $("#DOCFile2").addClass("manfieldredborder");
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Editable & Readable Documents are Mandatory');
+                }
+                else if ($("#DOCFile").val() == "") {
+                    $("#DOCFile").addClass("manfieldredborder");
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Editable Document is Mandatory');
+                }
+                else if ($("#DOCFile2").val() == "") {
+                    $("#DOCFile2").addClass("manfieldredborder");
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Readable Document is Mandatory');
+                }
+                return false;
+            }
+            return false;
+        });
+
+        $("#btnReSubmit").click(function () {
+            if ($("#DOCFile").val() != "" && $("#DOCFile2").val() != "" && (($("#RevisionReason").val() != undefined && $("#RevisionReason").val().trim() != '') || $("#RevisionReason").val() == undefined)) {
+                $("#DOCFile").removeClass("manfieldredborder");
+                $("#DOCFile2").removeClass("manfieldredborder");
+                $("#RevisionReason").removeClass("manfieldredborder");
+                var fileData = new FormData();
+                var catCode = '';
+                catCode = $("#divCatCode").text();
+                fileData.append("documentguid", $("#divDocumentID").text());
+                fileData.append("DocumentNo", $("#divDocumentNo").text());
+                fileData.append('doccategorycode', $("#divCatCode").text());
+                fileData.append("filepath", $("#divEditableFilePath").text());
+                fileData.append("filepath2", $("#divReadableFilePath").text());
+                fileData.append('comments', $("#txtComments").val().trim());
+                fileData.append('DraftVersion', $("#divDraftVersion").text());
+                fileData.append('WFExecutionID', $("#divWFExecutionID").text());
+                fileData.append('ProjectTypeID', $("#divProjectTypeID").text());
+                fileData.append('ProjectID', $("#divProjectID").text());
+                 fileData.append('DocumentDescription', $("#DocumentDescription").val().trim());
+                fileData.append('EditableDocumentName', $("#divEditableDocumentName").text());
+                fileData.append('ReadableDocumentName', $("#divReadableDocumentName").text());
+                if ($("#RevisionReason").val() != null && $("#RevisionReason").val() != undefined)
+                    fileData.append('RevisionReason', $("#RevisionReason").val().trim());
+                else
+                    fileData.append('RevisionReason', '');
+                
+                //Files - Editable Document
+                var fileUpload = $("#DOCFile").get(0);
+                var files = fileUpload.files;
+                var ext = ''; var fileSize = 0; var isProceed = false;
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);
+                }
+                //File Type Check
+                if (catCode == 'FR')
+                    isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext);
+                else
+                    isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                if (isProceed == false) { return false; }
+                //File Size Check
+                isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                if (isProceed == false) { return false; }
+
+                //Files - Readable Document
+                var fileUpload2 = $("#DOCFile2").get(0);
+                var files2 = fileUpload2.files;
+                var ext2 = ''; var fileSize2 = 0;
+                for (var z = 0; z < files2.length; z++) {
+                    ext2 = files2[z].name.substr(files2[z].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize2 = files2[z].size;
+                    fileData.append(files2[z].name, files2[z]);
+                }
+                //File Type Check
+                isProceed = IsFileTypeAllowed($("#divReadableFileTypes").text(), ext2);
+                if (isProceed == false) { return false; }
+                //File Size Check
+                isProceed = IsFileSizeAllowed(fileSize2, $("#divAllowedFileSize").text());
+                if (isProceed == false) { return false; }
+
+                if (isProceed == true) {
+                    $.ajax({
+                        url: "/Request/ReSubmitDocument",
+                        dataType: "json",
+                        type: "POST",
+                        beforeSend: function () {
+                            $("#overlay").show();
+                            $("#overlay").addClass('modal-backdrop fade in');
+                            $("#sidebar").addClass('modal-backdrop fade in');
+                        },
+                        complete: function () {
+                            $("#overlay").hide();
+                            $("#overlay").removeClass('modal-backdrop fade in');
+                            $("#sidebar").removeClass('modal-backdrop fade in');
+                        },
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        data: fileData,
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.message == 'failed') {
+                                    $('.btn-danger').trigger('click');
+                                    $('.modal-body').html('Error While Saving the Document.');
+                                }
+                                else if (data.message == 'itemexists') {
+                                    $('.btn-warning').trigger('click');
+                                    $('.modal-body').html('Document already exists');
+                                }
+                                else {
+                                    $('.btn-success').trigger('click');
+                                    $('.modal-body').html('Document Re-Submitted Successfully.');
+                                    $("#DOCFile").val(''); $("#txtComments").val();
+                                    //redirect after success altert close
+                                    $('#modal-success').on('hide.bs.modal', function () {
+                                        window.location = '/Inbox';
+                                    })
+                                }
+                            }
+                        },
+                        error: function (xhr) {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error while saving document.');
+                        }
+                    });
+                }
+                else {
+                    alert('Something is wrong while Submitting.');
+                    return false;
+                }
+            }
+            else {
+                //alert('in Else');
+                $("#RevisionReason").removeClass("manfieldredborder");
+                $("#DOCFile").removeClass("manfieldredborder"); $("#DOCFile2").removeClass("manfieldredborder");
+                var ermsg = '';
+                if ($("#RevisionReason").val() != undefined && $("#RevisionReason").val().trim() == '') {
+                    $("#RevisionReason").addClass("manfieldredborder");                    
+                    ermsg = 'Revision Reason';
+                }
+                if ($("#DOCFile").val() == "") {
+                    $("#DOCFile").addClass("manfieldredborder");
+                    ermsg += '<br />'
+                    ermsg += 'Editable Document';
+                }
+                if ($("#DOCFile2").val() == "") {
+                    $("#DOCFile2").addClass("manfieldredborder");
+                    ermsg += '<br />'
+                    ermsg += 'Readable Document';
+                }
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(ermsg);
+                return false;
+            }
+            return false;
+        });
+
+
+        function DownloadDocument(docURL, docVersion) {
+            //alert(docURL)
+            $.ajax({
+                url: '/Request/DownloadDocument_OLD',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                beforeSend: ShowProgressBar(),
+                complete: HideProgressBar(),
+                cache: false,
+                async: true,
+                data: JSON.stringify({ URL: docURL, versionNo: docVersion }),
+                success: function (data) {
+                    if (data.success) {
+                        
+                    }
+                },
+                error: function (xhr) {
+                    alert('error ' + xhr.message);
+                }
+            });
+        }
+
+        function DeleteDocument() {
+            bootbox.confirm("Are you sure to Delete?", function (result) {
+                if (result) {
+                    var DocumentID = $("#divDocumentID").text();
+
+                    $.ajax({
+                        url: '/Request/DeleteDocument',
+                        dataType: "json",
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        beforeSend: ShowProgressBar(),
+                        complete: HideProgressBar(),
+                        cache: false,
+                        async: true,
+                        data: JSON.stringify({ DocumentID: DocumentID }),
+                        success: function (data) {
+                            if (data.success) {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html('Document Deleted Successfully.');
+
+                                //redirect after success altert close
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/PendingDocuments';
+                                })
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('error ' + xhr.message);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}
+

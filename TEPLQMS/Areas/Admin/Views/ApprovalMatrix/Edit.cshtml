@@ -1,0 +1,391 @@
+﻿@{
+    ViewBag.Title = "Approval Matrix";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b>Approval Matrix</b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a id="ancbacktoList" href="/Admin/ApprovalMatrix" class="btn btn-azure btn-xs" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-arrow-circle-left"></i> Back to list
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div style="display:none;">
+                <div id="divID">@ViewBag.ApprovalMatrixID</div>
+                <div id="divProjectTypeID"></div>
+                <div id="divProjectID"></div>
+            </div>
+            <div id="divnew" class="widget-body ">
+                <div class="form-horizontal">
+                    <div class="row ">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-5"><strong>Project Type</strong></label>
+                                        <div class=" col-lg-7">
+                                            <label id="lblProjectType" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-5"><strong>Project</strong></label>
+                                        <div class=" col-lg-7">
+                                            <label id="lblProject" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-5"><strong>Stage</strong></label>
+                                        <div class=" col-lg-7">
+                                            <label id="lblStage" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-5"><strong>Level</strong></label>
+                                        <div class=" col-lg-7">
+                                            <label id="lblLevel" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-5"><strong>Department</strong></label>
+                                        <div class=" col-lg-7">
+                                            <label id="lblDepartment" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-5"><strong>Section</strong></label>
+                                        <div class=" col-lg-7">
+                                            <label id="lblSection" class="control-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-3 col-sm-3 col-xs-12">
+
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                                <div style="border: 1px #2dc3e8 solid;">
+                                    <div style="text-align: center; font-weight: bold; background: aliceblue;margin-bottom:3px;">Approvers</div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Search User<span class="mandatory">*</span></label>
+                                        <div class="col-lg-6">
+                                            <input type="text" value="" class="form-control" name="searchword" id="txtSearchWord" />
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <button class="btn btn-azure" id="btnAdd" type="button">Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="divUserScreen1" style="display:none;">
+                                        <label class="col-lg-11 control-label">
+                                            If you don't find the user, please add in the user list first
+                                            <a target="_blank" href="/Admin/Users" style="font-size:13px;font-weight:bold;text-decoration:underline;">
+                                                Go to User List
+                                            </a>                                            
+                                        </label>
+                                    </div>
+                                    <div class="form-group" id="divUserScreen2" style="display:none;">
+                                        <label class="col-lg-11 control-label">
+                                            If you don't find the user, please add in the project user list first
+                                            <a target="_blank" href="/Admin/ProjectUsers" style="font-size:13px;font-weight:bold;text-decoration:underline;">
+                                                Go to Project User List
+                                            </a>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <table class="table table-striped table-hover table-bordered" id="editabledatatable_Users">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th style="display:none;">ID</th>
+                                                    <th>
+                                                        Name
+                                                    </th>
+                                                    <th>
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>   
+                            <div class="col-lg-3 col-sm-3 col-xs-12">
+
+                            </div>
+                        </div>
+                        <div  class="col-lg-9 col-sm-9 col-xs-12">
+
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-xs-12">
+                            <button class="btn btn-azure" id="btnUpdate" type="button">Update</button>
+                            <button class="btn" id="btnCancel" type="button">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+<div style="display:none;">
+    <div id="divselectedUserID"></div>
+    <div id="divselectedLoginID"></div>
+    <div id="divselectedName"></div>
+    <div id="divselectedEmail"></div>
+</div>
+
+
+@section PageScripts{
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script>        
+
+        $(document).ready(function () {            
+            
+            $("#txtSearchWord").autocomplete({
+                source: function (request, response) {
+                    var projTypeGUID = $("#divProjectTypeID").text();
+                    var projGUID = $("#divProjectID").text();
+
+                    $.ajax({
+                        url: "/ApprovalMatrix/SearchProjectUsers",
+                        type: "POST",
+                        dataType: "json",
+                        data: { ProjectTypeID: projTypeGUID, ProjectID: projGUID, UserName: request.term },
+                        success: function (data) {
+                            response($.map(data.message, function (item) {
+                                //alert(item.DisplayName);
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    $("#divselectedUserID").text(ui.item.id);
+                    $("#divselectedName").text(ui.item.label);
+                    $("#divselectedEmail").text(ui.item.email);
+                    $("#divselectedLoginID").text(ui.item.loginid);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+
+            GetApprovalMatrixForID($("#divID").text());
+        });
+
+        function GetApprovalMatrixForID(ID) {
+            $.ajax({
+                url: '/ApprovalMatrix/GetApprovalMatrixDataForID',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                beforeSend: ShowProgressBar(),
+                complete: HideProgressBar(),
+                cache: false,
+                async: true,
+                data: JSON.stringify({ ID: ID }), //'0A8D017F-B8C8-4E0C-84EB-77BD7D6E052C'
+                success: function (data) {
+                    if (data.success) {
+                        $("#divProjectTypeID").text(data.message.ProjectTypeID);                        
+                        $("#lblProjectType").text(data.message.ProjectTypeName);
+                        if (data.message.ProjectTypeName == "NPI") {
+                            $("#divUserScreen1").hide();
+                            $("#divUserScreen2").show();
+                        }
+                        else if (data.message.ProjectTypeName == "MP") {
+                            $("#divUserScreen1").show();
+                            $("#divUserScreen2").hide();
+                        }
+                        $("#divProjectID").text(data.message.ProjectID);
+                        $("#lblProject").text(data.message.ProjectName);
+                        $("#lblStage").text(data.message.StageName);
+                        $("#lblLevel").text(data.message.DocumentLevel);
+                        $("#lblDepartment").text(data.message.DepartmentName);
+                        $("#lblSection").text(data.message.SectionName);
+
+                        //Add Users
+                        var userGUIDs = data.message.ApprovalUserIDs;
+                        var userNames = data.message.ApprovalUsers;
+                        var myArrayIDs = userGUIDs.split(",");
+                        var myArrayNames = userNames.split(",");
+                        for (var i = 0; i < myArrayIDs.length; i++) {
+                            var actionTD = '<a onclick=DeleteUserRow("' + myArrayIDs[i] + '") class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+                            $('#editabledatatable_Users tr:last').after('<tr><td style="display:none;">' + myArrayIDs[i] + '</td><td>' + myArrayNames[i] + '</td><td>' + actionTD + '</td></tr>');
+                        }
+                        
+                        $("#divselectedUserID").text('');
+                        $("#divselectedName").text('');
+                        $("#divselectedEmail").text('');
+                        $("#divselectedLoginID").text('');
+                        $("#txtSearchWord").val('');
+                    }
+                },
+                error: function (xhr) {
+                    alert('error ' + xhr.message);
+                }
+            });
+        }
+
+
+
+        function DeleteUserRow(usrID) {
+
+            bootbox.confirm("Are you sure to Delete?", function (result) {
+                if (result) {
+                    $("#editabledatatable_Users").find('tr').each(function () {
+                        if ($(this).find('td:eq(2)') != undefined) {
+                            if (usrID == $(this).find('td:eq(0)').text()) {
+                                //Should be deleted
+                                $(this).remove();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        function removeAllUsers() {
+            $("#editabledatatable_Users").find("tr:gt(0)").remove();
+        }
+        $("#btnAdd").click(function () {
+
+            //alert($("#divselectedUserID").text());
+            if ($("#txtSearchWord").val().trim() == '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Please search user...');
+            }
+            else {
+                if ($("#divselectedUserID").text() != '') {
+                    var userGUID = $("#divselectedUserID").text(); var canbeAdded = true;
+                    //var dynfun = 'DeleteUserRow("' +userGUID+'")';
+                    //var actionTD = '<a href="#" onclick=' + dynfun +' class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+
+                    var actionTD = '<a href="#" onclick=DeleteUserRow("' + userGUID + '") class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i>Delete</a>';
+
+                    $("#editabledatatable_Users").find('tr').each(function () {
+                        if ($(this).find('td:eq(2)') != undefined) {
+                            if (userGUID == $(this).find('td:eq(0)').text()) {
+                                canbeAdded = false;
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html('User already added');
+                            }
+                        }
+                    });
+                    if (canbeAdded == true) {
+                        $('#editabledatatable_Users tr:last').after('<tr><td style="display:none;">' + userGUID + '</td><td>' + $("#divselectedName").text() + '</td><td>' + actionTD + '</td></tr>');
+                        $("#divselectedUserID").text('');
+                        $("#divselectedName").text('');
+                        $("#divselectedEmail").text('');
+                        $("#divselectedLoginID").text('');
+                        $("#txtSearchWord").val('');
+                    }
+                }
+                else {
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('User not found...');
+                }
+            }
+        });
+
+        
+
+        function getAllValues() {
+            var arrData = new Array();
+            arrData[0] = "";
+
+            arrData[1] = $("#ddlProjectType1 option:selected").val();
+            arrData[2] = $("#ddlProjectType1 option:selected").text();
+            arrData[3] = '';
+
+
+            return arrData;
+        }
+
+        function ValidateFieldValues() {
+            var ermsg = '';
+            if ($("#editabledatatable_Users").find('tr').length == 1) {
+                ermsg += 'Users' + '<br />';
+                $("#txtSearchWord").addClass("manfieldredborder");
+            }
+            else
+                $("#txtSearchWord").removeClass("manfieldredborder");            
+
+            if (ermsg != '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(ermsg);
+                return false;
+            }
+            return true;
+        }
+
+        $("#btnUpdate").click(function () {
+            if (ValidateFieldValues()) {
+                //alert('Validated');
+                //var arry = getAllFormValues();
+                var arrData = new Array();
+                arrData[0] = $("#divID").text();
+                
+                var arrData2 = new Array();
+                var z = 0; var userGuIDs = '';
+                $("#editabledatatable_Users").find('tr:gt(0)').each(function () {
+                    if ($(this).find('td:eq(0)') != undefined) {
+                        userGuIDs += $(this).find('td:eq(0)').text() + ',';
+                    }
+                });
+                arrData[1] = userGuIDs;
+
+
+                $.ajax({
+                    url: '/ApprovalMatrix/UpdateEntity',
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: ShowProgressBar(),
+                    complete: HideProgressBar(),
+                    async: false,
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    data: JSON.stringify({ arr: arrData }),
+                    success: function (data) {
+                        if (data.success) {
+                            retmsg = data.message;
+                            var mesge = '';
+                            $('.btn-success').trigger('click');
+                            $('.modal-body').html(retmsg);
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving ' + entity + '.');
+                    }
+                });
+            }
+        });
+       
+
+       
+    </script>
+}
+

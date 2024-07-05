@@ -1,0 +1,347 @@
+﻿@{
+    ViewBag.Title = "Profile";
+}
+
+<div class="row">
+    <div class="col-lg-7 col-sm-7 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-top bordered-azure">
+                <span class="widget-caption"><b>Change Profile</b></span>
+            </div>
+            @*<div class="widget-body">
+                <div class="collapse in">
+                    <form role="form">
+                        <div class="form-group" style="display:none;">
+                            <label for="definpu">ID</label>
+                            @Html.Bootstrap().TextBox("txtID")
+                            @Html.Bootstrap().TextBox("txtImg")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Name</label>
+                            @Html.Bootstrap().TextBox("txtName").Placeholder("Name")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Email</label>
+                            @Html.Bootstrap().TextBox("txtmail").Placeholder("Email")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Mobile</label>
+                            @Html.Bootstrap().TextBox("txtmob").Placeholder("Mobile")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Picture</label>
+                            <br />
+                            <div style="display:inline-flex;width:100%;">
+                                @Html.Bootstrap().File("filepic").Id("filepic")
+                                <div style="width:100%; text-align:end;">
+                                    @Html.Bootstrap().CheckBox("chkdelete").Text("No Picture")
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="loginbox-submit" style="width:150px;margin-left:auto;margin-right:auto">
+                            @Html.Bootstrap().SubmitButton().Text("Submit").Id("btnSubmit").Color(BootstrapColors.Azure).ButtonBlock()
+                        </div>
+                    </form>
+
+                </div>
+            </div>*@       
+            
+            @{
+                var usrObj = new TEPLQMS.Common.LoginManager();
+                var dtDOB = usrObj.DOB != null ? usrObj.DOB.ToString().Substring(0, 10) : null;
+                var picName = usrObj.Picture != null ? usrObj.Picture : null;
+            }
+            <div id="divnew" class="widget-body ">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="row mantable">
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Email  ID</label>
+                                <div class=" col-lg-8">
+                                    <input class="form-control manfield" id="txt3" name="txt3" type="text" maxlength="50"
+                                           value="@usrObj.Email" title="Email ID" readonly="readonly">
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-3">First Name<span class="mandatory">*</span></label>
+                                    <div class=" col-lg-8">
+                                        <div id="divID" style="display:none;">@usrObj.ID</div>
+                                        <div id="divImg" style="display:none;">@picName</div>                                        
+                                        <input title="First Name" class="form-control manfield" id="txt1" name="txt1"
+                                               value="@usrObj.FirstName" type="text" maxlength="100">
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Last Name</label>
+                                <div class=" col-lg-8">
+                                    <input class="form-control" id="txt2" name="txt2" type="text" maxlength="25" value="@usrObj.LastName">
+                                </div>
+                            </div>
+                                
+                            <div class="form-group">
+                                <label class="control-label col-lg-3">Mobile</label>
+                                <div class=" col-lg-8">
+                                    <input class="form-control" id="txt4" name="txt4" type="text" onkeydown="AllowNumbers(event);"
+                                           value="@usrObj.Mobile" maxlength="10" >
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Date of Birth</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group">
+                                            <input readonly="readonly" class="form-control date-picker" id="date1" type="text"
+                                                   value="@dtDOB"  data-date-format="dd-mm-yyyy">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Gender</label>
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                                <div class="radio">
+                                                    <label>
+                                                        @if (@usrObj.Gender == "Male")
+                                                        {
+                                                            <input id="rbn1" checked="checked" class="" name="form-field-radio" type="radio"><span class="text"> Male</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input id="rbn1" class="" name="form-field-radio" type="radio"><span class="text"> Male</span>
+                                                        }                                                        
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                <div class="radio">
+                                                    <label>
+                                                        @if (@usrObj.Gender == "Female")
+                                                        {
+                                                            <input id="rbn2" checked="checked" class="" name="form-field-radio" type="radio"><span class="text"> Female</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input id="rbn2" class="" name="form-field-radio" type="radio"><span class="text"> Female</span>
+                                                        }                                                        
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" for="definpu" style="padding-top: 0px !important">Picture</label>
+                                    <div class="col-lg-8">
+                                        <div style="display:inline-flex;width:100%;">
+                                            @Html.Bootstrap().File("filepic").Id("filepic")
+                                            <div style="width:100%; text-align:end;">
+                                                @Html.Bootstrap().CheckBox("chkdelete").Text("No Picture")
+                                            </div>
+                                        </div>
+                                        <div style="color:red">Please upload the .jpg image with 366*366 in size for better view.</div>
+                                        </div>
+                                    </div>
+                                @*<div class="col-sm-offset-9 col-sm-12">
+                                    <button class="btn" id="btnUpdate" type="button">Update</button>
+                                </div>*@   
+                            <div class="col-sm-offset-10">
+                                <button class="btn btn-azure " type="submit" id="btnUpdate">
+                                    Update
+                                </button>
+                            </div>                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+                 
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-12">
+        <div class="widget">
+            <div>
+                @if (!string.IsNullOrEmpty(@usrObj.Picture))
+                {
+                    <img id="pic" src="/assets/img/avatars/@usrObj.Picture" alt="" class="header-avatar" style="border:#2dc3e8 1px solid;" />
+                }
+                else
+                {                    
+                    if (usrObj.Gender == "Female")
+                    {
+                        <img id="pic" src="/assets/img/avatars/f_default.jpg" alt="" class="header-avatar" style="border:#2dc3e8 1px solid;" />
+                    }
+                    else
+                    {
+                        <img id="pic" src="/assets/img/avatars/default.jpg" alt="" class="header-avatar" style="border:#2dc3e8 1px solid;" />
+                    }
+                }                
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .checkbox {
+    position: relative;
+    display: block;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+</style>
+@section PageScripts{
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <script>
+
+    $('#modal-success').on('shown.bs.modal', function () {
+        //alert("Model is opening...");
+    })
+
+    $('#modal-success').on('hide.bs.modal', function () {
+        //clear the values
+        //$("#txtcPsw").val('');
+        //$("#txtnPsw1").val('');
+        //$("#txtnPsw2").val('');
+        //After changing the password redirect to login
+        //window.location = "/Login";
+    })
+
+    function ChangeProfile() {
+        // Create FormData object  
+        var fileData = new FormData();
+        fileData.append('id', $("#divID").html().trim());
+        fileData.append('fname', $("#txt1").val().trim());
+        fileData.append('lname', $("#txt2").val().trim());
+        fileData.append('mail', $("#txt3").val().trim());
+        fileData.append('mob', $("#txt4").val().trim());
+        fileData.append('dob', $("#date1").val().trim());
+        var gender = "Male";
+        if ($("#rbn2")[0].checked)
+            gender = "Female";
+        fileData.append('gender', gender);      
+
+        var newimg = $("#divImg").html();
+        var fileUpload = $("#filepic").get(0);
+        var files = fileUpload.files;
+        
+        for (var i = 0; i < files.length; i++) {
+            //alert(files[i].name); alert(files[i]);
+            fileData.append(files[i].name, files[i]);
+            newimg = files[i].name;
+        }
+        if ($("#chkdelete")[0].checked)
+            newimg = '';      
+
+        fileData.append('picname', newimg);
+        if (newimg != '')
+            $('#pic').attr("src", "/assets/img/avatars/" + newimg);
+        else {
+            if (gender == "Female")
+                $('#pic').attr("src", "/assets/img/avatars/f_default.jpg");
+            else
+                $('#pic').attr("src", "/assets/img/avatars/default.jpg");
+        }
+
+        var cururl = "/Profile2/ChangeProfile";
+        $.ajax({
+            url: cururl,
+            dataType: "json",
+            type: "POST",
+            beforeSend: ShowProgressBar(),
+            complete: HideProgressBar(),
+            contentType: false,
+            processData: false,
+            cache: false,
+            data: fileData,//JSON.stringify({ arr: lst, fil: fileData }),
+            success: function (data) {
+                if (data.success) {
+                    if (data.message == 'failed') {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error While Saving the Profile.');
+                    }
+                    else
+                    {
+                        $('.btn-success').trigger('click');
+                        $('.modal-body').html('Profile Changed Successfully.');
+                        //Need to redirect as passowrd changed
+                        //window.location = "/Login";
+                    }
+                }
+                else
+                {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Details not found...');
+                }
+            },
+            error: function (xhr) {
+                //alert('fail ' + data.message);
+                $('.btn-danger').trigger('click');
+                $('.modal-body').html('Error while saving profile.');
+            }
+        });
+    }
+
+
+    $("#btnUpdate").on('click', function () {
+        if (ValidateFormFields())
+        {
+            ChangeProfile();
+        }
+        return false;
+    });
+
+    $("#filepic").change(function () {        
+        readURL(this);
+    });
+
+    function readURL(input) {        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                //alert('yes');
+                //alert(e.target.result);
+                $('#pic').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(document).ready(function () {
+        $('.date-picker').datepicker();
+
+        //$("#txtcPsw").attr("maxlength", "10");
+        //$("#txtnPsw1").attr("maxlength", "10");
+        //$("#txtnPsw2").attr("maxlength", "10");
+
+        @*var model1 = @Html.Raw(@ViewBag.cUserID);
+        var model2 = @Html.Raw(@ViewBag.cUserName);
+        var model3 = @Html.Raw(@ViewBag.cEmail);
+        var model4 = @Html.Raw(@ViewBag.cMobile);
+        var model5 = @Html.Raw(@ViewBag.cPic);
+        //alert(model1.Enable.toString());
+
+        $("#txtID").val(model1.Enable.toString()).attr("readonly", "readonly");
+        $("#txtName").val(model2.Enable.toString());
+        $("#txtmail").val(model3.Enable.toString());
+        $("#txtmob").val(model4.Enable.toString());
+        if(model5.Enable.toString() != "")
+        {
+            var nme = '/assets/img/avatars/' + model5.Enable.toString();
+            $("#pic").attr('src', nme);
+            $("#txtImg").val(model5.Enable.toString());
+        }
+        else
+        {
+            $("#pic").attr('src', '/assets/img/avatars/default.jpg');
+            $("#txtImg").val("");
+        }*@            
+    });      
+
+    </script>
+}
+
+
+
+

@@ -1,0 +1,524 @@
+﻿@{
+    ViewBag.Title = "DMS - Document Upload";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="cuwidget-header bordered-bottom bordered-blue">
+                <span class="cuwidget-caption" style="font-size:25px !important;"><b>Document Upload</b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a href="/DownloadTemplate" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-download"></i> Download Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="display:none;">
+                <div id="divFileTypes">@ViewBag.FileTypes</div>
+                <div id="divFormsFileTypes">@ViewBag.FormsFileTypes</div>
+                <div id="divReadableFileTypes">@ViewBag.ReadableFileTypes</div>
+                <div id="divAllowedFileSize">@ViewBag.AllowedFileSize</div>
+            </div>
+            <div class="widget-body">
+                
+            </div>
+            <div class="widget-body">
+                @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
+                {
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row mantable">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            @*<div class="form-group">
+                        <label class="col-lg-3 control-label"><strong>Upload Type</strong><span class="mandatory">*</span></label>
+                        <div class="col-lg-7">
+                            <select class="form-control manfield manfieldG" title="Upload Type" name="filetype" data-bv-field="filetype" id="ddlUploadType">
+                                <option value="0">Select a value</option>
+                                <option value="1">New Document</option>
+                                <option value="2">Existing Document</option>
+                            </select>
+                        </div>
+                    </div>*@
+
+
+                                            @*<div class="form-group">
+                        <label class="col-lg-4 control-label"><strong>Document Category</strong><span class="mandatory">*</span></label>
+                        <div class="col-lg-7">
+                            <select class="form-control manfield manfieldG" title="Document Category" name="doctype" data-bv-field="doctype" id="ddlDocCategory">
+                                <option value="0">Select a value</option>
+                            </select>
+                        </div>
+                    </div>*@
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-9">
+                                                    <label><strong>Document Category</strong><span class="mandatory">*</span></label>
+                                                    <select class="form-control manfield manfieldG" title="Document Category" name="doctype" data-bv-field="doctype" id="ddlDocCategory">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            @*<div class="form-group">
+                        <label class="col-lg-2 control-label"><strong>Project</strong><span class="mandatory">*</span></label>
+                        <div class="col-lg-9">
+                            <select title="Project" class="form-control manfield manfieldG" name="project" data-bv-field="project" id="ddlProject">
+                                <option value="0">Select a value</option>
+                            </select>
+                        </div>
+                    </div>*@
+
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-9">
+                                                    <label><strong>Project</strong><span class="mandatory">*</span></label>
+                                                    <select title="Project" class="form-control manfield manfieldG" name="project" data-bv-field="project" id="ddlProject">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-9">
+                                                    <label><strong>Department</strong><span class="mandatory">*</span></label>
+                                                    <select class="form-control manfield manfieldG" title="Department" name="department" data-bv-field="department" id="ddlDepartment">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-9">
+                                                    <label><strong>Section</strong><span class="mandatory">*</span></label>
+                                                    <select class="form-control manfield manfieldG" title="Section" name="section" data-bv-field="section" id="ddlSection">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group" style="">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-7" style="">
+                                                    <label><strong>Document Number</strong><span class="mandatory">*</span></label>
+                                                    <input title="Document No" class="form-control manfield" id="DocumentNo" name="Number" type="text" value="" readonly="readonly" maxlength="20">
+                                                    <div style="display:none;" id="divDocumentID"></div>
+                                                    <div style="display:none;" id="divWFExecutionID"></div>
+                                                </div>
+                                                <div class=" col-lg-4">
+                                                    <label style="color:white">TEPL DMS System QMS</label>
+                                                    <button class="btn btn-blue " type="button" id="btnGenerate">Generate</button>
+                                                    <button class="btn btn-yellow " type="button" id="btnCopy">Copy</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Document Description</strong><span class="mandatory">*</span></label>
+                                                    <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Editable Document</strong><span class="mandatory">*</span></label>
+                                                    <input class="form-control manfield" id="DOCFile" name="DOC" type="file" value="" title="Editable Document">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Readable Document</strong><span class="mandatory">*</span></label>
+                                                    <input class="form-control manfield" id="DOCFile2" name="DOC2" type="file" value="" title="Readable Document">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-11 col-sm-11 col-xs-12">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-11" style="margin-left: -30px !important;">
+                                                    <label><strong>Comments</strong></label>
+                                                    <textarea class="form-control" rows="8" id="txtComments" style="resize:none;" placeholder="Comments..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row" id="divApprovalUsers">
+                                    <div class="col-lg-1 col-sm-12 col-xs-12">
+                                    </div>
+                                    <div class="col-lg-10 col-sm-12 col-xs-12">
+                                        <table class="table table-striped table-hover table-bordered" id="ApprovalUsers">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>
+                                                        S No
+                                                    </th>
+                                                    <th>
+                                                        Stage
+                                                    </th>
+                                                    <th>
+                                                        Approval User
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ApprovalUsersBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-12 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <br />
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div style="float:right;margin-right:200px;">
+                                            <button class="btn btn-azure" type="submit" id="btnSubmit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        
+    </div>
+</div>
+
+@section PageScripts{
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            $("#divApprovalUsers").hide();
+            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'Select a value');
+        });
+        $("#ddlDepartment").change(function () {            
+            BindSectionsForDept("/DocumentInitiate/GetSectionsForDepartment", $('#ddlSection'), $('#ddlDepartment').val(),'Select a value');
+        });
+
+        $("#btnGenerate").click(function () {
+            if (ValidateFormFields(".manfieldG"))
+            {
+                $("#ApprovalUsersBody").empty();
+                var fileData = new FormData();
+                fileData.append('DepartmentID', $("#ddlDepartment").val());
+                fileData.append('DepartmentCode', $("#ddlDepartment option:selected").attr('code'));
+                fileData.append('SectionID', $("#ddlSection").val());
+                fileData.append('SectionCode', $("#ddlSection option:selected").attr('code'));
+                fileData.append('ProjectID', $("#ddlProject").val());
+                fileData.append('ProjectCode', $("#ddlProject option:selected").attr('code'));
+                fileData.append('ProjectTypeID', $("#ddlProject option:selected").attr('projTypeID'));
+                fileData.append('DocumentCategoryID', $("#ddlDocCategory").val());
+                fileData.append('DocumentCategoryCode', $("#ddlDocCategory option:selected").attr('code'));
+                $.ajax({
+                    url: "/DocumentInitiate/GenerateDocumentNumber",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            //var msg = data.message1.toString().split('#');
+                            //$("#DocumentNo").val(msg[0]);
+                            //$("#divDocumentID").text(msg[1]);
+                            //$("#divWFExecutionID").text(msg[2]);
+                            var isMissing = data.message1[0];
+                            var docnumberSTring = data.message1[1];
+                            var arrayApproval = data.message1[2];
+                            if (isMissing == true) {
+                                $("#btnSubmit").hide();
+                                $("#divApprovalUsers").show();
+                                for (var z = 0; z < arrayApproval.length; z++) {
+                                    var userNames = '';
+                                    if (arrayApproval[z].WFUsers != null) {
+                                        for (j = 0; j < arrayApproval[z].WFUsers.length; j++) {
+                                            userNames += arrayApproval[z].WFUsers[j].DisplayName + ',';
+                                        }
+                                    }
+                                    $('#ApprovalUsersBody').append('<tr><td>' + (z + 1) + '</td><td>' + arrayApproval[z].StageName + '</td><td>' + userNames + '</td></tr>');
+                                }
+
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html('Not able to Generate Number as Approvers Missing...');
+                                
+                            }
+                            else {
+                                $("#btnSubmit").show();
+                                $("#divApprovalUsers").show();
+                                var msg = docnumberSTring.toString().split('#');
+                                $("#DocumentNo").val(msg[0]);
+                                $("#divDocumentID").text(msg[1]);
+                                $("#divWFExecutionID").text(msg[2]);
+                                
+                                for (var z = 0; z < arrayApproval.length; z++) {
+                                    var userNames = '';
+                                    if (arrayApproval[z].WFUsers != null) {
+                                        for (j = 0; j < arrayApproval[z].WFUsers.length; j++) {
+                                            userNames += arrayApproval[z].WFUsers[j].DisplayName + ',';
+                                        }
+                                    }
+                                    $('#ApprovalUsersBody').append('<tr><td>' + (z + 1) + '</td><td>' + arrayApproval[z].StageName + '</td><td>' + userNames +'</td></tr>');
+                                }
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error ' + xhr.message);
+                    }
+                }); /*
+                var deptCode = $("#ddlDepartment option:selected").attr('code');
+                var secCode = $("#ddlSection option:selected").attr('code');
+                var projCode = $("#ddlProject option:selected").attr('code');
+                var catCode = $("#ddlDocCategory option:selected").attr('code');
+                GenerateDocumentNumber("/DocumentInitiate/GenerateDocumentNumber", $("#DocumentNo"), projCode, deptCode, secCode, catCode, $("#divDocumentID"), $("#divWFExecutionID"));
+                */
+            }
+        });
+        $("#btnSubmit").click(function () {            
+            if (ValidateFormFields('.manfield'))
+            {
+                var catCode = '';
+                var fileData = new FormData();
+                fileData.append("DocumentID", $("#divDocumentID").text());
+                fileData.append("WFExecutionID", $("#divWFExecutionID").text());
+                if ($("#ddlDocCategory").val() != '') {
+                    fileData.append('DocumentCategoryID', $("#ddlDocCategory").val());
+                    catCode = $("#ddlDocCategory option:selected").attr('code');
+                    fileData.append('DocumentCategoryCode', catCode);
+                    fileData.append('DocumentCategoryName', $("#ddlDocCategory option:selected").text());
+                }
+                else {
+                    fileData.append('DocumentCategoryID', '');
+                    fileData.append('DocumentCategoryCode', '');
+                    fileData.append('DocumentCategoryName', '');
+                }
+                if ($("#ddlDepartment").val() != '') {
+                    fileData.append('DepartmentID', $("#ddlDepartment").val());
+                    fileData.append('DepartmentCode', $("#ddlDepartment option:selected").attr('code'));
+                    fileData.append('DepartmentName', $("#ddlDepartment option:selected").text());
+                }
+                else {
+                    fileData.append('DepartmentID', '');
+                    fileData.append('DepartmentCode', '');
+                    fileData.append('DepartmentName', '');
+                }
+                if ($("#ddlSection").val() != '') {
+                    fileData.append('SectionID', $("#ddlSection").val());
+                    fileData.append('SectionCode', $("#ddlSection option:selected").attr('code'));
+                    fileData.append('SectionName', $("#ddlSection option:selected").text());
+                }
+                else {
+                    fileData.append('SectionID', '');
+                    fileData.append('SectionCode', '');
+                    fileData.append('SectionName', '');
+                }
+                if ($("#ddlProject").val() != '') {
+                    fileData.append('ProjectID', $("#ddlProject").val());
+                    fileData.append('ProjectCode', $("#ddlProject option:selected").attr('code'));
+                    fileData.append('ProjectName', $("#ddlProject option:selected").text());
+                    fileData.append('ProjectTypeName', $("#ddlProject option:selected").attr('projType'));
+                    fileData.append('ProjectTypeID', $("#ddlProject option:selected").attr('projTypeID'));
+                    fileData.append('ProjectTypeCode', $("#ddlProject option:selected").attr('projTypeCode'));
+                }
+                else {
+                    fileData.append('ProjectID', '');
+                    fileData.append('ProjectCode', '');
+                    fileData.append('ProjectName', '');
+                    fileData.append('ProjectTypeName', '');
+                    fileData.append('ProjectTypeID', '');
+                    fileData.append('ProjectTypeCode', '');
+                }                                      
+                fileData.append('DocumentNo', $("#DocumentNo").val().trim());
+                fileData.append('Comments', $("#txtComments").val().trim());
+                fileData.append('DocumentDescription', $("#DocumentDescription").val().trim());                
+                                
+                //File - Editable Document
+                var fileUpload = $("#DOCFile").get(0);
+                var files = fileUpload.files;
+                var ext = ''; var fileSize = 0; var isProceed = false;
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);                            
+                }
+                //File Type Check
+                if (catCode == 'FR')
+                    isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext);
+                else
+                    isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                if (isProceed == false) { return false; }                
+                //File Size Check
+                isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                if (isProceed == false) { return false; }
+
+                //File - Readable Document
+                var fileUpload2 = $("#DOCFile2").get(0);
+                var files2 = fileUpload2.files;
+                var ext2 = ''; var fileSize2 = 0;
+                for (var z = 0; z < files2.length; z++) {
+                    ext2 = files2[z].name.substr(files2[z].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize2 = files2[z].size;
+                    fileData.append(files2[z].name, files2[z]);
+                }
+                //File Type Check
+                isProceed = IsFileTypeAllowed($("#divReadableFileTypes").text(), ext2);
+                if (isProceed == false) { return false; }
+                //File Size Check
+                isProceed = IsFileSizeAllowed(fileSize2, $("#divAllowedFileSize").text());
+                if (isProceed == false) { return false; }
+                
+                if (isProceed == true)
+                {                    
+                    $.ajax({
+                        url: "/DocumentInitiate/SubmitDocument",
+                        dataType: "json",
+                        type: "POST",
+                        beforeSend: function () {
+                            $("#overlay").show();
+                            $("#overlay").addClass('modal-backdrop fade in');
+                            $("#sidebar").addClass('modal-backdrop fade in');
+                        },
+                        complete: function () {
+                            $("#overlay").hide();
+                            $("#overlay").removeClass('modal-backdrop fade in');
+                            $("#sidebar").removeClass('modal-backdrop fade in');
+                        },
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        data: fileData,
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.message == 'failed') {
+                                    $('.btn-danger').trigger('click');
+                                    $('.modal-body').html('Error While Saving the Document.');
+                                }
+                                else if (data.message == 'itemexists') {
+                                    $('.btn-warning').trigger('click');
+                                    $('.modal-body').html('Document already exists');
+                                }
+                                else {
+                                    $('.btn-success').trigger('click');
+                                    $('.modal-body').html('Document Submitted Successfully.');
+                                    $('#modal-success').on('hide.bs.modal', function () {
+                                        window.location = '/Inbox';
+                                    })
+                                    //clearFields();
+                                }
+                            }
+                        },
+                        error: function (xhr) {                            
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error while saving document. ' + xhr.message);
+                        }
+                    });
+                }
+                else
+                {
+                    alert('Something wrong with File Type or File Size');                   
+                    return false;
+                }               
+            }
+            return false;
+        });
+        function copyToClipboard(text) {
+            var sampleTextarea = document.createElement("textarea");
+            document.body.appendChild(sampleTextarea);
+            sampleTextarea.value = text; //save main text in it
+            sampleTextarea.select(); //select textarea contenrs
+            document.execCommand("copy");
+            document.body.removeChild(sampleTextarea);
+        }
+        $("#btnCopy").click(function () {
+            if ($("#DocumentNo").val() == "")
+            {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Document No is not generated');
+            }
+            else
+            {
+                copyToClipboard($("#DocumentNo").val());
+                $('.btn-success').trigger('click');
+                $('.modal-body').html('Document No is copied to clipboard');
+            }            
+        });
+        $("#ddlDepartment").change(function () {
+            $("#DocumentNo").val('');
+        });
+        $("#ddlSection").change(function () {
+            $("#DocumentNo").val('');
+        });
+        $("#ddlProject").change(function () {
+            $("#DocumentNo").val('');
+        });
+        function clearFields() {
+            $("#ddlDocCategory").val(0);
+            $("#ddlDepartment").val(0);
+            $("#ddlSection").val(0);
+            $("#ddlProject").val(0);
+            $("#DocumentNo").val('');
+            $("#DOCFile").val('');
+            $("#txtComments").val('');
+            $("#DocumentDescription").val('');
+        }
+
+        $.fn.center = function () {
+            this.css("position", "absolute");
+            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                $(window).scrollTop()) + "px");
+            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                $(window).scrollLeft()) + "px");
+            return this;
+        }
+                
+    </script>
+}

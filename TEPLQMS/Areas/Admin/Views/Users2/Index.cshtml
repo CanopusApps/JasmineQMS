@@ -1,0 +1,455 @@
+﻿@{
+    ViewBag.Title = "Users2";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b>Users</b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a id="ancbacktoList" href="/Admin/Users2" class="btn btn-azure btn-xs" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-arrow-circle-left"></i> Back to list
+                        </a>
+
+                        <a id="ancaddNew" href="javascript:displayAddDiv();" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-plus-circle"></i> Add User
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="divnew" class="widget-body ">
+                <div class="form-horizontal">
+                    <div class="row ">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row mantable">
+                                <div class="row">
+                                    <div id="divID" style="display:none;"></div>
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Name</strong><span class="mandatory">*</span></label>
+                                                    <input title="Display Name" class="form-control" id="DisplayName" name="DisplayName" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Login ID</strong><span class="mandatory">*</span></label>
+                                                    <input readonly="readonly" title="Login ID" class="form-control" id="LoginID" name="LoginID" type="text" value="" maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Email ID</strong><span class="mandatory">*</span></label>
+                                                    <input readonly="readonly" title="Email ID" class="form-control" id="EmailID" name="EmailID" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label style="color:white">TEPL</label>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-7 control-label"><strong>Is QMS Admin</strong></label>
+                                                        <div class="col-lg-5">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input id="chk2" type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-xs-12">
+                                            <div class="form-group" id="divIsActive">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label style="color:white">TEPL</label>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-5 control-label"><strong>Is Active</strong></label>
+                                                        <div class="col-lg-7">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input id="chk1" type="checkbox" checked="checked">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12 col-sm-offset-8">
+                                            <button class="btn btn-azure" id="btnCreate" type="button">Create</button>
+                                            <button class="btn btn-azure" id="btnUpdate" type="button">Update</button>
+                                            <button class="btn" id="btnCancel" type="button">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divGrid">
+                <div class="widget-body">
+                    <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                        <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>
+                                    Login ID
+                                </th>
+                                <th>
+                                    Display Name
+                                </th>
+                                <th>
+                                    EMail ID
+                                </th>
+                                <th nowrap>Is QMS Admin</th>
+                                <th>Is Active</th>
+                                <th>
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var txt in ViewBag.Data)
+                            {
+                            <tr>
+                                <td>@txt.ID</td>
+                                <td>@txt.LoginID</td>
+                                <td>@txt.DisplayName</td>
+                                <td>@txt.EmailID</td>
+                                <td>@txt.IsQMSAdmin</td>
+                                <td>@txt.IsActive</td>
+                                <td>
+                                    <a href="#" class="btn btn-azure btn-xs edit"><i class="fa fa-edit"></i> Edit</a>
+                                    @*<a href="#" class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i> Delete</a>*@
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section PageScripts{
+    <link href="~/assets/css/multiple-select.css" rel="stylesheet" />
+    <link href="~/assets/css/sol.css" rel="stylesheet" />
+
+    <script src="~/Scripts/multiple-select.js"></script>
+    <script src="~/Scripts/sol.js"></script>
+
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <!--Bootstrap Time Picker-->
+    <script src="~/assets/js/datetime/bootstrap-timepicker.js"></script>
+
+    <script>
+        function backtoList() {
+            $("#divnew").hide();
+            $("#divGrid").show();
+            $("#ancaddNew").show();
+            $("#ancbacktoList").hide();
+        }
+        $(document).ready(function () {
+            $("#divnew").hide();
+            $("#ancbacktoList").hide();
+            $("#divIsActive").hide();
+            InitiateSystemUsersTable.init();
+
+
+            $("#DisplayName").autocomplete({
+                source: function (request, response) {
+                    
+                    $.ajax({
+                        url: "/Users2/SearchADUsersWithName",
+                        type: "POST",
+                        dataType: "json",
+                        data: { Name: request.term },
+                        success: function (data) {
+                            response($.map(data.message, function (item) {
+                                //alert(item.DisplayName);
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    //$("#divselectedUserID").text(ui.item.id);
+                    $("#DisplayName").text(ui.item.label);
+                    $("#EmailID").val(ui.item.email);
+                    $("#LoginID").val(ui.item.loginid);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
+
+        function removeAllUsers() {
+            $("#editabledatatable_Users").find("tr:gt(0)").remove();
+        }
+
+        function ValidateFields() {
+            $("#ddlProjectType").removeClass("manfieldredborder");
+            $("#ddlProject").removeClass("manfieldredborder");
+
+            if ($("#ddlProjectType").val() == 0) {
+                //select Project Type
+                $("#ddlProjectType").addClass("manfieldredborder");
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Project Type');
+                return false;
+            }
+            else if ($("#ddlProjectType option:selected").text() == 'MP') {
+                return true;
+            }
+            else if ($("#ddlProjectType option:selected").text() == 'NPI') {
+                if ($("#ddlProject").val() == 0) {
+                    $("#ddlProject").addClass("manfieldredborder");
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Project');
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        function ValidateFieldValues() {
+            var ermsg = '';
+            if ($("#LoginID").val().trim() == '') {
+                ermsg += $("#LoginID").prop("title") + '<br />';
+                $("#LoginID").addClass("manfieldredborder");
+            }
+            else {
+                $("#LoginID").removeClass("manfieldredborder");
+            }
+            if ($("#DisplayName").val().trim() == '') {
+                ermsg += $("#DisplayName").prop("title") + '<br />';
+                $("#DisplayName").addClass("manfieldredborder");
+            }
+            else {
+                $("#DisplayName").removeClass("manfieldredborder");
+            }
+            if ($("#EmailID").val().trim() == '') {
+                ermsg += $("#EmailID").prop("title") + '<br />';
+                $("#EmailID").addClass("manfieldredborder");
+            }
+            else {
+                $("#EmailID").removeClass("manfieldredborder");
+                if (!ValidateEmail($("#EmailID").val().trim())) {
+                    ermsg += 'Email ID is not valid.<br />';
+                    $("#EmailID").addClass("manfieldredborder");
+                }
+                else
+                    $("#EmailID").removeClass("manfieldredborder");
+            }
+
+            if (ermsg != '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(ermsg);
+                return false;
+            }
+            return true;
+        }
+
+        $("#btnCreate").click(function () {
+            if (ValidateFieldValues()) {
+                var arrData = new Array();
+                arrData[0] = ""; //We will keep empty this and we can use at the time of update of item.
+                arrData[1] = $("#LoginID").val().trim();
+                arrData[2] = $("#DisplayName").val().trim();
+                arrData[3] = $("#EmailID").val().trim();
+                var isQMSChecked = false;
+                if ($("#chk2").prop("checked")) {
+                    isQMSChecked = true;
+                }
+                arrData[4] = isQMSChecked;
+                
+                $.ajax({
+                    url: '/Users2/InsertRecord',
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: ShowProgressBar(),
+                    complete: HideProgressBar(),
+                    async: false,
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    data: JSON.stringify({ arr: arrData }),
+                    success: function (data) {
+                        if (data.success) {
+                            retmsg = data.message;
+                            
+                            $('.btn-success').trigger('click');
+                            $('.modal-body').html(data.message);
+
+                            ClearFieldValues();
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving user');
+                    }
+                });
+            }
+        });
+        $("#btnUpdate").click(function () {
+            //alert($("#chk1").prop("checked"));
+            if (ValidateFieldValues()) {        
+                var arrData = new Array();
+                arrData[0] = $("#divID").html().trim();
+                arrData[1] = $("#LoginID").val().trim();
+                arrData[2] = $("#DisplayName").val().trim();
+                arrData[3] = $("#EmailID").val().trim();
+
+                if ($("#chk2").prop("checked")) {
+                    arrData[4] = true;
+                }
+                else {
+                    arrData[4] = false;
+                }
+                if ($("#chk1").prop("checked")) {
+                    arrData[5] = true;
+                }
+                else {
+                    arrData[5] = false;
+                }
+                
+                $.ajax({
+                    url: '/Users2/InsertRecord',
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: ShowProgressBar(),
+                    complete: HideProgressBar(),
+                    async: false,
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    data: JSON.stringify({ arr: arrData }),
+                    success: function (data) {
+                        if (data.success) {
+                            retmsg = data.message;
+
+                            if (retmsg.indexOf("successfully") >= 0) {
+                                var oTable = $("#editabledatatable").dataTable();
+                                $('#editabledatatable tbody tr').each(function () {
+                                    var nRow = $(this);
+                                    var aData = oTable.fnGetData(nRow);
+                                    if (aData[0] == $("#divID").html().trim()) {
+                                        oTable.fnUpdate(arrData[1], nRow, 1, false);
+                                        oTable.fnUpdate(arrData[2], nRow, 2, false);
+                                        oTable.fnUpdate(arrData[3], nRow, 3, false);
+                                        if ($("#chk2").prop("checked") == true) {
+                                            oTable.fnUpdate('True', nRow, 4, false);
+                                        }
+                                        else {
+                                            oTable.fnUpdate('False', nRow, 4, false);
+                                        }
+                                        if ($("#chk1").prop("checked") == true) {
+                                            oTable.fnUpdate('True', nRow, 5, false);
+                                        }
+                                        else {
+                                            oTable.fnUpdate('False', nRow, 5, false);
+                                        }
+                                    }
+                                });
+                                ClearFieldValues();
+                            }
+                            $('.btn-success').trigger('click');
+                            $('.modal-body').html(retmsg);
+
+                            $('#modal-success').on('hide.bs.modal', function () {
+                                $("#divnew").hide();
+                                $("#ancaddNew").show();
+                                $("#ancbacktoList").hide();
+                                $("#divGrid").show();
+                            })
+
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving user');
+                    }
+                });
+            }
+        });
+
+        $("#btnCancel").click(function () {
+            //$("#divnew").hide();
+            //$("#ancaddNew").show();
+            //$("#ancbacktoList").hide();
+            //$("#divGrid").show();
+            window.location = "/Admin/Users2";
+        });
+        function displayAddDiv() {
+            $("#ancbacktoList").show();
+            $("#ancaddNew").hide();
+            $("#divnew").show();
+            $("#divGrid").hide();
+            $("#btnUpdate").hide();
+            $("#btnCreate").show();
+            $("#divIsActive").hide();
+
+            $("#divID").html('');
+            $("#LoginID").val('');
+            $("#DisplayName").val('');
+            $("#EmailID").val('');
+            $("#chk1").prop('checked', true);
+        }
+
+        function ClearFieldValues() {
+            $("#LoginID").val('');
+            $("#DisplayName").val('');
+            $("#EmailID").val('');
+        }
+    </script>
+}
+

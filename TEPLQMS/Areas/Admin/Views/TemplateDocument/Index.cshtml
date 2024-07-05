@@ -1,0 +1,317 @@
+﻿
+@{
+    ViewBag.Title = "DMS - Template Document";
+}
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1' style="font-size:25px !important;"><b><span id="spanTitle">Template Document</span></b></span>
+            </div>
+            <div class="widget-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row mantable">
+                                <div id="divID" style="display:none;"></div><div id="divExtFileName" style="display:none;"></div>
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label><strong>Template Code</strong><span class="mandatory">*</span></label>
+                                            <input title="Template Code" class="form-control manfield umanfield" id="TemplateCode" name="Name" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label><strong>Template Name</strong><span class="mandatory">*</span></label>
+                                            <input title="Template Name" class="form-control manfield umanfield" id="TemplateName" name="Name" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label><strong>Template Level</strong><span class="mandatory">*</span></label>
+                                            <select class="form-control manfield umanfield" name="TemplateName" data-bv-field="TemplateLevel" id="TemplateLevel" title="Template Level">
+                                                <option value="0">Select a value</option>
+                                                <option value="Level 1">Level 1</option>
+                                                <option value="Level 2">Level 2</option>
+                                                <option value="Level 3">Level 3</option>
+                                                <option value="Level 4">Level 4</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label><strong>Upload Template</strong><span class="updateDocu mandatory">*</span></label>
+                                            <input class="form-control manfield" id="DOCFile" name="DOC" type="file" value="" title="Upload Template">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label style="color:white;">TEPL</label>
+                                            <button class="btn btn-azure" id="btnAddTemplate" type="button">Add Template</button>
+                                            <button style="display:none;" class="btn btn-azure" id="btnUpdateTemplate" type="button">Update Template</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                    <thead>
+                        <tr role="row">
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Template Code
+                            </th>
+                            <th>
+                                Template Name
+                            </th>
+                            <th>
+                                File Name
+                            </th>
+                            <th>
+                                Level
+                            </th>
+                            <th>Is Active</th>
+                            <th>
+                                Download
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var txt in ViewBag.Data)
+                        {
+                        <tr>
+                            <td>@txt.ID</td>
+                            <td>@txt.Code</td>
+                            <td>@txt.Name</td>
+                            <td>@txt.FileName</td>
+                            <td>@txt.Level</td>
+                            <td>@txt.Active</td>
+                            <td nowrap>
+                                <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "../DownloadTemplate", new { filePath = @txt.FilePath,fileName=@txt.FileName })'>View Document</a>
+                            </td>
+                            <td>
+                                <a href="#" onclick="EditTemplate('@txt.ID', '@txt.Code','@txt.Name','@txt.Level','@txt.FileName','@txt.FilePath')" class="btn btn-azure btn-xs edit"><i class="fa fa-edit"></i></a>
+                                <a href="#" onclick="DeleteTemplate('@txt.ID', '@txt.Name')" class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+@*<div id="overlay" style="display:none;">
+        sdfsdfsd
+        <div id="sidebar">AAAA</div>
+    </div>*@
+
+@section PageScripts{
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script>
+        $(document).ready(function () {
+            InitiateTemplateDataTable.init();
+          });
+       
+        $("#btnAddTemplate").click(function () {
+            if (ValidateFormFields('.manfield')) {
+                var fileData = new FormData();
+                fileData.append("TemplateCode", $("#TemplateCode").val().trim());
+                fileData.append("TemplateName", $("#TemplateName").val().trim());
+                fileData.append("TemplateLevel", $("#TemplateLevel").val().trim());
+                //fileData.append("TemplateName", $("#TemplateName").val().trim());
+                //fileData.append("TemplateName", $("#TemplateName").val().trim());
+                var fileUpload = $("#DOCFile").get(0);
+                var files = fileUpload.files;
+                var ext = ''; var fileSize = 0; var isProceed = false;
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);
+                }
+                $.ajax({
+                    url: "TemplateDocument/AddTemplate",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While Saving the Template.');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html('Template Saved Successfully.');
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/TemplateDocument';
+                                })
+                                //clearFields();
+                            }
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+        function resetValue() {
+            $("#ddlTemplate").val(0);
+            $("#ddlSection").val(0);
+            $("#ddlSection").find("option").remove();
+            $("#ddlSection").append('<option title="All" value="0">All</option>');
+            $("#ddlDocCategory").val(0);
+            $("#ddlProject").val(0);
+        }
+
+        function DeleteTemplate(docID, docName) {
+            bootbox.confirm('Are you sure to delete document \'' + docName + '\'?', function (result) {
+                if (result) {
+                    var fileData = new FormData();
+                    fileData.append("ID", docID);
+
+                    $.ajax({
+                        url: "/TemplateDocument/DeleteTemplate",
+                        dataType: "json",
+                        type: "POST",
+                        beforeSend: function () {
+                            $("#overlay").show();
+                            $("#overlay").addClass('modal-backdrop fade in');
+                            $("#sidebar").addClass('modal-backdrop fade in');
+                        },
+                        complete: function () {
+                            $("#overlay").hide();
+                            $("#overlay").removeClass('modal-backdrop fade in');
+                            $("#sidebar").removeClass('modal-backdrop fade in');
+                        },
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        data: fileData,
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.message == 'failed') {
+                                    $('.btn-danger').trigger('click');
+                                    $('.modal-body').html('Error While Deleting the Template.');
+                                }
+                                else {
+                                    $('.btn-success').trigger('click');
+                                    $('.modal-body').html(data.message);
+                                    $('#modal-success').on('hide.bs.modal', function () {
+                                        window.location = '/Admin/TemplateDocument';
+                                    })
+                                    //clearFields();
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+        }
+
+        function EditTemplate(docID, code, name, level, fileName, filePath) {
+            $("#btnAddTemplate").hide(); $("#btnUpdateTemplate").show();
+            $('.updateDocu').hide();
+            $("#divID").text(docID);
+            $("#TemplateCode").val(code.trim()).attr('readonly', true);
+            $("#TemplateName").val(name.trim());
+            $("#TemplateLevel").val(level);
+            $("#divExtFileName").text(fileName.trim());            
+        }
+
+        $("#btnUpdateTemplate").click(function () {
+            if (ValidateFormFields('.umanfield')) {
+                var fileData = new FormData();
+                fileData.append("ID", $("#divID").text().trim());
+                fileData.append("TemplateCode", $("#TemplateCode").val().trim());
+                fileData.append("TemplateName", $("#TemplateName").val().trim());
+                fileData.append("TemplateLevel", $("#TemplateLevel").val().trim());
+                fileData.append("ExtFileName", $("#divExtFileName").text().trim());
+                var fileUpload = $("#DOCFile").get(0);
+                if (fileUpload != null) {
+                    var files = fileUpload.files;
+                    var ext = ''; var fileSize = 0; var isProceed = false;
+                    for (var i = 0; i < files.length; i++) {
+                        ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                        fileSize = files[i].size;
+                        fileData.append(files[i].name, files[i]);
+                    }
+                }
+                
+                $.ajax({
+                    url: "TemplateDocument/UpdateTemplate",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While Updating the Template.');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html('Template Updated Successfully.');
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/TemplateDocument';
+                                })
+                                //clearFields();
+                            }
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    </script>
+}
+

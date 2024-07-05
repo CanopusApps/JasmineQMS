@@ -1,0 +1,492 @@
+﻿@{
+    ViewBag.Title = "DMS - Existing Document Upload";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="cuwidget-header bordered-bottom bordered-blue">
+                <span class="cuwidget-caption" style="font-size:25px !important;"><b>Existing Document Upload</b></span>
+            </div>
+            <div style="display:none;">
+                <div id="divFileTypes">@ViewBag.FileTypes</div>
+                <div id="divFormsFileTypes">@ViewBag.FormsFileTypes</div>
+                <div id="divReadableFileTypes">@ViewBag.ReadableFileTypes</div>
+                <div id="divAllowedFileSize">@ViewBag.AllowedFileSize</div>
+                <div id="divDocumentDescription"></div>
+                <div id="divCatCode"></div>
+                <div id="divProjCode"></div>
+                <div id="divDeptCode"></div>
+                <div id="divSectionCode"></div>
+                <div id="divDocNumber"></div>
+                <div id="divDocGUID"></div>
+                <div id="DocumentPublishID"></div>
+                <div id="divWFExecutionID"></div>
+                <div id="divDraftVersion"></div>
+                <div id="divEditVersion"></div>
+                <div id="divProjectTypeID"></div>
+                <div id="divProjectTypeCode"></div>
+                <div id="divProjectID"></div>
+                <div id="divDepartmentID"></div>
+                <div id="divSectionID"></div>
+                <div id="divDocumentCategoryID"></div>
+            </div>
+            <div class="widget-body">
+                @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
+                {
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Document Number</strong><span class="mandatory">*</span></label>
+                                            <div class=" col-lg-6">
+                                                <input title="Document Number" class="form-control manfield" id="DocumentNo" name="Number" type="text" value="">
+                                            </div>
+                                            <div class=" col-lg-2">
+                                                <button class="btn btn-blue " type="button" id="btnGetDetails">Get</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12 frmFields">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Upload Type</strong></label>
+                                            <label id="lblUploadType" class="col-lg-7 control-label text-align-left">Existing Document</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="frmFields">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label"><strong>Document Category</strong></label>
+                                                <label id="lblDocCategory" class="col-lg-7 control-label text-align-left"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label"><strong>Project</strong></label>
+                                                <label id="lblProject" class="col-lg-7 control-label text-align-left"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label"><strong>Department</strong></label>
+                                                <label id="lblDepartment" class="col-lg-7 control-label text-align-left"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label"><strong>Section</strong></label>
+                                                <label id="lblSection" class="col-lg-7 control-label text-align-left"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Editable Document</strong><span class="mandatory">*</span></label>
+                                                <div class=" col-lg-7">
+                                                    <input class="form-control manfield" id="DOCFile" name="DOC" type="file" value="" title="Editable Document">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Readable Document</strong><span class="mandatory">*</span></label>
+                                                <div class=" col-lg-7">
+                                                    <input class="form-control manfield" id="DOCFile2" name="DOC2" type="file" value="" title="Readable Document">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Document Description</strong><span class="mandatory">*</span></label>
+                                                <div class=" col-lg-7">
+                                                    <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Last Published Version</strong></label>
+                                                <div class=" col-lg-7">
+                                                    <label id="lblLastVersion" class="col-lg-7 control-label text-align-left"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2"><strong>Revision Reason</strong><span class="mandatory">*</span></label>
+                                                <div class="col-lg-9">
+                                                    <textarea class="form-control manfield" rows="4" id="RevisionReason" style="resize:none;" placeholder="Reason for change..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label" style=""><strong>Comments</strong></label>
+                                                <div class="col-lg-9" style="">
+                                                    <textarea class="form-control" rows="8" id="txtComments" style="resize:none;" placeholder="Comments..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-1 col-sm-12 col-xs-12">
+
+                                        </div>
+                                        <div class="col-lg-10 col-sm-12 col-xs-12">
+                                            <table class="table table-striped table-hover table-bordered" id="ApprovalUsers">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>
+                                                            S No
+                                                        </th>
+                                                        <th>
+                                                            Stage
+                                                        </th>
+                                                        <th>
+                                                            Approval User
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ApprovalUsersBody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-1 col-sm-12 col-xs-12">
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                            <div style="float:right;margin-right:135px;">
+                                                <button class="btn btn-azure" type="submit" id="btnSubmit">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section PageScripts{
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.frmFields').hide();
+        });
+
+        $("#btnGetDetails").click(function () {
+            $("#ApprovalUsersBody").empty();
+            if ($('#DocumentNo').val().trim() != '') {
+                BindDocumentDetails("/ExistingDocumentUpload/GetDocumentDetails", $('#DocumentNo').val());
+            }
+            else {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Document Number is Mandatory');
+            }
+        });
+
+        function BindDocumentDetails(cururl, docNumber) {
+            $.ajax({
+                url: cururl,
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                beforeSend: ShowProgressBar(),
+                complete: HideProgressBar(),
+                cache: false,
+                async: true,
+                data: JSON.stringify({ documentNumber: docNumber }),
+                success: function (data) {
+                    if (data.success) {
+                        if (data.message == 'invalid') {
+                            $('.frmFields').hide();
+                            $('.btn-warning').trigger('click');
+                            $('.modal-body').html('Invalid Document Number.');
+                        }
+                        else if (data.message == 'noaccess') {
+                            $('.frmFields').hide();
+                            $('.btn-warning').trigger('click');
+                            $('.modal-body').html('You are not authorized to modify this document');
+                        }
+                        else if (data.message[1].WFStatus == 'invalid') {
+                            $('.frmFields').hide();
+                            $('.btn-warning').trigger('click');
+                            $('.modal-body').html('Invalid Document Number.');
+                        }
+                        else if (data.message[1].WFStatus == 'notfound') {
+                            $('.frmFields').hide();
+                            $('.btn-warning').trigger('click');
+                            $('.modal-body').html('Document Number Not Found');
+                        }
+                        else if (data.message[1].WFStatus == 'inprogress') {
+                            $('.frmFields').hide();
+                            $('.btn-warning').trigger('click');
+                            $('.modal-body').html('Workflow is in progress for the Document Number.');
+                        }
+                        else {
+
+                            var isMissing = data.message[0];
+                            var docDetails = data.message[1];
+                            var arrayApproval = data.message[2];
+
+                            if (isMissing == true) {
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html('Not able to Submit as Approvers Missing...');
+                            }
+                            else {                                
+
+                                for (var z = 0; z < arrayApproval.length; z++) {
+                                    var userNames = '';
+                                    if (arrayApproval[z].WFUsers != null) {
+                                        for (j = 0; j < arrayApproval[z].WFUsers.length; j++) {
+                                            userNames += arrayApproval[z].WFUsers[j].DisplayName + ',';
+                                        }
+                                    }
+                                    $('#ApprovalUsersBody').append('<tr><td>' + (z + 1) + '</td><td>' + arrayApproval[z].StageName + '</td><td>' + userNames + '</td></tr>');
+                                }
+
+                                $('.frmFields').show();
+                                $("#divDocumentDescription").text(docDetails.DocumentDescription);
+                                $("#lblDocCategory").text(docDetails.DocumentCategoryName);
+                                $("#lblProject").text(docDetails.ProjectName);
+                                $("#lblDepartment").text(docDetails.DepartmentName);
+                                $("#lblSection").text(docDetails.SectionName);
+                                $("#divCatCode").text(docDetails.DocumentCategoryCode);
+                                $("#divProjCode").text(docDetails.ProjectCode);
+                                $("#divProjectTypeID").text(docDetails.ProjectTypeID);
+                                $("#divProjectTypeCode").text(docDetails.ProjectTypecode);
+                                $("#divProjectID").text(docDetails.ProjectID);
+                                $("#divSectionID").text(docDetails.SectionID);
+                                $("#divDeptCode").text(docDetails.DepartmentCode);
+                                $("#divDepartmentID").text(docDetails.DepartmentID);
+                                $("#divSectionCode").text(docDetails.SectionCode);
+                                $("#divDocumentCategoryID").text(docDetails.DocumentCategoryID);
+                                $("#divDocNumber").text(docDetails.DocumentNo);
+                                $("#divDocGUID").text(docDetails.DocumentID);
+                                $("#DocumentPublishID").text(docDetails.DocumentPublishID);
+                                $("#divWFExecutionID").text(docDetails.WFExecutionID);
+                                $("#divDraftVersion").text(docDetails.DraftVersion);
+                                $("#divEditVersion").text(docDetails.EditVersion);
+                                $("#DocumentDescription").val(docDetails.DocumentDescription);
+                                $("#lblLastVersion").text(docDetails.DraftVersion);
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    alert('error ' + xhr.message);
+                }
+            });
+        }
+
+        $("#btnSubmit").click(function () {
+            if ($("#DOCFile").val() != "" && $("#DOCFile2").val() != "" && $("#RevisionReason").val().trim() != '' && $("#DocumentDescription").val().trim() != '') {
+                $("#DOCFile").removeClass("manfieldredborder"); $("#DOCFile2").removeClass("manfieldredborder");
+                $("#RevisionReason").removeClass("manfieldredborder");
+                var fileData = new FormData();
+                //fileData.append("DocumentDescription", $("#divDocumentDescription").text());
+                fileData.append('DocumentCategoryID', $("#divDocumentCategoryID").text());
+                fileData.append("DocumentCategoryCode", $("#divCatCode").text());
+                fileData.append("DocumentCategoryName", $("#lblDocCategory").text());
+                fileData.append("ProjectCode", $("#divProjCode").text());
+                fileData.append("ProjectName", $("#lblProject").text());
+                fileData.append('ProjectTypeID', $("#divProjectTypeID").text());
+                fileData.append('ProjectTypeCode', $("#divProjectTypeCode").text());
+                fileData.append('ProjectID', $("#divProjectID").text());
+                fileData.append('SectionID', $("#divSectionID").text());
+                fileData.append('DepartmentID', $("#divDepartmentID").text());
+                fileData.append("DepartmentCode", $("#divDeptCode").text());
+                fileData.append("DepartmentName", $("#lblDepartment").text());
+                fileData.append("SectionCode", $("#divSectionCode").text());
+                fileData.append("SectionName", $("#lblSection").text());
+                fileData.append("DocumentNo", $("#divDocNumber").text());
+                fileData.append("DocumentID", $("#divDocGUID").text());
+                fileData.append("DocumentPublishID", $("#DocumentPublishID").text());
+                fileData.append("WFExecutionID", $("#divWFExecutionID").text());
+                fileData.append("DraftVersion", $("#divDraftVersion").text());
+                fileData.append("EditVersion", $("#divEditVersion").text());
+                fileData.append("Comments", $("#txtComments").val());
+                fileData.append("RevisionReason", $("#RevisionReason").val().trim());
+                fileData.append("DocumentDescription", $("#DocumentDescription").val().trim());
+                var catCode = '';
+                catCode = $("#divCatCode").text();
+                //Files
+                var fileUpload = $("#DOCFile").get(0);
+                var files = fileUpload.files;
+                var ext = ''; var isExist = 'no'; var fileSize = 0; var isProceed = false;
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);
+                    isExist = 'yes';
+                }
+                if (isExist == 'yes') {
+                    //File Type Check
+                    if (catCode == 'FR')
+                        isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext);
+                    else
+                        isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                    if (isProceed == false) { return false; }
+
+                    //File Size Check
+                    isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                    if (isProceed == false) { return false; }
+                }
+                else {
+                    alert('Editable Document is Mandatory');
+                    return false;
+                }
+                isExist = 'no'; isProceed = false;
+                //Readbale Files
+                var fileUpload2 = $("#DOCFile2").get(0);
+                var files2 = fileUpload2.files;
+                var ext2 = '';  var fileSize2 = 0;
+                for (var z = 0; z < files2.length; z++) {
+                    ext2 = files2[z].name.substr(files2[z].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize2 = files2[z].size;
+                    fileData.append(files2[z].name, files2[z]);
+                    isExist = 'yes';
+                }
+                if (isExist == 'yes') {
+                    //File Type Check
+                    isProceed = IsFileTypeAllowed($("#divReadableFileTypes").text(), ext2);
+                    if (isProceed == false) { return false; }
+
+                    //File Size Check
+                    isProceed = IsFileSizeAllowed(fileSize2, $("#divAllowedFileSize").text());
+                    if (isProceed == false) { return false; }
+                }
+                else {
+                    alert('Readable Document is Mandatory');
+                    return false;
+                }
+
+
+                if (isProceed == true) {                    
+                    $.ajax({
+                        url: "/ExistingDocumentUpload/SubmitExistingUpload",
+                        dataType: "json",
+                        type: "POST",
+                        beforeSend: function () {
+                            $("#overlay").show();
+                            $("#overlay").addClass('modal-backdrop fade in');
+                            $("#sidebar").addClass('modal-backdrop fade in');
+                        },
+                        complete: function () {
+                            $("#overlay").hide();
+                            $("#overlay").removeClass('modal-backdrop fade in');
+                            $("#sidebar").removeClass('modal-backdrop fade in');
+                        },
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        data: fileData,
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.message == 'failed') {
+                                    $('.btn-danger').trigger('click');
+                                    $('.modal-body').html('Error While Saving the Document.');
+                                }
+                                else if (data.message == 'itemexists') {
+                                    $('.btn-warning').trigger('click');
+                                    $('.modal-body').html('Document already exists');
+                                }
+                                else {
+                                    $('.btn-success').trigger('click');
+                                    $('.modal-body').html('Document Submitted Successfully.');
+                                    $("#DOCFile").val(''); $("#txtComments").val();
+                                    //redirect after success altert close
+                                    $('#modal-success').on('hide.bs.modal', function () {
+                                        window.location = '/Inbox';
+                                    })
+                                }
+                            }
+                        },
+                        error: function (xhr) {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error while saving document.');
+                        }
+                    });
+                }
+                else {
+                    alert('Something is wrong while Submitting.');
+                    return false;
+                }
+            }
+            else {
+                $("#DOCFile").removeClass("manfieldredborder"); $("#DOCFile2").removeClass("manfieldredborder");
+                $("#RevisionReason").removeClass("manfieldredborder");
+                $("#DocumentDescription").removeClass("manfieldredborder");
+                //if ($("#DOCFile").val() == "") {
+                //    $("#DOCFile").addClass("manfieldredborder");
+                //    $('.btn-warning').trigger('click');
+                //    $('.modal-body').html('Document is Mandatory');
+                //    return false;
+                //}
+                //if ($("#RevisionReason").val() == "") {
+                //    $("#RevisionReason").addClass("manfieldredborder");
+                //    $('.btn-warning').trigger('click');
+                //    $('.modal-body').html('Revision Reason is Mandatory');
+                //    return false;
+                //}
+                var ermsg = '';                
+                if ($("#DOCFile").val() == "") {
+                    $("#DOCFile").addClass("manfieldredborder");                    
+                    ermsg = 'Editable Document';
+                }
+                if ($("#DOCFile2").val() == "") {
+                    $("#DOCFile2").addClass("manfieldredborder");
+                    ermsg += '<br />'
+                    ermsg += 'Readable Document';
+                }
+                if ($("#DocumentDescription").val().trim() == '') {
+                    $("#DocumentDescription").addClass("manfieldredborder");
+                    ermsg += '<br />'
+                    ermsg += 'Document Description';
+                }
+                if ($("#RevisionReason").val().trim() == '') {
+                    $("#RevisionReason").addClass("manfieldredborder");
+                    ermsg += '<br />'
+                    ermsg += 'Revision Reason';
+                }
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(ermsg);
+                return false;
+            }
+            return false;
+        });
+
+        function clearFields() {
+            $("#DOCFile").val(''); $("#DOCFile2").val('');
+            $("#txtComments").val('');
+        }
+
+        $.fn.center = function () {
+            this.css("position", "absolute");
+            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                $(window).scrollTop()) + "px");
+            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                $(window).scrollLeft()) + "px");
+            return this;
+        }
+    </script>
+}

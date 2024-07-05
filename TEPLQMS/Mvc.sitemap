@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+	
+	<mvcSiteMapNode title="Dashboard" controller="Dashboard" action="Index" imageUrl="glyphicon glyphicon-dashboard" description="USER" roles="" >
+		<mvcSiteMapNode title="New Document Upload" controller="DocumentInitiate" action="Index" imageUrl="glyphicon glyphicon-upload" description="USER" roles="USER,ADMIN,QPADM,QMSADMIN" />
+		<mvcSiteMapNode title="Existing Document Upload" controller="ExistingDocumentUpload" action="Index" imageUrl="glyphicon glyphicon-upload" description="USER" roles="USER,ADMIN,QPADM,QMSADMIN" />
+		<mvcSiteMapNode title="Inbox" controller="Inbox" action="Index" imageUrl="glyphicon glyphicon-user" description="USER" roles="USER,ADMIN,QPADM,QMSADMIN" />
+		<mvcSiteMapNode title="External Documents" controller="ExternalDocuments" action="Index" imageUrl="glyphicon glyphicon-download" description="USER" roles="USER,ADMIN,QPADM,QMSADMIN" />
+		<mvcSiteMapNode title="Download Template" controller="DownloadTemplate" action="Index" imageUrl="glyphicon glyphicon-download" description="USER" roles="USER,ADMIN,QPADM,QMSADMIN" />
+		<mvcSiteMapNode title="Approval Matrix" controller="ApprovalMatrix" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="USER,ADMIN,QPADM,QADM" roles="USER,ADMIN,QPADM,QMSADMIN" />
+		<mvcSiteMapNode title="Admin" controller="Admin" action="Index" imageUrl="glyphicon glyphicon-tasks" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QMSADMIN" >
+			<mvcSiteMapNode title="Pending Documents" controller="PendingDocuments" area="Admin" action="Index" imageUrl="glyphicon glyphicon-dashboard" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QADM" />
+			<mvcSiteMapNode title="Archive Projects" controller="ArchiveProjects" area="Admin" action="Index" imageUrl="glyphicon glyphicon-dashboard" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QADM" />
+			<mvcSiteMapNode title="Document Upload" controller="DirectUpload" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+			<mvcSiteMapNode title="Template Upload" controller="TemplateDocument" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+			<mvcSiteMapNode title="Approval Matrix" controller="ApprovalMatrix" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QMSADMIN" />
+			<mvcSiteMapNode title="Users" controller="Users" area="Admin" action="Index" imageUrl="glyphicon glyphicon-user" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+			<mvcSiteMapNode title="Project Users" controller="ProjectUsers" area="Admin" action="Index" imageUrl="glyphicon glyphicon-user" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QMSADMIN" />
+			<mvcSiteMapNode title="External Document" controller="ExternalDocument" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+			<mvcSiteMapNode title="Master" controller="Master" action="Index" imageUrl="glyphicon glyphicon-tasks" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" >
+				<mvcSiteMapNode title="Department" controller="Department" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+				<mvcSiteMapNode title="Section" controller="Section" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+				<mvcSiteMapNode title="Project" controller="Project" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+				<mvcSiteMapNode title="Document Category" controller="Category" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+				<mvcSiteMapNode title="Document No" controller="DocumentNo" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+				<mvcSiteMapNode title="External Category" controller="ExternalCategory" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
+				<mvcSiteMapNode title="External SubCategory" controller="ExternalSubCategory" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />				
+			</mvcSiteMapNode>
+		</mvcSiteMapNode>		
+	</mvcSiteMapNode>
+</mvcSiteMap>

@@ -1,0 +1,755 @@
+﻿@{
+    ViewBag.Title = "DMS - Request Details";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="cuwidget-header bordered-bottom bordered-blue">
+                <span class="cuwidget-caption"> <b>Request Details - Version @{ @ViewBag.Data.DraftVersion.ToString().Split('.')[0] }</b></span>
+                @*<div style="display:inline-block;line-height:36px;background-color:antiquewhite;">
+                <span class="cuwidget-caption" style="font-size:24px !important;padding-left:5px;padding-right:5px;"> <b>Stage - @ViewBag.Data.CurrentStage</b></span>
+            </div>*@
+                <div class="widget-buttons">
+                    <div id="adddiv">
+                        @if (ViewBag.isHistory == false)
+                        {
+                            <a id="ancBack" href="../Dashboard" class="btn btn-azure btn-sm">
+                                <i class="fa fa-arrow-circle-left"></i> Back to Dashboard
+                            </a>
+                            if (ViewBag.isQMSAdmin == true)
+                            {
+                                if (Convert.ToInt32(@ViewBag.Data.DraftVersion.ToString().Split('.')[0].ToString()) > 1)
+                                {
+                                    <a id="ancReplaceUser" href="History?ID=@ViewBag.Data.DocumentID" class="btn btn-azure btn-sm">
+                                        <i class="fa fa-history"></i> Revision History
+                                    </a>
+                                }
+                    <a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-sm add">
+                        <i class="fa fa-remove"></i>Delete Document
+                    </a>
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body">
+                @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
+                {
+                    if (ViewBag.Data != null)
+                    {
+                <div style="display:none;">
+                    <div id="divDocumentID">@ViewBag.Data.DocumentID</div>
+                    <div id="divEditableDocumentName">@ViewBag.Data.EditableDocumentName</div>
+                    <div id="divReadableDocumentName">@ViewBag.Data.ReadableDocumentName</div>
+                    <div id="divDocumentNumber">@ViewBag.Data.DocumentNo</div>
+                    <div id="divEditableFilePath">@ViewBag.Data.EditableFilePath</div>
+                    <div id="divReadableFilePath">@ViewBag.Data.ReadableFilePath</div>
+                    <div id="divDraftVersion">@ViewBag.Data.DraftVersion</div>
+                    <div id="divOriginalVersion">@ViewBag.Data.OriginalVersion</div>
+                    <div id="divEditVersion">@ViewBag.Data.EditVersion</div>
+                    <div id="divWFExecutionID">@ViewBag.Data.WFExecutionID</div>
+                    <div id="divCatCode">@ViewBag.Data.DocumentCategoryCode</div>
+                    <div id="divCatName">@ViewBag.Data.DocumentCategoryName</div>
+                    <div id="divDeptCode">@ViewBag.Data.DepartmentCode</div>
+                    <div id="divDeptName">@ViewBag.Data.DepartmentName</div>
+                    <div id="divSecCode">@ViewBag.Data.SectionCode</div>
+                    <div id="divSecName">@ViewBag.Data.SectionName</div>
+                    <div id="divProjCode">@ViewBag.Data.ProjectCode</div>
+                    <div id="divProjName">@ViewBag.Data.ProjectName</div>
+                    <div id="divFileTypes">@ViewBag.FileTypes</div>
+                    <div id="divFormsFileTypes">@ViewBag.FormsFileTypes</div>
+                    <div id="divReadableFileTypes">@ViewBag.ReadableFileTypes</div>
+                    <div id="divAllowedFileSize">@ViewBag.AllowedFileSize</div>
+                </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Upload Type</strong></label>
+                                            @*@if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000" || @ViewBag.Data.DraftVersion.ToString().Split('.')[0] ==1)
+                                            {
+                                                <label class="col-lg-7 control-label text-align-left">New Document</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
+                                            }*@
+                                            @if (Convert.ToDouble(@ViewBag.Data.DraftVersion.ToString()) > 1)
+                                            {
+                                                <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
+
+                                            }
+                                            else
+                                            {
+                                                <label class="col-lg-7 control-label text-align-left">New Document</label>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Document Category</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.DocumentCategoryName
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Department</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">@ViewBag.Data.DepartmentName</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Section</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.SectionName
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Project</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.ProjectName
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Document Number</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.DocumentNo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Version</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">@ViewBag.Data.DraftVersion.ToString().Split('.')[0]</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Stage</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.CurrentStage
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong> Created By @*@(@ViewBag.Data.CurrentStage == "Initiated" ? "Created By" : "Uploaded By")*@</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.UploadedUserName
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Created On @*@(@ViewBag.Data.CurrentStage == "Initiated" ? "Created On" : "Uploaded On")*@</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.CreatedDate
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Editable Document</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @if (ViewBag.isHistory == false)
+                                                {
+                                                    @ViewBag.Data.EditableDocumentName
+                                                    <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.EditableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.EditableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    @ViewBag.Data.EditableDocumentName
+                                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadHistoryDocument", "Dashboard", new { folderPath = @ViewBag.Data.EditableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.EditableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                                                }
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Readable Document</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @if (ViewBag.isHistory == false)
+                                                {
+                                                    if (ViewBag.Data.DocumentCategoryCode != "FR")
+                                                    {
+                                                        <a target="_blank" class="anc2" id="ancLink2" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        @ViewBag.Data.ReadableDocumentName
+                                                    }
+                                                    <a class="anc2" title="View Document" style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.OriginalVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                                                }
+                                                else
+                                                {
+
+                                                    if (ViewBag.Data.DocumentCategoryCode != "FR")
+                                                    {
+                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=History&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        @ViewBag.Data.ReadableDocumentName
+                                                    }
+                                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadHistoryDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                                                }
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Document Description</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                <span class="viewfield">@ViewBag.Data.DocumentDescription</span>
+                                                <input title="Document Description" class="form-control editfield" id="DocumentDescription" name="Name"
+                                                       type="text" value="@ViewBag.Data.DocumentDescription">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                                    </div>
+                                </div>
+                                @if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000")
+                                {
+                                    <span></span>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2" style=""><strong>Revision Reason</strong></label>
+                                                <label class=" col-lg-9 control-label text-align-left" style="">
+                                                    <span class="viewfield">@ViewBag.Data.RevisionReason</span>
+                                                    <textarea class="form-control editfield" rows="4" id="RevisionReason" style="resize:none;" placeholder="Reason for change...">@ViewBag.Data.RevisionReason</textarea>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
+                                            <label class=" col-lg-9 control-label text-align-left" style="">
+                                                @ViewBag.Data.Comments
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if (ViewBag.isHistory == false)
+                                {
+                                    <div class="row editfield">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label"><strong>Editable Document</strong></label>
+                                                <label class="col-lg-7 control-label text-align-left">
+                                                    <input id="DOCFile" class="form-control manfield" name="DOC" type="file" value="" title="Editable Document">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            @if (@ViewBag.Data.DocumentCategoryCode != "FR")
+                                            {
+                                                <div class="form-group" id="divDoc2">
+                                                    <label class="col-lg-4 control-label"><strong>Readable Document</strong></label>
+                                                    <label class="col-lg-7 control-label text-align-left">
+                                                        <input id="DOCFile2" class="form-control manfield" name="DOC2" type="file" value="" title="Readable Document">
+                                                    </label>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    if (ViewBag.IsInProgress != "inprogress")
+                                    {
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                <div style="float:right;margin-right:150px;">
+                                                    <button class="btn btn-azure " type="submit" id="btnEdit">Edit Document</button>
+
+                                                    <button class="btn btn-azure" type="submit" id="btnUpdate">Update</button>
+                                                    <button class="btn btn-azure" type="submit" id="btnCancel">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                }
+
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div>
+                @Html.Partial("~/Views/ApproveRequest/WFHistoryView.cshtml")
+            </div>            
+        </div>
+    </div>
+</div>
+
+@section PageScripts{
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            InitiateWFHistoryDataTable.init();
+
+            $('.editfield').hide(); $('.viewfield').show();
+            $("#btnUpdate").hide(); $("#btnCancel").hide();
+            $("#btnEdit").hide();
+            ShowHideEditDocument("/ExistingDocumentUpload/GetDocumentDetails", $('#divDocumentNumber').text());
+        });
+
+        $("#btnEdit").click(function () {
+            $('.editfield').show(); $("#btnEdit").hide(); $('.viewfield').hide();
+            $("#btnUpdate").show(); $("#btnCancel").show();
+            return false;
+        });
+        $("#btnUpdate").click(function () {
+
+            if (ValidateFields())
+                UpdateDocumentDetails();
+            return false;
+        });
+
+        $("#btnCancel").click(function () {
+            $('.editfield').hide(); $("#btnEdit").show(); $('.viewfield').show();
+            $("#btnUpdate").hide(); $("#btnCancel").hide();
+            return false;
+        })
+
+        $("#btnUpload1").click(function () {
+            var docName = $("#divEditableDocumentName").text();
+            var filePath = $("#divEditableFilePath").text();
+            var fileTypes = $("#divFileTypes").text();
+            var existingEXT = docName.split('.')[1];
+            UploadDocument('editable', $("#DOCFile1"), docName, existingEXT, 1, filePath, fileTypes);
+            return false;
+        });
+        $("#btnUpload2").click(function () {
+            var docName = $("#divReadableDocumentName").text();
+            var filePath = $("#divReadableFilePath").text();
+            var fileTypes = $("#divReadableFileTypes").text();
+            var existingEXT = docName.split('.')[1];
+            UploadDocument('readonly', $("#DOCFile2"), docName, existingEXT, 2, filePath, fileTypes);
+            return false;
+        });
+
+        function UploadDocument(type, fileControl, docName, existingEXT, btnNo, filePath, fileTypes) {
+            if (fileControl.val() != "") {
+                var fileData = new FormData();
+                fileData.append("DocumentID", $("#divDocumentID").text());
+                fileData.append("DocumentNo", $("#divDocumentNumber").text());
+                fileData.append("DocumentName", docName);
+                fileData.append("FilePath", filePath);
+                fileData.append('DraftVersion', $("#divDraftVersion").text());
+                fileData.append("OriginalVersion", $("#divOriginalVersion").text());
+                fileData.append("EditVersion", $("#divEditVersion").text());
+                fileData.append('DocumentCategoryCode', $("#divCatCode").text());
+                fileData.append('DocumentCategoryName', $("#divCatName").text());
+                fileData.append('DepartmentCode', $("#divDeptCode").text());
+                fileData.append('DepartmentName', $("#divDeptName").text());
+                fileData.append('SectionCode', $("#divSecCode").text());
+                fileData.append('SectionName', $("#divSecName").text());
+                fileData.append('ProjectCode', $("#divProjCode").text());
+                fileData.append('ProjectName', $("#divProjName").text());
+                fileData.append('DocumentType', type);                
+                var catCode = '';
+                catCode = $("#divCatCode").text();
+
+                //Files
+                var fileUpload = fileControl.get(0); //$("#DOCFile").get(0);
+                var files = fileUpload.files;
+                var ext = ''; var isExist = 'no'; var fileSize = 0; var isProceed = true;
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);
+                    isExist = 'yes';
+                }                
+                if (isExist == 'yes') {
+                    //File Type Check
+                    if (catCode == 'FR')
+                        isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext);
+                    else
+                        isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                    if (isProceed == false) { return false; }
+
+                    //File Size Check
+                    isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                    if (isProceed == false) { return false; }
+
+                    //Existing doc extension check
+                    if (existingEXT != ext) {
+                        isProceed = false;
+                        $('.btn-warning').trigger('click');
+                        $('.modal-body').html('File Extension is Different than Old File');
+                        return false;
+                    }
+                }
+                if (isProceed == true) {
+                    $.ajax({
+                        url: "/Request/EditDocument",
+                        dataType: "json",
+                        type: "POST",
+                        beforeSend: function () {
+                            $("#overlay").show();
+                            $("#overlay").addClass('modal-backdrop fade in');
+                            $("#sidebar").addClass('modal-backdrop fade in');
+                        },
+                        complete: function () {
+                            $("#overlay").hide();
+                            $("#overlay").removeClass('modal-backdrop fade in');
+                            $("#sidebar").removeClass('modal-backdrop fade in');
+                        },
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        data: fileData,
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.message == 'failed') {
+                                    $('.btn-danger').trigger('click');
+                                    $('.modal-body').html('Error While Replacing the Document.');
+                                }
+                                else {
+                                    $('.btn-success').trigger('click');
+                                    $('.modal-body').html('Document Replaced Successfully.');
+                                    fileControl.val('');
+                                    //redirect after success altert close
+                                    $('#modal-success').on('hide.bs.modal', function () {
+                                        if (btnNo == 1) { $('.anc11').hide(); $('.anc1').show(); }
+                                        else { $('.anc21').hide(); $('.anc2').show(); }
+                                    })
+                                }
+                            }
+                        },
+                        error: function (xhr) {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error while Replacing document.');
+                        }
+                    });
+                }
+                else {
+                    alert('Something is wrong while Replacing.');
+                    return false;
+                }
+            }
+            else {
+                fileControl.addClass("manfieldredborder");
+                var typeText = '';
+                if (type == 'editable')
+                    typeText = 'Editable';
+                else
+                    typeText = 'Published';
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(typeText + ' Document is Mandatory');
+            }
+            return false;
+        }
+
+        function DeleteDocument() {
+            bootbox.confirm("Are you sure to Delete?", function (result) {
+                if (result) {
+                    var DocumentID = $("#divDocumentID").text();
+                   
+                    $.ajax({
+                        url: '/Request/DeleteDocument',
+                        dataType: "json",
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        beforeSend: ShowProgressBar(),
+                        complete: HideProgressBar(),
+                        cache: false,
+                        async: true,
+                        data: JSON.stringify({ DocumentID: DocumentID }),
+                        success: function (data) {
+                            if (data.success) {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);
+
+                                //redirect after success altert close
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Dashboard';
+                                })
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('error ' + xhr.message);
+                        }
+                    });
+                }
+            });            
+        }
+
+        function UpdateDocumentDetails() {
+            var catCode = '';
+            catCode = $("#divCatCode").text();
+
+            //Files Validation
+            var fileUpload = $("#DOCFile").get(0);
+            var files = fileUpload.files;
+            var fileUpload2 = $("#DOCFile2").get(0);
+            var files2;
+            if (fileUpload2 != undefined)
+                files2 = fileUpload2.files;
+            //if (catCode == "FR") {
+            //    if (files.length == 0) {
+            //        $("#DOCFile").addClass("manfieldredborder");
+            //        $('.btn-warning').trigger('click');
+            //        $('.modal-body').html('Please upload Editable Document');
+            //        return false;
+            //    }
+            //}
+            //else {
+            //    if (files.length == 0 && files2.length == 0) {
+            //        $("#DOCFile").addClass("manfieldredborder"); $("#DOCFile2").addClass("manfieldredborder");
+            //        $('.btn-warning').trigger('click');
+            //        $('.modal-body').html('Please upload Editable & Readable Documents');
+            //        return false;
+            //    }
+            //    else if (files.length == 0) {
+            //        $("#DOCFile").addClass("manfieldredborder");
+            //        $('.btn-warning').trigger('click');
+            //        $('.modal-body').html('Please upload Editable Document');
+            //        return false;
+            //    }
+            //    else if (files2.length == 0) {
+            //        $("#DOCFile2").addClass("manfieldredborder");
+            //        $('.btn-warning').trigger('click');
+            //        $('.modal-body').html('Please upload Readable Document');
+            //        return false;
+            //    }
+            //}
+
+            var fileData = new FormData();
+            fileData.append("DocumentID", $("#divDocumentID").text());
+            fileData.append("DocumentNo", $("#divDocumentNumber").text());
+            fileData.append("EditableDocumentName", $("#divEditableDocumentName").text());
+            fileData.append("EditableFilePath", $("#divEditableFilePath").text());
+            fileData.append("ReadableDocumentName", $("#divReadableDocumentName").text());
+            fileData.append("ReadableFilePath", $("#divReadableFilePath").text());
+            fileData.append("DraftVersion", $("#divDraftVersion").text());
+            fileData.append("OriginalVersion", $("#divOriginalVersion").text());
+            fileData.append("EditVersion", $("#divEditVersion").text());
+            fileData.append("DocumentCategoryCode", $("#divCatCode").text());
+            fileData.append("DocumentDescription", $("#DocumentDescription").val().trim());
+            fileData.append("RevisionReason", $("#RevisionReason").val().trim());
+         
+            //File - Editable            
+            var ext = ''; var isExist = 'no'; var fileSize = 0; var isProceed = true;
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    ext = files[i].name.substr(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+                    fileSize = files[i].size;
+                    fileData.append(files[i].name, files[i]);
+                    isExist = 'yes';
+                }
+                if (isExist == 'yes') {
+                    //File Type Check
+                    if (catCode == 'FR')
+                        isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext);
+                    else
+                        isProceed = IsFileTypeAllowed($("#divFileTypes").text(), ext);
+                    if (isProceed == false) { return false; }
+
+                    //File Size Check
+                    isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
+                    if (isProceed == false) { return false; }
+                }
+            }
+            fileData.append('EditableDocumentUploaded', isExist);
+            isExist = 'no';
+            //Files - Readable Document            
+            var ext2 = ''; var fileSize2 = 0;
+            if (files2 != undefined) {
+                if (files2.length > 0) {
+                    for (var z = 0; z < files2.length; z++) {
+                        ext2 = files2[z].name.substr(files2[z].name.lastIndexOf('.') + 1).toLowerCase();
+                        fileSize2 = files2[z].size;
+                        fileData.append(files2[z].name, files2[z]);
+                        isExist = 'yes';
+                    }
+                    if (catCode == 'FR')
+                        isProceed = IsFileTypeAllowed($("#divFormsFileTypes").text(), ext2);
+                    else
+                        isProceed = IsFileTypeAllowed($("#divReadableFileTypes").text(), ext2);
+                    if (isProceed == false) { return false; }
+                    //File Size Check
+                    isProceed = IsFileSizeAllowed(fileSize2, $("#divAllowedFileSize").text());
+                    if (isProceed == false) { return false; }
+                }
+            }
+            fileData.append('ReadableDocumentUploaded', isExist);
+
+            if (isProceed == true) {
+                $.ajax({
+                    url: "/Request/EditDocument",
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: function () {
+                        $("#overlay").show();
+                        $("#overlay").addClass('modal-backdrop fade in');
+                        $("#sidebar").addClass('modal-backdrop fade in');
+                    },
+                    complete: function () {
+                        $("#overlay").hide();
+                        $("#overlay").removeClass('modal-backdrop fade in');
+                        $("#sidebar").removeClass('modal-backdrop fade in');
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: fileData,
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message == 'failed') {
+                                $('.btn-danger').trigger('click');
+                                $('.modal-body').html('Error While Updating the Document.');
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html('Documents Updated Successfully.');
+                                $("#DOCFile").val(''); $("#DOCFile2").val('');                                
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    $('.editfield').hide(); $('.viewfield').show();
+                                    $("#btnUpdate").hide(); $("#btnCancel").hide();
+                                    $("#btnUpdate").show();
+                                    location.reload(true);
+                                })
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while Updating the document.');
+                    }
+                });
+            }
+            else {
+                alert('Something is wrong while Updating.');
+                return false;
+            }
+
+            //else {
+            //    $("#DOCFile").addClass("manfieldredborder");
+            //    $('.btn-warning').trigger('click');
+            //    $('.modal-body').html('Published Document is Mandatory');
+            //}
+            return false;
+        }
+      
+        function ValidateFields() {
+            $("#RevisionReason").removeClass("manfieldredborder");
+            $("#DocumentDescription").removeClass("manfieldredborder");
+            $("#DOCFile").removeClass("manfieldredborder");
+            $("#DOCFile2").removeClass("manfieldredborder");
+            var catCode = $("#divCatCode").text();
+            var isValid = true;
+            var message = '';
+            var version = $("#divOriginalVersion").text().toString().split('.')[0];
+            if ($("#DocumentDescription").val().trim() == '') {
+                $("#DocumentDescription").addClass("manfieldredborder");
+                message = 'Document Description';
+                message += '<br/>';
+                isValid = false;
+            }
+            if (version > 1 && $("#RevisionReason").val().trim() == '') {
+                $("#RevisionReason").addClass("manfieldredborder");
+                message += 'Revision Reason';
+                message += '<br/>';
+                isValid = false;
+            }
+            if (catCode != "FR") {
+                var fileUpload = $("#DOCFile").get(0);
+                var files = fileUpload.files;
+                var fileUpload2 = $("#DOCFile2").get(0);
+                var files2;
+                if (fileUpload2 != undefined)
+                    files2 = fileUpload2.files;
+                if ((files.length > 0 && files2.length == 0) || (files.length == 0 && files2.length > 0)) {
+                    if (files.length == 0) {
+                        $("#DOCFile").addClass("manfieldredborder");
+                        message = 'Editable Document';
+                        message += '<br/>';
+                        isValid = false;
+                    }
+                    else if (files2.length == 0) {
+                        $("#DOCFile2").addClass("manfieldredborder");
+                        message = 'Readable Document';
+                        message += '<br/>';
+                        isValid = false;
+                    }
+                }
+            }
+            if (message != '') {
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html(message);
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        function ShowHideEditDocument(cururl, docNumber) {
+            $.ajax({
+                url: cururl,
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                beforeSend: ShowProgressBar(),
+                complete: HideProgressBar(),
+                cache: false,
+                async: true,
+                data: JSON.stringify({ documentNumber: docNumber }),
+                success: function (data) {
+                    if (data.success) {
+                        if (data.message.WFStatus == 'inprogress') {
+                            $("#btnEdit").hide();
+                        }
+                        else {
+                            $("#btnEdit").show();
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    alert('error ' + xhr.message);
+                }
+            });
+        }
+    </script>
+}
+

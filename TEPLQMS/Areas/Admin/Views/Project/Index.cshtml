@@ -1,0 +1,288 @@
+﻿
+@{
+    ViewBag.Title = "DMS - Project";
+}
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1' style="font-size:25px !important;"><b><span id="spanTitle">Project</span></b></span>
+                <div class="widget-buttons">
+                    <div>
+                        <a id="ancbacktoList" href="/Admin/Project" class="btn btn-azure btn-xs" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-arrow-circle-left"></i> Back to list
+                        </a>
+
+                        <a id="ancaddNew" href="javascript:displayAddDiv();" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-plus-circle"></i> Add Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="divnew" class="widget-body ">
+                <div class="form-horizontal">
+                    <div class="row ">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row mantable">
+                                <div class="row">
+                                    <div id="divID" style="display:none;"></div>
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Project Type</strong><span class="mandatory">*</span></label>
+                                                    <select class="form-control manfield" name="projecttype" data-bv-field="projecttype" id="ddlProjectType" title="Project Type">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Project Code</strong><span class="mandatory">*</span></label>
+                                                    <input title="Project Code" class="form-control manfield" id="ProjectCode" name="ProjectCode" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Project</strong><span class="mandatory">*</span></label>
+                                                    <input title="Project" class="form-control manfield" id="Project" name="Project" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-xs-12">
+                                            <div class="form-group" id="divIsActive">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label style="color:white">TEPL</label>
+                                                    <div class="form-group">
+                                                        <label class="col-lg-5 control-label"><strong>Is Active</strong></label>
+                                                        <div class="col-lg-7">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input id="chk1" type="checkbox" checked="checked">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12 col-sm-offset-8">
+                                            <button class="btn btn-azure" id="btnCreate" type="button">Create</button>
+                                            <button class="btn btn-azure" id="btnUpdate" type="button">Update</button>
+                                            <button class="btn" id="btnCancel" type="button">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divGrid" class="widget-body">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                    <thead>
+                        <tr role="row">
+                            <th>
+                               ID
+                            </th>
+                            <th>Project Type</th>
+                            <th>
+                                Project Code
+                            </th>
+                            <th>
+                                Project Name
+                            </th>
+                            <th>Is Active</th>
+                            <th>
+                                Action
+                            </th>
+                            <th>
+                                Project Type ID
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var txt in ViewBag.Data)
+                        {
+                        <tr>
+                            <td>@txt.ID</td>
+                            <td>@txt.ProjectTypeName</td>
+                            <td>@txt.Code</td>
+                            <td>@txt.Title</td>
+                            <td>@txt.ProjectActive</td>
+                            <td>
+                                <a href="#" class="btn btn-azure btn-xs edit"><i class="fa fa-edit"></i> Edit</a>
+                            </td>
+                            <td>
+                                @txt.ProjectTypeID
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section PageScripts{
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#divnew").hide();
+            $("#ancbacktoList").hide();
+            $("#btnUpdate").hide();
+            InitiateProjectsDataTable.init();
+            BindDropDownBoxes('/Project/GetProjectTypes', $("#ddlProjectType"),'','', 'Select a value');
+        });
+
+        function displayAddDiv() {
+            $("#ancbacktoList").show();
+            $("#ancaddNew").hide();
+            $("#divnew").show();            
+            $("#btnUpdate").hide();
+            $("#btnCreate").show();
+            $("#divGrid").hide();
+
+            $("#divID").html('');
+            $("#ddlProjectType").val('0');
+            $("#ProjectCode").val('');
+            $("#Project").val('');
+            $("#chk1").prop('checked', true);
+        }
+        $("#btnCancel").click(function () {
+            window.location = "/Admin/Project";
+        });
+
+
+        $("#btnCreate").click(function () {
+            if (ValidateFormFields('.manfield')) {
+                var arrData = new Array();
+                if ($("#ProjectCode").val().trim().length != 6) {
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Project Code Should be 6 Digits');
+                    return false;
+                }
+                arrData[0] = ""; //We will keep empty this and we can use at the time of update of item.
+                arrData[1] = $("#ddlProjectType").val().trim();
+                arrData[2] = $("#ddlProjectType option:selected").attr('workflowid');
+                arrData[3] = $("#ProjectCode").val().trim();
+                arrData[4] = $("#Project").val().trim();
+                var isChecked = false;
+                if ($("#chk1").prop("checked")) {
+                    isChecked = true;
+                }
+                arrData[5] = isChecked;
+
+                $.ajax({
+                    url: '/Project/AddProject',
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: ShowProgressBar(),
+                    complete: HideProgressBar(),
+                    async: false,
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    data: JSON.stringify({ arr: arrData }),
+                    success: function (data) {
+                        if (data.success) {
+                            retmsg = data.message;
+
+                            $('.btn-success').trigger('click');
+                            $('.modal-body').html(data.message);
+                            displayAddDiv();
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving Project');
+                    }
+                });
+            }
+        });
+
+        $("#btnUpdate").click(function () {
+            if (ValidateFormFields('.manfield')) {
+                var arrData = new Array();
+                arrData[0] = $("#divID").text();
+                arrData[1] = $("#Project").val().trim();
+                var isChecked = false;
+                if ($("#chk1").prop("checked")) {
+                    isChecked = true;
+                }
+                arrData[2] = isChecked;
+
+                $.ajax({
+                    url: '/Project/UpdateProject',
+                    dataType: "json",
+                    type: "POST",
+                    beforeSend: ShowProgressBar(),
+                    complete: HideProgressBar(),
+                    async: false,
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    data: JSON.stringify({ arr: arrData }),
+                    success: function (data) {
+                        if (data.success) {
+                            retmsg = data.message;
+                            //$('.btn-success').trigger('click');
+                            //$('.modal-body').html(data.message);
+                            ////redirect after success altert close
+                            //$('#modal-success').on('hide.bs.modal', function () {
+                            //    window.location = '/Admin/Project';
+                            //})
+                            if (retmsg.indexOf("pending") >= 0) {
+                                $('.btn-warning').trigger('click');
+                                $('.modal-body').html(retmsg);
+                            }
+                            else {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Admin/Project';
+                                })
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error while saving Project');
+                    }
+                });
+            }
+        });
+    </script>
+}
+

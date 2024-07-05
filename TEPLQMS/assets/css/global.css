@@ -1,0 +1,54 @@
+﻿.cuwidget-header {
+    position: relative;
+    min-height: 40px;
+    background: #ffffff;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    color: #555555;
+    padding-left: 12px;
+    text-align: right;
+}
+.cuwidget-header > .cuwidget-caption {
+    line-height: 40px;
+    padding: 0;
+    margin: 0;
+    float: left;
+    text-align: left;
+    font-weight: 400 !important;
+    font-size: 25px;
+}
+.cuwidget-header > .cuwidget-captionright {
+    line-height: 40px;
+    padding: 0;
+    margin-right: 10px;
+    float: right;
+    text-align: left;
+    font-weight: 400 !important;
+    font-size: 15px;
+    text-decoration-line:underline;
+}
+
+.cuwidget-header.bordered-bottom {
+    border-bottom: 3px solid #ffffff;
+}
+.mandatory
+{
+    color:red;
+}
+.manfieldredborder
+{
+    border:red 1px solid !important;
+}
+.topfocus:focus {
+  outline: none;
+}
+.eye-open-font-size{
+    font-size:15px !important;
+    top:5px !important
+}
+.btn-redcolor, .btn-redcolor:focus {
+    background-color: #d73d32 !important;
+    border-color: #d73d32 !important;
+    color: #ffffff !important;
+}

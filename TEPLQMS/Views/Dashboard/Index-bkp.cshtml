@@ -1,0 +1,500 @@
+﻿@{
+    ViewBag.Title = "DMS - Dashboard";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'  style="font-size:25px !important;"><b>Feedback Form</b></span>
+                <div class="widget-buttons">
+                    <div>
+                        @*<a href="javascript:displayDownloadDIV();" class="btn btn-azure btn-xs add" style="font-size:13px;font-weight:bold;">
+                            <i class="fa fa-download"></i> Download Template
+                        </a>*@    
+                        <span class="widget-caption topfocus" tabindex='1' style="font-size:25px !important;background-color:yellow">
+                        <b>Stage - Plant Maintenance</b></span>
+                    </div>
+                </div>
+            </div> 
+            <div id="divDownload" class="widget-body ">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row mantable">                                
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Document Type</label>
+                                        <div class="col-lg-5">
+                                            <select class="form-control" name="doctype" data-bv-field="doctype">
+                                                <option value="">Select a value</option>
+                                                <option>SOP Document</option>
+                                                <option>Standard Document</option>
+                                                <option>Policy Document</option>
+                                                <option>Work Instruction</option>
+                                                <option>MSOP Document</option>
+                                            </select>
+                                        </div>
+                                        <div class ="col-lg-4">
+                                            <button class="btn btn-azure" id="btnDownload" type="button">Download</button>
+                                            <button class="btn btn-redcolor" id="btnCancel" type="button">Cancel</button>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+            <div class="widget-body">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable" style="display:none;">
+                    <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>
+                                PR Number
+                            </th>
+                            <th>
+                                Equipment
+                            </th>
+                            <th>
+                                Department
+                            </th>                            
+                            <th>
+                                Section
+                            </th>
+                            <th>
+                                Created By
+                            </th>
+                            <th>
+                                Created Date
+                            </th>
+                            <th>
+                                Approved Date
+                            </th>
+                            <th>
+                                Feedback Process
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        <tr>
+                            <td>1</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002001</a></td>
+                            <td>Equipment 1</td>
+                            <td>Administration</td>                            
+                            <td>General Admin</td>
+                            <td>SAGAR KUMAR</td>
+                            <td>11-10-2023</td>
+                            <td>18-10-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Not Initiated</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002002</a></td>
+                            <td>Equipment 2</td>
+                            <td>CEO Office</td>
+                            <td>CEO Common</td>
+                            <td>RAZESH</td>
+                            <td>19-10-2023</td>
+                            <td>27-10-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">In Progress</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002003</a></td>
+                            <td>Equipment 3</td>
+                            <td>Engineering</td>
+                            <td>Anodizing Engineering</td>
+                            <td>CHANDRA SEKHAR</td>
+                            <td>23-10-2023</td>
+                            <td>30-10-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">In Progress</a></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002004</a></td>
+                            <td>Equipment 4</td>
+                            <td>Administration</td>
+                            <td>Admin Common</td>
+                            <td>RAMA KRISHNAN</td>
+                            <td>01-11-2023</td>
+                            <td>20-11-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Not Initiated</a></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002005</a></td>
+                            <td>Equipment 5</td>
+                            <td>INDUSTRIAL ENGINEERING</td>
+                            <td>Info Security</td>
+                            <td>KULA SEKHAR</td>
+                            <td>07-11-2023</td>
+                            <td>30-11-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Completed</a></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002006</a></td>
+                            <td>Equipment 6</td>
+                            <td>INDUSTRIAL ENGINEERING</td>
+                            <td>IE Common</td>
+                            <td>RAZESH</td>
+                            <td>10-11-2023</td>
+                            <td>25-11-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">In Progress</a></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002007</a></td>
+                            <td>Equipment 7</td>
+                            <td>Finance</td>
+                            <td>Finance Common</td>
+                            <td>SANDEEP SETTY</td>
+                            <td>16-11-2023</td>
+                            <td>21-11-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Not Initiated</a></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002008</a></td>
+                            <td>Equipment 8</td>
+                            <td>Administration</td>
+                            <td>Security</td>
+                            <td>RAZESH</td>
+                            <td>21-11-2023</td>
+                            <td>27-11-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Completed</a></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002009</a></td>
+                            <td>Equipment 9</td>
+                            <td>Engineering</td>
+                            <td>Assembly Engineering-Fixtures</td>
+                            <td>SIVA</td>
+                            <td>25-11-2023</td>
+                            <td>02-12-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Not Initiated</a></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002010</a></td>
+                            <td>Equipment 10</td>
+                            <td>Administration</td>
+                            <td>Admin Common</td>
+                            <td>SREEVASTAV</td>
+                            <td>01-12-2023</td>
+                            <td>10-12-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Completed</a></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002011</a></td>
+                            <td>Equipment 11</td>
+                            <td>Administration</td>
+                            <td>General Admin</td>
+                            <td>DINESH</td>
+                            <td>14-12-2023</td>
+                            <td>15-12-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Not Initiated</a></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">8000002012</a></td>
+                            <td>Equipment 12</td>
+                            <td>Engineering</td>
+                            <td>Assembly Engineering-Fixtures</td>
+                            <td>RAZESH</td>
+                            <td>10-12-2023</td>
+                            <td>14-12-2023</td>
+                            <td><a href="http://goolgle.com" target="_blank" style="text-decoration:underline;">Not Initiated</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div  class="col-lg-12 col-sm-12 col-xs-12">
+
+
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>PR Number</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">8000002001</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Equipment</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                Equipement Title
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>No of Items</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">5</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Total Cost</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                RS 10,00,000/-
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Requested By</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                Susheel Kumar
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Requested Date</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                11-10-2023
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Approved By</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                RAJAN GUPTA
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Approved Date</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                18-10-2023
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Department</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                Administration
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Section</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                General Admin
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Supplier</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                SAMSUNG
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Delivery Date</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                01-11-2023
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <br />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Feedback Initiated By</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                RAKESH KUMAR
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Initiated Date</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                20-11-2023
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <br />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label"><strong>Is everything ready from <span style="background-color:yellow">Plant Maintenance</span> Area </strong></label>
+                                            <div class="col-lg-6" style="top:-7px;">
+                                                <div class="row">
+                                                    <div class="col-lg-2 col-sm-2 col-xs-2">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input id="rbnYes" class="" name="form-field-radio" type="radio"><span class="text"> Yes</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-sm-2 col-xs-2">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input id="rbnNo" checked="checked" class="" name="form-field-radio" type="radio"><span class="text"> No</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Available Date<span class="mandatory">*</span></strong></label>
+                                            <div class=" col-lg-4" style="padding-right:0px;">
+                                                <input readonly="readonly" class="form-control date-picker" id="date1" type="text"
+                                                       data-date-format="dd-mm-yyyy" placeholder="Available Date" style="width:200px;">
+                                            </div>
+                                            <div class=" col-lg-1" style="padding-left:0px;">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label" style=""><strong><span id="spanComments">Comments</span> </strong></label>
+                                            <div class="col-lg-9" style="">
+                                                <textarea class="form-control" rows="6" placeholder="Comments..." style="resize:none;" id="txtComments"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <br />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div style="float:right;margin-right:200px;">
+                                            <button class="btn btn-azure " type="submit" id="btnSubmit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section PageScripts{
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>    
+
+    <script>
+
+        $(document).ready(function () {
+            $('#divDownload').hide();
+            //InitiateEditableDataTable_Test.init();
+        //BindControlMultipleItems(new Array(), "/AppUser/GetAllRoles", $('#ddlMultiple'));
+    });
+
+    $("#btnCreate").click(function () {
+        if (ValidateFormFields()) {
+            var arry = getAllFormValues();
+            var arrData = new Array(); var i = 1;
+            arrData[0] = "";
+            $.each(arry, function (key, value) {
+                arrData[i] = value;
+                i = i + 1;
+            });
+            var ctrl = '<a href="#" class="btn btn-azure btn-xs edit"><i class="fa fa-edit"></i> Edit</a><a href="#" class="btn btn-redcolor btn-xs delete"><i class="fa fa-trash-o"></i> Delete</a>';
+            var newRow = ["-1", arrData[1], arrData[4], arrData[2], arrData[5], ctrl];
+            
+            SaveEntitytoDB($("#editabledatatable").dataTable(), "/AppUser/SaveEntity", "", arrData, GetIDsFromMultipleSelected("#ddlMultiple"), newRow, "User");
+        }
+    });
+    $("#btnUpdate").click(function () {
+        if (ValidateFormFields()) {
+            var arry = getAllFormValues();
+            var arrData = new Array(); var i = 1;
+            arrData[0] = $("#divID").html().trim();
+            $.each(arry, function (key, value) {
+                arrData[i] = value;
+                i = i + 1;
+            });
+            var oTable = $("#editabledatatable").dataTable();
+            $('#editabledatatable tbody tr').each(function () {
+                var nRow = $(this);
+                var aData = oTable.fnGetData(nRow);
+                if (aData[0] == $("#divID").html().trim()) {
+                    oTable.fnUpdate(arrData[1], nRow, 1, false);
+                    oTable.fnUpdate(arrData[4], nRow, 2, false);
+                    oTable.fnUpdate(arrData[2], nRow, 3, false);
+                    oTable.fnUpdate(arrData[5], nRow, 4, false);
+                }
+            });
+            SaveEntitytoDB(oTable, "/AppUser/SaveEntity", $("#divID").html().trim(), arrData, GetIDsFromMultipleSelected("#ddlMultiple"), "", "User");
+        }
+    });
+
+    $("#btnCancel").click(function () {
+        $("#divnew").hide();
+    });
+
+    function displayDownloadDIV() {
+        $("#divDownload").show();
+    }
+    $("#btnCancel").click(function () {
+        $("#divDownload").hide();
+    });
+    </script>
+}
+
+
+
+
+

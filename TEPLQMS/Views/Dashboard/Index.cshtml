@@ -1,0 +1,408 @@
+﻿@{
+    ViewBag.Title = "DMS - Dashboard";
+}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <div class="widget-caption topfocus" tabindex='1'><b>All Published Documents</b></div>
+                
+                @if (ViewBag.isQMSAdmin == true)
+                {
+                    @*<div class="widget-buttons" id="QMSDashBoard">
+                        <div class="" style="display:inline-flex">
+                            <div style="padding-right:10px;font-size:18px !important;"><b> Show Pending Documents</b></div>
+                            <div class="checkbox" style="margin-top:0px !important;">
+                                <label>
+                                    <input class="checkbox-slider  colored-blue" id="form-field-checkbox" name="form-field-checkbox" type="checkbox" value="true">
+                                    <input name="form-field-checkbox" type="hidden" value="false"><span class="text"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>*@
+                    <div style="display:none" id="divQMSAdmin">yes</div>
+                }
+                else
+                {
+                    <div style="display:none" id="divQMSAdmin"></div>
+                }
+            </div>
+            <div class="widget-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Department</label>
+                                            <select class="form-control" name="department" data-bv-field="department" id="ddlDepartment">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Section</label>
+                                            <select class="form-control" name="section" data-bv-field="section" id="ddlSection">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Project</label>
+                                            <select class="form-control" name="project" data-bv-field="project" id="ddlProject">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <select class="form-control" name="category" data-bv-field="category" id="ddlDocCategory">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Document Description</label>
+                                            <input type="text" value="" class="form-control" name="description" id="txtDescription" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label style="color:white;">TEPL</label>
+                                            <button class="btn btn-azure" id="btnGetData" type="button">Get Data</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-xs-12">
+                                        <div class="form-group">
+                                            @if (ViewBag.isQMSAdmin == true)
+                                            {
+                                                <label style="color:white;">TEPL</label>
+                                                <button class="btn btn-azure" id="btnExportData" type="button">Export Data</button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body" id="divPublishedDocuments">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable">
+                    <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>
+                                Document Number
+                            </th>
+                            <th>
+                                Document Description
+                            </th>
+                            <th nowrap>
+                                Published On
+                            </th>
+                            <th>
+                                Version
+                            </th>
+                            <th>
+                                Department
+                            </th>
+                            <th>
+                                Section
+                            </th>
+                            <th>
+                                Category
+                            </th>
+                            <th>
+                                Project
+                            </th>
+                            <th>
+                                View
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var txt in ViewBag.Data)
+                        {
+                        <tr>
+                            <td>@txt.DocumentPublishID</td>
+                            <td>
+                                @if (ViewBag.isQMSAdmin == true)
+                                {
+                                    <a style="text-decoration: underline; white-space:nowrap;" href="/Request/Details?IsHistory=false&ID=@txt.DocumentID">@txt.DocumentNo</a>
+                                }
+                                else
+                                {
+                                    <span style="white-space:nowrap;">@txt.DocumentNo</span>
+                                }
+                            </td>
+                            <td>@txt.DocumentDescription</td>
+                            <td nowrap>@txt.PublishedOn</td>
+                            <td>
+                                @if (@txt.OriginalVersion != null)
+                                {
+                                    @txt.OriginalVersion.ToString().Split('.')[0]
+                                }
+                            </td>
+                            <td>@txt.DepartmentName</td>
+                            <td>@txt.SectionName</td>
+                            <td>@txt.DocumentCategoryName</td>
+                            <td>@txt.ProjectName</td>
+                            <td style="text-align:center" nowrap>
+                                @if (@txt.DocumentCategoryCode == "FR")
+                                {
+                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @txt.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @txt.OriginalVersion, fileName= @txt.ReadableDocumentName })'>Download</a>
+                                }
+                                else
+                                {
+                                    <a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href='@TEPL.QMS.Common.Constants.QMSConstants.ViewerURL?stage=Publish&version=@txt.OriginalVersion.ToString().Split('.')[0]&documentid=@txt.DocumentID'>View</a>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section PageScripts{
+ 
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            InitiatePublishedDataTable.init();
+            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'), 'All');
+            $("#editabledatatable_filter").find('input[type="search"]').css("width", "250px");
+        });
+        $("#ddlDepartment").change(function () {
+            if ($('#ddlDepartment').val() != 0)
+                BindSectionsForDept("/DocumentInitiate/GetSectionsForDepartment", $('#ddlSection'), $('#ddlDepartment').val(),'All');
+            else {
+                //Clear all Section values except first
+                $('#ddlSection').find("option").remove();
+                $('#ddlSection').append('<option title="All" value="0">All</option>');
+            }
+        });
+        $("#btnGetData").click(function () {
+           var dept = ''; var sec = ''; var category = ''; var project = '';
+            if ($("#ddlDepartment option:selected").text() != 'All')
+                dept = $("#ddlDepartment option:selected").attr('code');
+            if ($("#ddlSection option:selected").text() != 'All')
+                sec = $("#ddlSection option:selected").attr('code');
+            if ($("#ddlDocCategory option:selected").text() != 'All')
+                category = $("#ddlDocCategory option:selected").attr('code');
+            if ($("#ddlProject option:selected").text() != 'All')
+                project = $("#ddlProject option:selected").attr('code');
+            
+            GetPublishedDocuments(dept, sec, category, project);
+        });
+        $("#btnExportData").click(function () {
+
+            var dept = ''; var sec = ''; var category = ''; var project = '';
+            if ($("#ddlDepartment option:selected").text() != 'All')
+                dept = $("#ddlDepartment option:selected").attr('code');
+            if ($("#ddlSection option:selected").text() != 'All')
+                sec = $("#ddlSection option:selected").attr('code');
+            if ($("#ddlDocCategory option:selected").text() != 'All')
+                category = $("#ddlDocCategory option:selected").attr('code');
+            if ($("#ddlProject option:selected").text() != 'All')
+                project = $("#ddlProject option:selected").attr('code');
+
+            $.ajax({
+                url: "/Dashboard/GetExportPublishedDocuments",
+                dataType: "text",
+                type: "POST",
+                //beforeSend: function () {
+                //    $("#overlay").show();
+                //    $("#overlay").addClass('modal-backdrop fade in');
+                //    $("#sidebar").addClass('modal-backdrop fade in');
+                //},
+                //complete: function () {
+                //    $("#overlay").hide();
+                //    $("#overlay").removeClass('modal-backdrop fade in');
+                //    $("#sidebar").removeClass('modal-backdrop fade in');
+                //},
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ department: dept, section: sec, category: category, project: project, DocumentDescription: $("#txtDescription").val().trim(), IsProjectActive:true }),
+                success: function (data) {
+                    //if (data.success) {
+                    //    if (data.message == 'error') {
+                    //        $('.btn-danger').trigger('click');
+                    //        $('.modal-body').html('Error While getting the pending documents.');
+                    //    }
+                    //    else {
+                    //            //Download File Logic
+                    //    }
+                    //}
+                    //Convert Base64 string to Byte Array.
+                    debugger;
+                    var fileName = "PublishedDocuments.xlsx";
+                    var bytes = Base64ToBytes(data);
+
+                    //Convert Byte Array to BLOB.
+                    var blob = new Blob([bytes], { type: "application/octetstream" });
+
+                    //Check the Browser type and download the File.
+                    var isIE = false || !!document.documentMode;
+                    if (isIE) {
+                        window.navigator.msSaveBlob(blob, fileName);
+                    } else {
+                        var url = window.URL || window.webkitURL;
+                        link = url.createObjectURL(blob);
+                        var a = $("<a />");
+                        a.attr("download", fileName);
+                        a.attr("href", link);
+                        $("body").append(a);
+                        a[0].click();
+                        $("body").remove(a);
+                    }
+                },
+                error: function (xhr) {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Error while downloading file.');
+                }
+            });
+        });
+        function Base64ToBytes(base64) {
+            var s = window.atob(base64);
+            var bytes = new Uint8Array(s.length);
+            for (var i = 0; i < s.length; i++) {
+                bytes[i] = s.charCodeAt(i);
+            }
+            return bytes;
+        };
+        function GetPublishedDocuments(dept, sec, category, project) {
+            
+            $("#editabledatatable").dataTable().fnDeleteRow();
+
+            $.ajax({
+                url: "/Dashboard/GetPublishedDocuments",
+                dataType: "json",
+                type: "POST",
+                beforeSend: function () {
+                    $("#overlay").show();
+                    $("#overlay").addClass('modal-backdrop fade in');
+                    $("#sidebar").addClass('modal-backdrop fade in');
+                },
+                complete: function () {
+                    $("#overlay").hide();
+                    $("#overlay").removeClass('modal-backdrop fade in');
+                    $("#sidebar").removeClass('modal-backdrop fade in');
+                },
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+                data: JSON.stringify({ department: dept, section: sec, category: category, project: project, DocumentDescription: $("#txtDescription").val().trim(), IsProjectActive:true }),
+                success: function (data) {
+                    if (data.success) {
+                        if (data.message == 'error') {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error While getting the published documents.');
+                        }
+                        else {
+                            //Bind the data
+                            for (var z = 0; z < data.message.length; z++) {
+                                //alert(data.message[z].DocumentNo);
+                                var pth = data.message[z].ReadableFilePath;
+                                var version = data.message[z].OriginalVersion;
+                                var docName = data.message[z].ReadableDocumentName;
+                                //var allprams = pth + '$##$' + version + '$##$' + docName;
+                                //var downloadLink = '<a style="text-decoration:underline;" href="@Url.Action("DownloadPublishedDocument", "Dashboard", new { folderPath = "AA", versionNo= 1, fileName= "AAA" })">' + docName +'</a>';
+                                var downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadPublishedDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
+                                var detailsLink = '<span style="white-space:nowrap;">' + data.message[z].DocumentNo+'</span>'; //data.message[z].DocumentNo;
+                                if ($("#divQMSAdmin").text() == 'yes') {
+                                    detailsLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="showDetails(\'' + data.message[z].DocumentID + '\');">' + data.message[z].DocumentNo + '</a>';
+                                }
+                                var record = [data.message[z].DocumentPublishID, detailsLink, data.message[z].DocumentDescription, data.message[z].PublishedOn, data.message[z].OriginalVersion, data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].DocumentCategoryName, data.message[z].ProjectName, downloadLink];
+                                var nRow = $("#editabledatatable").dataTable().fnAddData(record);
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Error while getting Publishing documents.');
+                }
+            });
+        }
+        function ViewDocument(fpath) {
+            //alert('Hi ' + fpath);
+            return false;
+        }
+       
+        function DownloadPublishedDocument(path, vNo, name) {
+            if (path.indexOf("&") > -1) {
+                path = path.replace("&", "%26");
+            }
+            window.location.href = '@Url.Action("DownloadPublishedDocument", "Dashboard")' + '?folderPath=' + path + '&versionNo=' + vNo + '&fileName=' + name;
+        }
+        function showDetails(pubID) {
+            var windhref = '/Request/Details?IsHistory=false&ID=' + pubID;
+            window.open(windhref);
+        }
+        function showPendingDetails(docID) {
+            //var windhref = '/Request?ID=' + docID;
+            //window.open(windhref);
+            window.location = '/Request?ID=' + docID;
+        }
+
+        //$("#form-field-checkbox").change(function () {
+        //    resetValue();
+        //    if ($(this).val() == 'true') {
+        //        $(this).val('false');
+        //        //alert('TRUE');
+        //        $("#spanTitle").html('All Pending Documents');
+        //        $("#divPendingDocuments").show();
+        //        $("#divPublishedDocuments").hide();
+        //        GetPendingDocuments('','','','');
+        //    }
+        //    else {
+        //        $(this).val('true');
+        //        //alert('FALSE');
+        //        $("#spanTitle").html('All Published Documents');
+        //        $("#divPendingDocuments").hide();
+        //        $("#divPublishedDocuments").show();
+        //        GetPublishedDocuments('', '', '', '');
+        //    }
+        //});
+               
+
+        function resetValue() {
+            $("#ddlDepartment").val(0);
+            $("#ddlSection").val(0);
+            $("#ddlSection").find("option").remove();
+            $("#ddlSection").append('<option title="All" value="0">All</option>');
+            $("#ddlDocCategory").val(0);
+            $("#ddlProject").val(0);
+            $("#txtDescription").val('');
+        }
+
+    </script>
+}
+
+
+
+
+

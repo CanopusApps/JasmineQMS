@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Access Denied";
+    Layout = "~/Views/Shared/_Empty.cshtml";
+}
+
+<div class="animated fadeIn" style="margin-left: 35% !important; position: relative; margin: 10% auto;">
+    <div class="logobox btn-azure" style="color:white;text-align: center;font-size:xx-large;width:50% !important">
+        <b>@ViewBag.Title</b>
+    </div>
+    <div class="loginbox bg-white" style="border: #2dc3e8 1px solid; width: 50% !important ">
+        <br />
+        <div class="loginbox-title text-align-center">
+            Sorry, you don't have access to the portal.
+        </div>
+        <br />
+        <div class="loginbox-title text-align-center">
+            Please contact <a href="mailto:@ViewBag.SupportEmail">@ViewBag.SupportEmail</a> 
+        </div>
+        <br />
+        <div class="loginbox-title text-align-center">
+            <a style="text-decoration:underline" href="Login">Login</a> 
+        </div>
+        <br />
+    </div>
+</div>

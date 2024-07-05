@@ -1,0 +1,304 @@
+﻿@using System
+@using Bootstrap
+
+<!DOCTYPE html>
+<!--
+BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 1.6.0
+Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB06R48S4
+-->
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+
+    <meta name="description" content="@ViewBag.Description" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @*<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">*@
+    <link rel="shortcut icon" href="~/assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    @Styles.Render("~/css/bootstrap")
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+
+
+    <!--Fonts-->
+    <!--<link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300"
+          rel="stylesheet" type="text/css">-->
+    <!--Beyond styles-->
+    @Styles.Render("~/css/beyond")
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    @Scripts.Render("~/bundles/skin")
+</head>
+<!-- /Head -->
+<!-- Body -->
+<body>
+    <!--Warning Modal Templates-->
+    @using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-blueberry").Fade().HtmlAttributes(new { @class = "modal-message .modal-warning" })))
+    {
+        using (var header = modal.BeginHeader())
+        {
+            <i class="fa fa-warning"></i>
+        }
+        using (var title = modal.BeginTitle())
+        {
+            <text></text>
+        }
+        using (var body = modal.BeginBody())
+        {
+            <text>Is something wrong?</text>
+        }
+        using (var footer = modal.BeginFooter())
+        {
+            @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Palegreen).HtmlAttributes(new { data_dismiss = "modal" })
+        }
+    }
+    <!--End Warning Modal Templates-->
+    <!--Warning Modal Templates-->
+    @using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-warning").Fade().HtmlAttributes(new { @class = "modal-message modal-warning" })))
+    {
+        using (var header = modal.BeginHeader())
+        {
+            <i class="fa fa-warning"></i>
+        }
+        using (var title = modal.BeginTitle())
+        {
+            <text>Below Fields are Missing</text>
+        }
+        using (var body = modal.BeginBody())
+        {
+            <text>Is something wrong?</text>
+        }
+        using (var footer = modal.BeginFooter())
+        {
+            @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Warning).HtmlAttributes(new { data_dismiss = "modal" })
+        }
+    }
+    <!--End Warning Modal Templates-->
+    <!--Danger Modal Templates-->
+    @using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-danger").Fade().HtmlAttributes(new { @class = "modal-message modal-danger" })))
+    {
+        using (var header = modal.BeginHeader())
+        {
+            <i class="glyphicon glyphicon-fire"></i>
+        }
+        using (var title = modal.BeginTitle())
+        {
+            <text>Error</text>
+        }
+        using (var body = modal.BeginBody())
+        {
+            <text>Message unable to send, Please try again later.</text>
+        }
+        using (var footer = modal.BeginFooter())
+        {
+            @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Danger).HtmlAttributes(new { data_dismiss = "modal" })
+        }
+    }
+    <!--End Danger Modal Templates-->
+    <!--Success Modal Templates-->
+    @using (var modal = Html.Bootstrap().Begin(new Modal().Id("modal-success").Fade().HtmlAttributes(new { @class = "modal-message modal-success" })))
+    {
+        using (var header = modal.BeginHeader())
+        {
+            <i class="glyphicon glyphicon-check"></i>
+        }
+        using (var title = modal.BeginTitle())
+        {
+            <text>Success</text>
+        }
+        using (var body = modal.BeginBody())
+        {
+            <text>Customer Saved Successfully.</text>
+        }
+        using (var footer = modal.BeginFooter())
+        {
+            @Html.Bootstrap().Button().Text("Ok").Color(BootstrapColors.Success).Id("btnOKSucess").HtmlAttributes(new { data_dismiss = "modal" })
+        }
+    }
+    <div style="display:none;">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modal-danger">Danger</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#modal-warning">Warning</button>
+        <button class="btn btn-blueberry" data-toggle="modal" data-target="#modal-blueberry">Information</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#modal-success">Success</button>
+    </div>
+
+    <!-- Loading Container -->
+    <div class="loading-container">
+        <div class="loader" style="color:white;"><br />Loading...</div>
+    </div>
+
+    <div id="overlay" style="display:none;">
+        <div id="sidebar" style="left:50%;top:25%;"> <img src="~/assets/img/Loading-Gif.gif" width="70px" height="70px" /> </div>
+    </div>
+    <!--  /Loading Container -->
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-container">
+                <!-- Navbar Barnd -->
+                <div class="navbar-header pull-left">
+                    <a href="/Dashboard" class="navbar-brand">
+                        <small>
+                            <img src="~/assets/img/logo.svg" alt="" /><strong style="font-size:40px;vertical-align:middle">TEPL</strong>
+                        </small>
+                    </a>
+                </div>
+                <!-- /Navbar Barnd -->
+                <!-- Sidebar Collapse -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="collapse-icon fa fa-bars"></i>
+                </div>
+                <div id="divSiteType" style="display:none;">@TEPL.QMS.Common.Constants.QMSConstants.SiteType</div>
+                <div class="navbar-header" style="margin-left: 60px; font-size: 30px; text-align: center; vertical-align: middle; color: white; float: left;">
+                    <strong>Document Management System</strong>
+                    <span style="color:red">(@TEPL.QMS.Common.Constants.QMSConstants.SiteType - @TEPL.QMS.Common.Constants.QMSConstants.SiteName)</span>
+                </div>
+
+                <!-- /Sidebar Collapse -->
+                <!-- Account Area and Settings --->
+                <div class="navbar-header pull-right">
+
+                    <div class="navbar-account">
+                        <ul class="account-area">
+
+                            <li>
+                                @if (HttpContext.Current.Session != null)
+                                {
+                                    if (HttpContext.Current.Session[TEPL.QMS.Common.Constants.QMSConstants.LoggedInUserDisplayName] != null)
+                                    {
+                                        //var usr = (TEPLQMS.Models.Database.AppUser)HttpContext.Current.Session[TEPLQMS.Common.MyConstants.LoggedInUser];
+                                        <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                            <div class="avatar" title="View your public profile">
+                                                <img src="~/assets/img/avatars/default.jpg">
+                                            </div>
+                                            <section>
+                                                <h2>
+                                                    <span class="profile">
+                                                        <span>
+                                                            <strong>@HttpContext.Current.Session[TEPL.QMS.Common.Constants.QMSConstants.LoggedInUserDisplayName]</strong>
+                                                            <div id="usrRole" style="display:none;"></div>
+                                                        </span>
+                                                    </span>
+                                                </h2>
+                                            </section>
+                                        </a>
+                                        <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                            <li>
+                                                <a href="/Login/Logout" class="pull-right">Sign Out</a>
+                                            </li>
+                                        </ul>
+                                    }
+                                }
+                            </li>
+
+                        </ul>
+
+                        <!-- Settings -->
+                    </div>
+                </div>
+                <!-- /Account Area and Settings -->
+            </div>
+        </div>
+    </div>
+    <!-- /Navbar -->
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                @*<div class="sidebar-header-wrapper">
+                        <input type="text" class="searchinput" />
+                        <i class="searchicon fa fa-search"></i>
+                        <div class="searchhelper">Search Documents</div>
+                    </div>*@
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                @Html.MvcSiteMap().Menu()
+                <!-- /Sidebar Menu -->
+            </div>
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+
+                <div class="page-header position-relative page-breadcrumbs" style="height: 41px;font-size:17px;">
+                    @Html.MvcSiteMap().SiteMapPath()
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <a class="sidebar-toggler" href="#">
+                            <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <a class="fullscreen" id="fullscreen-toggler" href="#" alt="full screen">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End-->
+                </div>
+                <!-- /Page Header -->
+                <!-- Page Body -->
+                <div class="page-body">
+                    <!-- Your Content Goes Here -->
+                    @RenderBody()
+                </div>
+                <!-- /Page Body -->
+                <!-- Page Footer -->
+                <div class="page-footer">
+                    <div class="footer-copyright">
+                        <span class="copyright-symbol">
+                            ©
+                        </span>
+                        2024 TEPL - Document Management System
+                    </div>
+                    <div class="footer-buttons">
+                        <a href="#">
+                            <i class="fa fa-external-link"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- /Page Footer -->
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+
+    </div>
+
+
+    <!--Basic Scripts-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!--Beyond Scripts-->
+    @Scripts.Render("~/bundles/beyond")
+
+    <!--Page Related Scripts-->
+    @RenderSection("PageScripts", required: false)
+    @Scripts.Render("~/assets/js/jquery-ui.min.js")
+    @Styles.Render("~/assets/css/jquery-ui.css")
+    <!--Custom Scripts-->
+    @Scripts.Render("~/Scripts/CustomScript.js")
+    @Scripts.Render("~/Scripts/DataTableScript.js")
+
+    <script>
+        $(document).ready(function () {
+            //Hide Projectusers Menu if this site is MP Site
+            if ($("#divSiteType").text() == "MP")
+                $("a[href$='ProjectUsers']").hide();
+            else
+                $("a[href$='ProjectUsers']").show();
+        });
+    </script>
+</body>
+<!--  /Body -->
+</html>

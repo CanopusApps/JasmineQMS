@@ -1,0 +1,304 @@
+﻿@{
+    ViewBag.Title = "DMS - Pending Documents";
+}
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-header">
+                <span class="widget-caption topfocus" tabindex='1'><b><span id="spanTitle">All Pending Documents</span></b></span>
+            </div>
+            <div class="widget-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Department</label>
+                                            <select class="form-control" name="department" data-bv-field="department" id="ddlDepartment">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Section</label>
+                                            <select class="form-control" name="section" data-bv-field="section" id="ddlSection">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Project</label>
+                                            <select class="form-control" name="project" data-bv-field="project" id="ddlProject">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Category</label>
+                                            <select class="form-control" name="category" data-bv-field="category" id="ddlDocCategory">
+                                                <option value="0">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label>Document Description</label>
+                                            <input type="text" value="" class="form-control" name="description" id="txtDescription" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label style="color:white;">TEPL</label>
+                                            <button class="btn btn-azure" id="btnGetData" type="button">Get Data</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-xs-12">
+                                        <div class="form-group">
+                                            <label style="color:white;">TEPL</label>
+                                            <button class="btn btn-azure" id="btnExportData" type="button">Export Data</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body" id="divPendingDocuments">
+                <table class="table table-striped table-hover table-bordered" id="editabledatatable_1">
+                    <thead>
+                        <tr role="row">
+                            <th>ID</th>
+                            <th>
+                                Document Number
+                            </th>
+                            <th nowrap>
+                                Document Description
+                            </th>
+                            <th>
+                                Stage
+                            </th>
+                            <th>
+                                Pending Days
+                            </th>
+                            <th nowrap>
+                                Pending With
+                            </th>
+                            <th>
+                                Department
+                            </th>
+                            <th>
+                                Section
+                            </th>
+                            <th>
+                                Category
+                            </th>
+                            <th>
+                                Project
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section PageScripts{
+
+    <!--Bootstrap Tags Input-->
+    <script src="~/assets/js/tagsinput/bootstrap-tagsinput.js"></script>
+
+    <link href="~/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <script src="~/assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="~/assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/js/datatable/datatables-init.js"></script>
+    <script src="~/assets/js/bootbox/bootbox.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            InitiatePendingDataTable.init();
+            GetPendingDocuments('', '', '', '',true);
+            BindDropDownBoxes("/PendingDocuments/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'), 'All',true);
+            $("#editabledatatable_1_filter").find('input[type="search"]').css("width", "250px");
+        });
+        $("#ddlDepartment").change(function () {
+            if ($('#ddlDepartment').val() != 0)
+                BindSectionsForDept("/DocumentInitiate/GetSectionsForDepartment", $('#ddlSection'), $('#ddlDepartment').val(),'All');
+            else {
+                //Clear all Section values except first
+                $('#ddlSection').find("option").remove();
+                $('#ddlSection').append('<option title="All" value="0">All</option>');
+            }
+        });
+        $("#btnGetData").click(function () {
+           var dept = ''; var sec = ''; var category = ''; var project = '';
+            if ($("#ddlDepartment option:selected").text() != 'All')
+                dept = $("#ddlDepartment option:selected").attr('code');
+            if ($("#ddlSection option:selected").text() != 'All')
+                sec = $("#ddlSection option:selected").attr('code');
+            if ($("#ddlDocCategory option:selected").text() != 'All')
+                category = $("#ddlDocCategory option:selected").attr('code');
+            if ($("#ddlProject option:selected").text() != 'All')
+                project = $("#ddlProject option:selected").attr('code');
+
+            GetPendingDocuments(dept, sec, category, project,true);
+        });
+        $("#btnExportData").click(function () {
+            var dept = ''; var sec = ''; var category = ''; var project = '';
+            if ($("#ddlDepartment option:selected").text() != 'All')
+                dept = $("#ddlDepartment option:selected").attr('code');
+            if ($("#ddlSection option:selected").text() != 'All')
+                sec = $("#ddlSection option:selected").attr('code');
+            if ($("#ddlDocCategory option:selected").text() != 'All')
+                category = $("#ddlDocCategory option:selected").attr('code');
+            if ($("#ddlProject option:selected").text() != 'All')
+                project = $("#ddlProject option:selected").attr('code');
+
+            $.ajax({
+                url: "/PendingDocuments/GetExportPendingDocuments",
+                dataType: "text",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+                data: JSON.stringify({ department: dept, section: sec, category: category, project: project, DocumentDescription: $("#txtDescription").val().trim(), IsProjectActive: true }),
+                success: function (data) {
+                    debugger;
+                    var fileName = "PendingDocuments.xlsx";
+                    var bytes = Base64ToBytes(data);
+
+                    //Convert Byte Array to BLOB.
+                    var blob = new Blob([bytes], { type: "application/octetstream" });
+
+                    //Check the Browser type and download the File.
+                    var isIE = false || !!document.documentMode;
+                    if (isIE) {
+                        window.navigator.msSaveBlob(blob, fileName);
+                    } else {
+                        var url = window.URL || window.webkitURL;
+                        link = url.createObjectURL(blob);
+                        var a = $("<a />");
+                        a.attr("download", fileName);
+                        a.attr("href", link);
+                        $("body").append(a);
+                        a[0].click();
+                        $("body").remove(a);
+                    }
+                },
+                error: function (xhr) {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Error while getting Pending documents.');
+                }
+            });
+        });
+        function Base64ToBytes(base64) {
+            var s = window.atob(base64);
+            var bytes = new Uint8Array(s.length);
+            for (var i = 0; i < s.length; i++) {
+                bytes[i] = s.charCodeAt(i);
+            }
+            return bytes;
+        };
+
+
+        function DownloadDraftDocument(path, vNo, name) {
+            window.location.href = '@Url.Action("DownloadDraftDocument", "PendingDocuments")' + '?folderPath=' + path + '&versionNo=' + vNo + '&fileName=' + name;
+        }
+
+        function showDetails(pubID) {
+            var windhref = '/Request/Details?IsHistory=false&ID=' + pubID;
+            window.open(windhref);
+        }
+        function showPendingDetails(docID) {
+            window.location = '/Request?ID=' + docID;
+        }
+        function showDocumentViewer(version, docID) {
+            var windhref = '@TEPL.QMS.Common.Constants.QMSConstants.ViewerURL'+'?stage=Draft&version=' + version + '&documentid='+docID;
+            window.open(windhref);
+        }
+
+        function GetPendingDocuments(dept, sec, category, project, IsProjectActive) {
+            $("#editabledatatable_1").dataTable().fnDeleteRow();
+            $.ajax({
+                url: "/PendingDocuments/GetDocumentsPending",
+                dataType: "json",
+                type: "POST",
+                beforeSend: function () {
+                    $("#overlay").show();
+                    $("#overlay").addClass('modal-backdrop fade in');
+                    $("#sidebar").addClass('modal-backdrop fade in');
+                },
+                complete: function () {
+                    $("#overlay").hide();
+                    $("#overlay").removeClass('modal-backdrop fade in');
+                    $("#sidebar").removeClass('modal-backdrop fade in');
+                },
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+                data: JSON.stringify({ department: dept, section: sec, category: category, project: project, DocumentDescription: $("#txtDescription").val().trim(), IsProjectActive: IsProjectActive }),
+                success: function (data) {
+                    if (data.success) {
+                        if (data.message == 'error') {
+                            $('.btn-danger').trigger('click');
+                            $('.modal-body').html('Error While getting pending documents.');
+                        }
+                        else {
+                            //Bind the data
+                            for (var z = 0; z < data.message.length; z++) {
+                                var pth = data.message[z].FilePath;
+                                var version = data.message[z].DraftVersion;
+                                var docName = data.message[z].DocumentName;
+                                var pendingWith = data.message[z].ActionByName;
+                                var pendingDays = data.message[z].PendingDays;
+                                var stage = '<span style="white-space:nowrap;">' + data.message[z].CurrentStage +'</span>';
+                                var downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadDraftDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
+                                if (data.message[z].DocumentCategoryCode == "FR")
+                                    downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadDraftDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
+                                else
+                                    downloadLink = '<a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href="#" onclick="showDocumentViewer(\'' + version + '\',\'' + data.message[z].DocumentID + '\');">View</a>';
+                                var detailsLink = data.message[z].DocumentNo;
+                                detailsLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="showPendingDetails(\'' + data.message[z].DocumentID + '\');">' + data.message[z].DocumentNo + '</a>';
+                                var record = [data.message[z].DocumentID, detailsLink, data.message[z].DocumentDescription, stage, pendingDays, pendingWith,data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].DocumentCategoryName, data.message[z].ProjectName];
+                                var nRow = $("#editabledatatable_1").dataTable().fnAddData(record);
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    $('.btn-danger').trigger('click');
+                    $('.modal-body').html('Error while getting Pending documents.');
+                }
+            });
+        }
+
+        function resetValue() {
+            $("#ddlDepartment").val(0);
+            $("#ddlSection").val(0);
+            $("#ddlSection").find("option").remove();
+            $("#ddlSection").append('<option title="All" value="0">All</option>');
+            $("#ddlDocCategory").val(0);
+            $("#ddlProject").val(0);
+            $("#txtDescription").val('');
+        }
+
+    </script>
+}
+
+
+
+
+

@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Change Password";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-sm-6 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-top bordered-azure">
+                <span class="widget-caption"><b>Change Password</b></span>
+            </div>
+            <div class="widget-body">
+                <div class="collapse in">
+                    <form role="form">
+                        <div class="form-group" style="display:none;">
+                            <label for="definpu">ID</label>
+                            <div id="divID"></div>
+                            <div id="divCPsw"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Name</label>
+                            @Html.Bootstrap().TextBox("txtName").Placeholder("Name")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Current Password</label>
+                            @Html.Bootstrap().Password("txtcPsw").Placeholder("Current Password")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">New Password</label>
+                            @Html.Bootstrap().Password("txtnPsw1").Placeholder("New Password")
+                        </div>
+                        <div class="form-group">
+                            <label for="definpu">Confirm Password</label>
+                            @Html.Bootstrap().Password("txtnPsw2").Placeholder("Confirm Password")
+                        </div>
+                        <div class="loginbox-submit" style="width:150px;margin-left:auto;margin-right:auto">
+                            @Html.Bootstrap().SubmitButton().Text("Submit").Id("btnSubmit").Color(BootstrapColors.Azure).ButtonBlock()
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageScripts{
+    <script>
+
+    $('#modal-success').on('shown.bs.modal', function () {
+        //alert("Model is opening...");
+    })
+
+    $('#modal-success').on('hide.bs.modal', function () {
+        //clear the values
+        $("#txtcPsw").val('');
+        $("#txtnPsw1").val('');
+        $("#txtnPsw2").val('');
+        //After changing the password redirect to login
+        window.location = "/Login";
+    })
+
+    function ChangePassword() {
+        var lst = new Array();
+        lst[0] = $("#divID").html();
+        lst[1] = $("#txtnPsw1").val();
+        lst[2] = $("#txtName").val();
+
+        var cururl = "/ChangePassword/ChangePassowrd";
+        $.ajax({
+            url: cururl,
+            dataType: "json",
+            type: "POST",
+            beforeSend: ShowProgressBar(),
+            complete: HideProgressBar(),
+            contentType: 'application/json; charset=utf-8',
+            cache: false,
+            data: JSON.stringify({ arr: lst }),
+            success: function (data) {                
+                if (data.success) {
+                    if (data.message == 'failed') {
+                        $('.btn-danger').trigger('click');
+                        $('.modal-body').html('Error, Please contact Administrator.');
+                    }
+                    else
+                    {
+                        $('.btn-success').trigger('click');
+                        $('.modal-body').html('Password Changed Successfully.');
+                        //Need to redirect as passowrd changed
+                        //window.location = "/Login";
+                    }
+                }
+                //else
+                //{
+                //    $('.btn-danger').trigger('click');
+                //    $('.modal-body').html('Current Passowrd is Wrong.');
+                //}
+            },
+            error: function (xhr) {
+                //alert('fail ' + data.message);
+                $('.btn-danger').trigger('click');
+                $('.modal-body').html('Error while saving Password.');
+            }
+        });
+    }
+
+
+    $("#btnSubmit").on('click', function () {
+        var ermsg = '';
+        var cuPSW = $("#txtcPsw").val().trim();
+        var nwPSW1 = $("#txtnPsw1").val().trim();
+        var nwPSW2 = $("#txtnPsw2").val().trim();
+        if (cuPSW == '')
+        {
+            ermsg = 'Current Password<br/>';
+            $("#txtcPsw").addClass('manfieldredborder');
+        }
+        else
+        {
+            if(cuPSW != $("#divCPsw").html().trim())
+            {
+                ermsg = 'Current Passowrd is Wrong<br/>';
+                $("#txtcPsw").addClass('manfieldredborder');
+            }
+            else
+                $("#txtcPsw").removeClass('manfieldredborder');
+        }
+        if (nwPSW1 == '') {
+            ermsg += 'New Password<br/>';
+            $("#txtnPsw1").addClass('manfieldredborder');
+        }
+        else
+            $("#txtnPsw1").removeClass('manfieldredborder');
+        if (nwPSW2 == '') {
+            ermsg += 'Confirm Password<br/>';
+            $("#txtnPsw2").addClass('manfieldredborder');
+        }
+        else
+            $("#txtnPsw2").removeClass('manfieldredborder');
+
+        if (nwPSW1 != '' && nwPSW2 != '') {
+            if (nwPSW1 != nwPSW2)
+            {
+                ermsg += 'New & Confirm Passwords not same<br/>';
+                $("#txtnPsw1").addClass('manfieldredborder');
+                $("#txtnPsw2").addClass('manfieldredborder');
+            }
+            else
+            {
+                $("#txtnPsw1").removeClass('manfieldredborder');
+                $("#txtnPsw2").removeClass('manfieldredborder');
+            }
+        }
+        if (ermsg != '')
+        {
+            $('.btn-warning').trigger('click');
+            $('.modal-body').html(ermsg);
+        }
+        else
+        {
+            $('.modal-body').html('');
+            //Save the data to DB
+            ChangePassword();
+        }
+        return false;
+    });
+
+
+    $(document).ready(function () {
+        $("#txtcPsw").attr("maxlength", "10");
+        $("#txtnPsw1").attr("maxlength", "10");
+        $("#txtnPsw2").attr("maxlength", "10");
+
+        var model1 = @Html.Raw(@ViewBag.cUserID);
+        var model2 = @Html.Raw(@ViewBag.cUserName);
+        var model3 = @Html.Raw(@ViewBag.cPassword);
+
+        $("#divID").html(model1.Enable.toString());
+        $("#txtName").val(model2.Enable.toString()).attr("readonly", "readonly");
+        $("#divCPsw").html(model3.Enable.toString()); 
+    });
+
+    </script>
+}
+
+
+
+
+
+

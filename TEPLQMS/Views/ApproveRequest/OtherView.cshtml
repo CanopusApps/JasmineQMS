@@ -1,0 +1,250 @@
+﻿<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Upload Type</strong></label>
+                    @if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000")
+                    {
+                        <label class="col-lg-7 control-label text-align-left">New Document</label>
+                    }
+                    else
+                    {
+                        <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Document Category</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.DocumentCategoryName
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Department</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">@ViewBag.Data.DepartmentName</label>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Section</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.SectionName
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Project</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.ProjectName
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4"><strong>Document Number</strong></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.DocumentNo
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4"><strong>New Version</strong></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        @ViewBag.DraftVersion
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4"><strong>Stage</strong></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.CurrentStage
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4"><strong>Created By</strong></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.UploadedUserName
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4"><strong>Created On</strong></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.CreatedDate
+                    </label>
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Document</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">
+                        <a style="text-decoration:underline;" href='@Url.Action("DownloadDraftDocument", "ApproveRequest", new { folderPath = @ViewBag.Data.FilePath, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.DocumentName })'>@ViewBag.Data.DocumentName</a>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4">
+                        <strong>Upload Document</strong>
+                    </label>
+                    <div class=" col-lg-7">
+                        <input class="form-control" id="DOCFile" name="DOC" type="file" value="">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Editable Document</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.EditableDocumentName
+                        @if (@ViewBag.Data.CurrentStage == "QMS Approver")
+                        {
+                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.EditableFilePath,folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.EditableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                        }
+                        @*&nbsp;&nbsp;
+        <a title="View Document" target="_blank" style="text-decoration:underline;" href='#'><i class="menu-icon glyphicon glyphicon-eye-open eye-open-font-size"></i></a>*@
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                @*<div class="form-group">
+                    <label class="control-label col-lg-5">
+                        <strong>Upload Document</strong>
+                    </label>
+                    <div class=" col-lg-7">
+                        <input class="form-control" id="DOCFile" name="DOC" type="file" value="">
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    <label class="col-lg-4 control-label"><strong>Readable Document</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">
+                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Draft&version=@ViewBag.Data.DraftVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+
+                        @if (@ViewBag.Data.CurrentStage == "QMS Approver")
+                        {
+                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath,folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                        }
+                    </label>
+                </div>
+            </div>
+        </div>
+        @if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000")
+        {
+            <span></span>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-lg-2" style=""><strong>Revision Reason</strong><span class="mandatory">*</span></label>
+                        <label class=" col-lg-9 control-label text-align-left" style="">
+                            <textarea class="form-control" rows="4" id="RevisionReason" style="resize:none;" placeholder="">@ViewBag.Data.RevisionReason</textarea>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4"><strong>Document Description</strong><span class="mandatory">*</span></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text"
+                               value="@ViewBag.Data.DocumentDescription">
+                    </label>
+                </div>
+            </div>
+            @*<div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-4"><strong>Multiple Approvals Required?</strong></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.IsMultipleApprovers
+                    </label>
+                </div>
+            </div>*@
+        </div>
+        @*<div id="divMultipleApprovers" style="display:none;">@ViewBag.Data.MultipleApprovers</div>
+        @if (@ViewBag.Data.IsMultipleApprovers == true)
+        {
+
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4"><strong>Document Reviewers</strong></label>
+                        <label id="lblDocReviewers" class=" col-lg-7 control-label text-align-left">
+
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4"><strong>Document Approvers</strong></label>
+                        <label id="lblDocApprovers" class=" col-lg-7 control-label text-align-left">
+
+                        </label>
+                    </div>
+                </div>
+            </div>
+        }*@
+
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
+                    <label class=" col-lg-9 control-label text-align-left" style="">
+                        @ViewBag.Data.Comments
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-lg-3 col-sm-3 col-xs-12">
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <button class="btn btn-azure " type="submit" id="btnApprove">Approve</button>
+                <button class="btn btn-redcolor " type="submit" id="btnReject">Reject</button>
+            </div>
+        </div>
+        <div class="row" id="divSection1" style="display:none">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" style=""><strong><span id="spanComments">Comments</span> </strong></label>
+                    <div class="col-lg-9" style="">
+                        <textarea class="form-control" rows="6" placeholder="Comments..." style="resize:none;" id="txtComments"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="divSection2" style="display:none">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div style="float:right;margin-right:150px;">
+                    <button class="btn btn-azure " type="submit" id="btnSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
