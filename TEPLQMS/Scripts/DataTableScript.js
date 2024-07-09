@@ -1395,10 +1395,10 @@ var InitiateDepartmentDataTable = function () {
             //Datatable Initiating
             var oTable = $('#editabledatatable').dataTable({
                 "aLengthMenu": [
-                    [5, 10, 20, 100, -1],
-                    [5, 10, 20, 100, "All"]
+                    [10, 15, 20, 100, -1],
+                    [10, 15, 20, 100, "All"]
                 ],
-                "iDisplayLength": 10,
+                "iDisplayLength": 15,
                 "sPaginationType": "bootstrap",
                 "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
                 "oTableTools": {
@@ -1439,10 +1439,10 @@ var InitiateSectionDataTable = function () {
             //Datatable Initiating
             var oTable = $('#editabledatatable').dataTable({
                 "aLengthMenu": [
-                    [5, 10, 20, 100, -1],
-                    [5, 10, 20, 100, "All"]
+                    [10, 15, 20, 100, -1],
+                    [10, 15, 20, 100, "All"]
                 ],
-                "iDisplayLength": 10,
+                "iDisplayLength": 15,
                 "sPaginationType": "bootstrap",
                 "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
                 "oTableTools": {
@@ -1554,10 +1554,10 @@ var InitiateCategoryDataTable = function () {
             //Datatable Initiating
             var oTable = $('#editabledatatable').dataTable({
                 "aLengthMenu": [
-                    [5, 10, 20, 100, -1],
-                    [5, 10, 20, 100, "All"]
+                    [10, 15, 20, 100, -1],
+                    [10, 15, 20, 100, "All"]
                 ],
-                "iDisplayLength": 10,
+                "iDisplayLength": 15,
                 "sPaginationType": "bootstrap",
                 "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
                 "oTableTools": {

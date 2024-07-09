@@ -799,6 +799,39 @@
             return false;
         });
 
+        $("#btnRejectDocument").click(function () {
+            
+            if ($("#txtComments").val() != '') {
+                $("#txtComments").removeClass("manfieldredborder");
+                bootbox.confirm("Are you sure to Reject the Request?", function (result) {
+                    if (result) {
+                        debugger;
+                        var comments = $("#txtComments").val().trim();
+                        var docguid = $("#divDocumentID").text();
+                        var CurrentStageID = $("#divCurrentStageID").text();
+                        var CurrentStage = $("#divCurrentStage").text();
+                        var exeID = $("#divWFExecutionID").text();
+                        var uplodUserID = $("#divUploadedUserID").text();
+                        var docNumber = $("#divDocumentNo").text();
+                        var docDesc = $("#divDocumentDescription").text();
+                        var DocumentName = $("#divDocumentName").text();
+                        var DraftVersion = $("#divDraftVersion").text();
+                        var EditVersion = $("#divEditVersion").text();
+                        var OriginalVersion = $("#divOriginalVersion").text();
+                        SubmitRequest(docNumber, docguid, comments, CurrentStageID, CurrentStage, exeID, uplodUserID, 'Document Rejected Successfully...',
+                            docDesc, DocumentName, DraftVersion, EditVersion, OriginalVersion);
+                    }
+                });
+            }
+            else {
+                $("#txtComments").addClass("manfieldredborder");
+                $('.btn-warning').trigger('click');
+                $('.modal-body').html('Comments is Mandatory while Rejecting...');
+            }
+
+            return false;
+        });
+
         $("#btnSubmit").click(function () {
             if (action == 'approve') {
                 if ($("#DocumentDescription").val().trim() == "") {

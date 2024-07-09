@@ -181,7 +181,7 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="T4MVCExtensions">
-      <HintPath>..\packages\T4MVCExtensions.3.10.0\lib\net40\T4MVCExtensions.dll</HintPath>
+      <HintPath>..\TEPL.QMS.Workflow\bin\Debug\T4MVCExtensions.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
@@ -833,6 +833,7 @@
     <Content Include="Views\ApproveRequest\WFHistoryView.cshtml" />
     <Content Include="Views\ExternalDocuments\Index.cshtml" />
     <Content Include="Views\Request\HistoryDetails.cshtml" />
+    <Content Include="Views\ApproveRequest\ViewDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

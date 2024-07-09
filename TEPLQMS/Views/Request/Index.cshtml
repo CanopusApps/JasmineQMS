@@ -46,6 +46,7 @@
                     <div id="divDeptCode">@ViewBag.Data.DepartmentCode</div>
                     <div id="divDeptName">@ViewBag.Data.DepartmentName</div>
                     <div id="divSecCode">@ViewBag.Data.SectionCode</div>
+                    <div id="divSecID">@ViewBag.Data.SectionID</div>
                     <div id="divSecName">@ViewBag.Data.SectionName</div>
                     <div id="divProjCode">@ViewBag.Data.ProjectCode</div>
                     <div id="divProjName">@ViewBag.Data.ProjectName</div>
@@ -491,6 +492,7 @@
                 fileData.append('DraftVersion', $("#divDraftVersion").text());
                 fileData.append('WFExecutionID', $("#divWFExecutionID").text());
                 fileData.append('ProjectTypeID', $("#divProjectTypeID").text());
+                fileData.append('SectionID', $("#divSecID").text());                
                 fileData.append('ProjectID', $("#divProjectID").text());
                  fileData.append('DocumentDescription', $("#DocumentDescription").val().trim());
                 fileData.append('EditableDocumentName', $("#divEditableDocumentName").text());

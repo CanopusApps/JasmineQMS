@@ -146,6 +146,10 @@
                         {
                             <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath,folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
                         }
+
+                        <br />
+                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/ApproveRequest/ViewDocument'> PDF Viewer </a>
+
                     </label>
                 </div>
             </div>

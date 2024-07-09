@@ -175,6 +175,7 @@ namespace TEPLQMS.Controllers
                 objDoc.DocumentID = new Guid(Request.Form["documentguid"].ToString());
                 objDoc.DocumentCategoryCode = Request.Form["doccategorycode"].ToString();
                 objDoc.WFExecutionID = new Guid(Request.Form["WFExecutionID"].ToString());
+                objDoc.SectionID = new Guid(Request.Form["SectionID"].ToString());
                 objDoc.ActionedID = (Guid)System.Web.HttpContext.Current.Session[QMSConstants.LoggedInUserID];
                 objDoc.Comments = Request.Form["comments"].ToString();
                 objDoc.DocumentDescription = Request.Form["DocumentDescription"].ToString();

@@ -48,6 +48,12 @@ namespace TEPLQMS.Controllers
             return View();
         }
 
+        public ActionResult ViewDocument()
+        {
+            
+            return View();
+        }
+
         [HttpPost]
         public ActionResult RejectRequest(string docNumber, string docGUID, string comments, string CurrentStageID, string CurrentStage, string exeID, string uplodUserID, string DocumentDescription,
             string DocumentName, string RevisionReason, string DraftVersion,string EditVersion, string OriginalVersion)
