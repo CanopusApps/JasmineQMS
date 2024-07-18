@@ -190,11 +190,11 @@
         $("#btnCreate").click(function () {
             if (ValidateFormFields('.manfield')) {
                 var arrData = new Array();
-                if ($("#ProjectCode").val().trim().length != 6) {
-                    $('.btn-warning').trigger('click');
-                    $('.modal-body').html('Project Code Should be 6 Digits');
-                    return false;
-                }
+                //if ($("#ProjectCode").val().trim().length != 6) {
+                //    $('.btn-warning').trigger('click');
+                //    $('.modal-body').html('Project Code Should be 6 Digits');
+                //    return false;
+                //}
                 arrData[0] = ""; //We will keep empty this and we can use at the time of update of item.
                 arrData[1] = $("#ddlProjectType").val().trim();
                 arrData[2] = $("#ddlProjectType option:selected").attr('workflowid');

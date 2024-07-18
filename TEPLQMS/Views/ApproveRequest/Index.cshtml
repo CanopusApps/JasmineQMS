@@ -41,6 +41,8 @@
                     <div id="divUploadedUserID">@ViewBag.Data.UploadedUserID</div>
                     <div id="divDocumentCategoryCode">@ViewBag.Data.DocumentCategoryCode</div>
                     <div id="divDocumentCategoryName">@ViewBag.Data.DocumentCategoryName</div>
+                    <div id="divFunctionCode">@ViewBag.Data.FunctionCode</div>
+                    <div id="divFunctionName">@ViewBag.Data.FunctionName</div>
                     <div id="divDepartmentCode">@ViewBag.Data.DepartmentCode</div>
                     <div id="divDepartmentName">@ViewBag.Data.DepartmentName</div>
                     <div id="divSectionCode">@ViewBag.Data.SectionCode</div>
@@ -332,6 +334,8 @@
             fileData.append('WorkflowID', $("#divWorkflowID").text());
             fileData.append('DocumentCategoryCode', $("#divDocumentCategoryCode").text());
             fileData.append('DocumentCategoryName', $("#divDocumentCategoryName").text());
+            fileData.append('FunctionCode', $("#divFunctionCode").text());
+            fileData.append('FunctionName', $("#divFunctionName").text());
             fileData.append('DepartmentCode', $("#divDepartmentCode").text());
             fileData.append('DepartmentName', $("#divDepartmentName").text());
             fileData.append('SectionCode', $("#divSectionCode").text());

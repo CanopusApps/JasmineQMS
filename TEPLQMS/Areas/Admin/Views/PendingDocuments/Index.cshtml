@@ -133,7 +133,7 @@
         $(document).ready(function () {
             InitiatePendingDataTable.init();
             GetPendingDocuments('', '', '', '',true);
-            BindDropDownBoxes("/PendingDocuments/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'), 'All',true);
+            BindDropDownBoxes("/PendingDocuments/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'', 'All',true);
             $("#editabledatatable_1_filter").find('input[type="search"]').css("width", "250px");
         });
         $("#ddlDepartment").change(function () {

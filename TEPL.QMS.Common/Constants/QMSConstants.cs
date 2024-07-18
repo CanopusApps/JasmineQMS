@@ -44,6 +44,7 @@ namespace TEPL.QMS.Common.Constants
 
         //StoredProcedures
         public static string spGenerateDocumentNo = "spGenerateDocumentNo";
+        public static string spGenerateDocumentNoLevel1 = "spGenerateDocumentNoLevel1";
         public static string spGetDocumentNumbers = "spGetDocumentNumbers";
         public static string spGetDocumentLevel = "spGetDocumentLevel";
         public static string spDocumentUpdate = "spDocumentUpdate";
@@ -62,6 +63,7 @@ namespace TEPL.QMS.Common.Constants
         public static string spDocumentPublish = "spDocumentPublish";
         public static string spGetDepartments = "spGetDepartments";
         public static string spGetActiveDepartments = "spGetActiveDepartments";
+        public static string spGetActiveFunctions = "spGetActiveFunctions";
         public static string spGetSectionsForDept = "spGetSectionsForDept";
         public static string spGetProjectTypes = "spGetProjectTypes";
         public static string spGetProjects = "spGetProjects";

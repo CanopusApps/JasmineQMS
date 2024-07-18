@@ -215,6 +215,32 @@ namespace TEPL.QMS.BLL.Component
             }
             return list;
         }
+
+        public List<Function> GetActiveFunctions()
+        {
+            List<Function> list = new List<Function>();
+            try
+            {
+                DataTable dt = objAdmin.GetActiveFunctions();
+                for (int z = 0; z < dt.Rows.Count; z++)
+                {
+                    Function itm = new Function();
+                    itm.ID = new Guid(dt.Rows[z]["ID"].ToString());
+                    itm.Code = dt.Rows[z]["Code"].ToString();
+                    itm.Title = dt.Rows[z]["Title"].ToString();
+                    if (Convert.ToBoolean(dt.Rows[z]["IsActive"].ToString()) == true)
+                        itm.Active = true;
+                    else
+                        itm.Active = false;
+                    list.Add(itm);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerBlock.WriteTraceLog(ex);
+            }
+            return list;
+        }
         public string DeleteDocument(Guid UserID, Guid DocumentID)
         {
             try

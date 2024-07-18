@@ -444,7 +444,7 @@ namespace TEPL.QMS.Common
                     };
                     message.To.Add(toEmail);
                     message.Bcc.Add("rajesh.m-ext@tataelectronics.co.in");
-                    message.Bcc.Add("siva.d-ext@tataelectronics.co.in");
+                    //message.Bcc.Add("siva.d-ext@tataelectronics.co.in");
                     message.Subject = subject;
                     message.Body = messageBody;
                     message.IsBodyHtml = true;

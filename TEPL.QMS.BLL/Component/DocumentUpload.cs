@@ -65,8 +65,11 @@ namespace TEPL.QMS.BLL.Component
             {
                 WorkflowActions objWF = new WorkflowActions();
                 DocumentResponse objRes = new DocumentResponse();
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                //docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                //docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                
                 docOperObj.DocumentUpdate(objDoc);
                 Stage objSt = objWF.GetWorkflowStage(QMSConstants.WorkflowID, objDoc.CurrentStageID);
                 if (objSt.IsDocumentLevelRequired)
@@ -94,8 +97,8 @@ namespace TEPL.QMS.BLL.Component
             {
                 WorkflowActions objWF = new WorkflowActions();
                 DocumentResponse objRes = new DocumentResponse();
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
                 objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
                 docOperObj.DocumentUpdate(objDoc);
                 objWF.WorkflowInitate(QMSConstants.WorkflowID, objDoc.DocumentID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.UploadedUserID);
@@ -129,8 +132,10 @@ namespace TEPL.QMS.BLL.Component
                 DocumentResponse objRes = new DocumentResponse();
                 if (isDocumentUploaded)
                 {
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                    //docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                    //docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
                 }
                 docOperObj.DocumentDescriptionUpdate(objDoc);
@@ -160,8 +165,8 @@ namespace TEPL.QMS.BLL.Component
                 WorkflowActions objWF = new WorkflowActions();
                 if (isDocumentUploaded)
                 {
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
                 }
                 docOperObj.DocumentDescriptionUpdate(objDoc);
@@ -254,8 +259,8 @@ namespace TEPL.QMS.BLL.Component
                 DocumentResponse objRes = new DocumentResponse();
                 if (isDocumentUploaded)
                 {
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
                 }
                 docOperObj.DocumentDescriptionUpdate(objDoc);
@@ -280,12 +285,12 @@ namespace TEPL.QMS.BLL.Component
             try
             {
                 WorkflowActions objWF = new WorkflowActions();
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
                 if (isDocumentUploaded)
                 {
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
                 }
                 docOperObj.DocumentDescriptionUpdate(objDoc);
@@ -314,8 +319,8 @@ namespace TEPL.QMS.BLL.Component
             {
                 if (isDocumentUploaded)
                 {
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
-                    docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
                 }
                 objDoc.EditVersion = objDoc.EditVersion + 0.001m;
                 docOperObj.DocumentUpdatePublised(objDoc);
@@ -704,8 +709,8 @@ namespace TEPL.QMS.BLL.Component
                 WorkflowActions objWF = new WorkflowActions();
                 DocumentResponse objRes = new DocumentResponse();
 
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
-                docOperObj.UploadDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
 
                 docOperObj.DocumentUpdate(objDoc);
 

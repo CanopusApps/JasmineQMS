@@ -50,7 +50,7 @@ namespace TEPL.QMS.BLL.Component
         {
             try
             {
-                docOperObj.UploadDocument(QMSConstants.StoragePath,QMSConstants.TemplateFolder, objTemp.FilePath, objTemp.FileName, 1, objTemp.byteArray);
+                docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath,QMSConstants.TemplateFolder, objTemp.FilePath, objTemp.FileName, 1, objTemp.byteArray);
                 DataTable dt = objTempDAL.AddTemplate(objTemp);
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace TEPL.QMS.BLL.Component
             try
             {
                 if (isFileUploaded)
-                    docOperObj.UploadDocument(QMSConstants.StoragePath,QMSConstants.TemplateFolder, objTemp.FilePath, objTemp.FileName, 1, objTemp.byteArray);
+                    docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath,QMSConstants.TemplateFolder, objTemp.FilePath, objTemp.FileName, 1, objTemp.byteArray);
                 DataTable dt = objTempDAL.UpdateTemplate(objTemp);
             }
             catch (Exception ex)

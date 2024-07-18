@@ -160,11 +160,12 @@
                             <td style="text-align:center" nowrap>
                                 @if (@txt.DocumentCategoryCode == "FR")
                                 {
-                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @txt.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @txt.OriginalVersion, fileName= @txt.ReadableDocumentName })'>Download</a>
+                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @txt.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo = @txt.OriginalVersion, fileName = @txt.ReadableDocumentName })'>Download</a>
                                 }
                                 else
                                 {
                                     <a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href='@TEPL.QMS.Common.Constants.QMSConstants.ViewerURL?stage=Publish&version=@txt.OriginalVersion.ToString().Split('.')[0]&documentid=@txt.DocumentID'>View</a>
+                            @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@txt.ReadableFilePath/@txt.ReadableDocumentName&random=@ViewBag.UTCTIME '> View </a>*@
                                 }
                             </td>
                         </tr>
@@ -194,7 +195,7 @@
 
         $(document).ready(function () {
             InitiatePublishedDataTable.init();
-            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'), 'All');
+            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'', 'All');
             $("#editabledatatable_filter").find('input[type="search"]').css("width", "250px");
         });
         $("#ddlDepartment").change(function () {

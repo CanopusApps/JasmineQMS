@@ -123,7 +123,7 @@ namespace TEPLQMS.Controllers
 
                     QMSAdmin objAdmin = new QMSAdmin();
                     obj = objAdmin.GetUserDetails(LoginId);
-                    if (string.IsNullOrEmpty(obj.LoginID))
+                        if (string.IsNullOrEmpty(obj.LoginID))
                     {
                         if (QMSConstants.SiteName == "OfficeArea")
                         {

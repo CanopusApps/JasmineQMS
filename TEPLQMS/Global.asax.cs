@@ -30,6 +30,11 @@ namespace TEPLQMS
             Logger.SetLogWriter(new LogWriterFactory().Create());
         }
 
+        //public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        //{
+        //    filters.Add(new DisableCache());
+        //}
+
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
             var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];

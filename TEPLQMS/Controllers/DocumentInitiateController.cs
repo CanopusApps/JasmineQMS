@@ -43,8 +43,8 @@ namespace TEPLQMS.Controllers
 
                 var list3 = objAdm.GetProjectsbyRole("DocumentInitiate", System.Web.HttpContext.Current.Session[QMSConstants.LoggedInUserRoles].ToString(),
                        (List<Project>)System.Web.HttpContext.Current.Session[QMSConstants.LoggedInUserProjects]);
-
-                return Json(new { success = true, message1 = list1, message2 = list2, message3 = list3 }, JsonRequestBehavior.AllowGet);
+                List<Function> list4 = objAdm.GetActiveFunctions();
+                return Json(new { success = true, message1 = list1, message2 = list2, message3 = list3, message4 = list4 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -160,13 +160,15 @@ namespace TEPLQMS.Controllers
                         {
                             objDoc.EditableByteArray = fileByteArray;
                             objDoc.EditableDocumentName = objDoc.DocumentNo + Path.GetExtension(file.FileName);
-                            objDoc.EditableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.EditableFolder, objDoc.DepartmentID.ToString(), objDoc.SectionID.ToString(), objDoc.DocumentCategoryID.ToString());
+                            //objDoc.EditableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.EditableFolder, objDoc.DepartmentID.ToString(), objDoc.SectionID.ToString(), objDoc.DocumentCategoryID.ToString());
+                            objDoc.EditableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.EditableFolder, objDoc.DepartmentID.ToString());
                         }
                         else if (i == 1)
                         {
                             objDoc.ReadableByteArray = fileByteArray;
                             objDoc.ReadableDocumentName = objDoc.DocumentNo + Path.GetExtension(file.FileName);
-                            objDoc.ReadableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.ReadableFolder, objDoc.DepartmentID.ToString(), objDoc.SectionID.ToString(), objDoc.DocumentCategoryID.ToString());
+                            //objDoc.ReadableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.ReadableFolder, objDoc.DepartmentID.ToString(), objDoc.SectionID.ToString(), objDoc.DocumentCategoryID.ToString());
+                            objDoc.ReadableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.ReadableFolder, objDoc.DepartmentID.ToString());
                         }
                     }
                 }

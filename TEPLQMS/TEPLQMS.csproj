@@ -239,6 +239,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PendingDocumentsController.cs" />
+    <Compile Include="Controllers\PDFViewerController.cs" />
     <Compile Include="Controllers\Profile2Controller.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Areas\Admin\Controllers\DocumentNoController.cs" />
@@ -834,6 +835,7 @@
     <Content Include="Views\ExternalDocuments\Index.cshtml" />
     <Content Include="Views\Request\HistoryDetails.cshtml" />
     <Content Include="Views\ApproveRequest\ViewDocument.cshtml" />
+    <Content Include="Views\PDFViewer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "DMS - PDF Viewer";
+}
+
+
+<div>
+    <iframe sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                src="@ViewBag.DocURL"
+                style="border: 0; width:100%; height:100%;">
+        </iframe>
+    
+
+</div>
+@*@Scripts.Render("~/bundles/jquery")
+<script>
+    $("#button").click(function () {
+        //$("#iframePDF").attr("src", "http://www.example.com/");
+        $.ajax({
+            url: "/PDFViewer/GetURL",
+            dataType: "json",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            cache: false,
+            //data: fileData,
+            success: function (data) {
+                if (data.success) {
+                    //alert(data.message);
+                    $("#iframePDF").attr("src", data.message);
+                    //document.getElementById('iframePDF').contentWindow.location.reload(true);
+                    //var ifrmmessga = '<iframe id="iframePDF1"  src="' + data.message + '" style="border: 0; width:100%; height:100%;"></iframe>';
+                    //$("#divDocu").append(ifrmmessga);
+
+                }
+            },
+            error: function (xhr) {
+                alert('error ' + xhr.message);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+
+
+    });
+</script>*@

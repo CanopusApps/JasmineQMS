@@ -33,26 +33,6 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-xs-12">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            @*<div class="form-group">
-                        <label class="col-lg-3 control-label"><strong>Upload Type</strong><span class="mandatory">*</span></label>
-                        <div class="col-lg-7">
-                            <select class="form-control manfield manfieldG" title="Upload Type" name="filetype" data-bv-field="filetype" id="ddlUploadType">
-                                <option value="0">Select a value</option>
-                                <option value="1">New Document</option>
-                                <option value="2">Existing Document</option>
-                            </select>
-                        </div>
-                    </div>*@
-
-
-                                            @*<div class="form-group">
-                        <label class="col-lg-4 control-label"><strong>Document Category</strong><span class="mandatory">*</span></label>
-                        <div class="col-lg-7">
-                            <select class="form-control manfield manfieldG" title="Document Category" name="doctype" data-bv-field="doctype" id="ddlDocCategory">
-                                <option value="0">Select a value</option>
-                            </select>
-                        </div>
-                    </div>*@
                                             <div class="form-group">
                                                 <div class="col-lg-1"></div>
                                                 <div class="col-lg-9">
@@ -64,14 +44,6 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            @*<div class="form-group">
-                        <label class="col-lg-2 control-label"><strong>Project</strong><span class="mandatory">*</span></label>
-                        <div class="col-lg-9">
-                            <select title="Project" class="form-control manfield manfieldG" name="project" data-bv-field="project" id="ddlProject">
-                                <option value="0">Select a value</option>
-                            </select>
-                        </div>
-                    </div>*@
 
                                             <div class="form-group">
                                                 <div class="col-lg-1"></div>
@@ -116,6 +88,17 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-xs-12">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class="col-lg-9">
+                                                    <label><strong>Function</strong><span class="mandatory">*</span></label>
+                                                    <select class="form-control manfield manfieldG" title="Function" name="Function" data-bv-field="Function" id="ddlFunction">
+                                                        <option value="0">Select a value</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="form-group" style="">
                                                 <div class="col-lg-1"></div>
                                                 <div class=" col-lg-7" style="">
@@ -131,17 +114,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <div class="col-lg-1"></div>
-                                                <div class=" col-lg-9">
-                                                    <label><strong>Document Description</strong><span class="mandatory">*</span></label>
-                                                    <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text" value="">
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-xs-12">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
@@ -165,13 +140,30 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-1"></div>
+                                                <div class=" col-lg-9">
+                                                    <label><strong>Document Description</strong><span class="mandatory">*</span></label>
+                                                    <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-11 col-sm-11 col-xs-12">
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-lg-1"></div>
                                                 <div class="col-lg-11" style="margin-left: -30px !important;">
                                                     <label><strong>Comments</strong></label>
-                                                    <textarea class="form-control" rows="8" id="txtComments" style="resize:none;" placeholder="Comments..."></textarea>
+                                                    <textarea class="form-control" rows="5" id="txtComments" style="resize:none;" placeholder="Comments..."></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,13 +219,14 @@
     <script>
         $(document).ready(function () {
             $("#divApprovalUsers").hide();
-            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'Select a value');
+            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'), $('#ddlFunction'), 'Select a value');
         });
         $("#ddlDepartment").change(function () {            
             BindSectionsForDept("/DocumentInitiate/GetSectionsForDepartment", $('#ddlSection'), $('#ddlDepartment').val(),'Select a value');
         });
 
         $("#btnGenerate").click(function () {
+            //alert($("#ddlFunction option:selected").attr('code'));
             if (ValidateFormFields(".manfieldG"))
             {
                 $("#ApprovalUsersBody").empty();
@@ -247,6 +240,9 @@
                 fileData.append('ProjectTypeID', $("#ddlProject option:selected").attr('projTypeID'));
                 fileData.append('DocumentCategoryID', $("#ddlDocCategory").val());
                 fileData.append('DocumentCategoryCode', $("#ddlDocCategory option:selected").attr('code'));
+                //fileData.append('DocumentLevel', $("#ddlDocCategory option:selected").attr('documentlevel'));
+                fileData.append('FunctionID', $("#ddlFunction").val());
+                fileData.append('FunctionCode', $("#ddlFunction option:selected").attr('code'));
                 $.ajax({
                     url: "/DocumentInitiate/GenerateDocumentNumber",
                     dataType: "json",
@@ -350,6 +346,16 @@
                     fileData.append('DepartmentID', '');
                     fileData.append('DepartmentCode', '');
                     fileData.append('DepartmentName', '');
+                }
+                if ($("#ddlFunction").val() != '') {
+                    fileData.append('FunctionID', $("#ddlFunction").val());
+                    fileData.append('FunctionCode', $("#ddlFunction option:selected").attr('code'));
+                    fileData.append('FunctionName', $("#ddlFunction option:selected").text());
+                }
+                else {
+                    fileData.append('FunctionID', '');
+                    fileData.append('FunctionCode', '');
+                    fileData.append('FunctionName', '');
                 }
                 if ($("#ddlSection").val() != '') {
                     fileData.append('SectionID', $("#ddlSection").val());

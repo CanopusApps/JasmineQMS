@@ -50,9 +50,9 @@
             </div>
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label class="control-label col-lg-4"><strong>Document Number</strong></label>
-                    <label class=" col-lg-7 control-label text-align-left">
-                        @ViewBag.Data.DocumentNo
+                    <label class="col-lg-4 control-label"><strong>Function</strong></label>
+                    <label class="col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.FunctionName
                     </label>
                 </div>
             </div>
@@ -60,17 +60,17 @@
         <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label class="control-label col-lg-4"><strong>New Version</strong></label>
+                    <label class="control-label col-lg-4"><strong>Document Number</strong></label>
                     <label class=" col-lg-7 control-label text-align-left">
-                        @ViewBag.DraftVersion
+                        @ViewBag.Data.DocumentNo
                     </label>
                 </div>
             </div>
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label class="control-label col-lg-4"><strong>Stage</strong></label>
+                    <label class="control-label col-lg-4"><strong>New Version</strong></label>
                     <label class=" col-lg-7 control-label text-align-left">
-                        @ViewBag.Data.CurrentStage
+                        @ViewBag.DraftVersion
                     </label>
                 </div>
             </div>
@@ -93,26 +93,25 @@
                 </div>
             </div>
         </div>
-        @*<div class="row">
+        <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label class="col-lg-4 control-label"><strong>Document</strong></label>
-                    <label class="col-lg-7 control-label text-align-left">
-                        <a style="text-decoration:underline;" href='@Url.Action("DownloadDraftDocument", "ApproveRequest", new { folderPath = @ViewBag.Data.FilePath, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.DocumentName })'>@ViewBag.Data.DocumentName</a>
+                    <label class="control-label col-lg-4"><strong>Document Description</strong><span class="mandatory">*</span></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text"
+                               value="@ViewBag.Data.DocumentDescription">
                     </label>
                 </div>
             </div>
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label class="control-label col-lg-4">
-                        <strong>Upload Document</strong>
+                    <label class="control-label col-lg-4"><strong>Stage</strong></label>
+                    <label class=" col-lg-7 control-label text-align-left">
+                        @ViewBag.Data.CurrentStage
                     </label>
-                    <div class=" col-lg-7">
-                        <input class="form-control" id="DOCFile" name="DOC" type="file" value="">
-                    </div>
                 </div>
             </div>
-        </div>*@
+        </div>
         <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <div class="form-group">
@@ -121,7 +120,7 @@
                         @ViewBag.Data.EditableDocumentName
                         @if (@ViewBag.Data.CurrentStage == "QMS Approver")
                         {
-                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.EditableFilePath,folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.EditableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.EditableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo = @ViewBag.Data.DraftVersion, fileName = @ViewBag.Data.EditableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
                         }
                         @*&nbsp;&nbsp;
         <a title="View Document" target="_blank" style="text-decoration:underline;" href='#'><i class="menu-icon glyphicon glyphicon-eye-open eye-open-font-size"></i></a>*@
@@ -141,14 +140,12 @@
                     <label class="col-lg-4 control-label"><strong>Readable Document</strong></label>
                     <label class="col-lg-7 control-label text-align-left">
                         <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Draft&version=@ViewBag.Data.DraftVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                        @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.DraftFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>*@
 
                         @if (@ViewBag.Data.CurrentStage == "QMS Approver")
                         {
-                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath,folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
-                        }
-
-                        <br />
-                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/ApproveRequest/ViewDocument'> PDF Viewer </a>
+                            <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo = @ViewBag.Data.DraftVersion, fileName = @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                        }                        
 
                     </label>
                 </div>
@@ -171,25 +168,7 @@
                 </div>
             </div>
         }
-        <div class="row">
-            <div class="col-lg-6 col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label class="control-label col-lg-4"><strong>Document Description</strong><span class="mandatory">*</span></label>
-                    <label class=" col-lg-7 control-label text-align-left">
-                        <input title="Document Description" class="form-control manfield" id="DocumentDescription" name="Name" type="text"
-                               value="@ViewBag.Data.DocumentDescription">
-                    </label>
-                </div>
-            </div>
-            @*<div class="col-lg-6 col-sm-6 col-xs-12">
-                <div class="form-group">
-                    <label class="control-label col-lg-4"><strong>Multiple Approvals Required?</strong></label>
-                    <label class=" col-lg-7 control-label text-align-left">
-                        @ViewBag.Data.IsMultipleApprovers
-                    </label>
-                </div>
-            </div>*@
-        </div>
+        
         @*<div id="divMultipleApprovers" style="display:none;">@ViewBag.Data.MultipleApprovers</div>
         @if (@ViewBag.Data.IsMultipleApprovers == true)
         {

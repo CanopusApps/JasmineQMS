@@ -26,6 +26,7 @@ namespace TEPLQMS.Controllers
 
             DocumentUpload obj = new DocumentUpload();
             ViewBag.Data = obj.GetPublishedDocuments("", "", "", "", "", LoggedInUserID,true);
+            ViewBag.UTCTIME = DateTime.UtcNow.ToString();
             return View();
         }
         public ActionResult Archive()
@@ -129,7 +130,8 @@ namespace TEPLQMS.Controllers
         {
             try
             {
-                string URL = CommonMethods.CombineUrl(QMSConstants.BackUpPath,"History", folder, folderPath, fileName.Split('.')[0].ToString() + "_V" + versionNo + "." + fileName.Split('.')[1].ToString());
+                int VNo = Convert.ToInt32(versionNo);
+                string URL = CommonMethods.CombineUrl(QMSConstants.BackUpPath,"History", folder, folderPath, fileName.Split('.')[0].ToString() + "_V" + VNo + "." + fileName.Split('.')[1].ToString());
                 DocumentUpload bllOBJ = new DocumentUpload();
                 byte[] fileContent = bllOBJ.DownloadDocument(URL);
 

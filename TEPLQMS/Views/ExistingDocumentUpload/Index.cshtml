@@ -18,6 +18,7 @@
                 <div id="divProjCode"></div>
                 <div id="divDeptCode"></div>
                 <div id="divSectionCode"></div>
+                <div id="divFunctionCode"></div>
                 <div id="divDocNumber"></div>
                 <div id="divDocGUID"></div>
                 <div id="DocumentPublishID"></div>
@@ -30,6 +31,7 @@
                 <div id="divDepartmentID"></div>
                 <div id="divSectionID"></div>
                 <div id="divDocumentCategoryID"></div>
+                <div id="divFunctionID"></div>
             </div>
             <div class="widget-body">
                 @using (var f = Html.Bootstrap().Begin(new Form().Type(FormType.Horizontal)))
@@ -88,19 +90,12 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
-                                                <label class="control-label col-lg-4"><strong>Editable Document</strong><span class="mandatory">*</span></label>
-                                                <div class=" col-lg-7">
-                                                    <input class="form-control manfield" id="DOCFile" name="DOC" type="file" value="" title="Editable Document">
-                                                </div>
+                                                <label class="col-lg-4 control-label"><strong>Function</strong></label>
+                                                <label id="lblFunction" class="col-lg-7 control-label text-align-left"></label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4"><strong>Readable Document</strong><span class="mandatory">*</span></label>
-                                                <div class=" col-lg-7">
-                                                    <input class="form-control manfield" id="DOCFile2" name="DOC2" type="file" value="" title="Readable Document">
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="row">
@@ -122,11 +117,30 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Editable Document</strong><span class="mandatory">*</span></label>
+                                                <div class=" col-lg-7">
+                                                    <input class="form-control manfield" id="DOCFile" name="DOC" type="file" value="" title="Editable Document">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4"><strong>Readable Document</strong><span class="mandatory">*</span></label>
+                                                <div class=" col-lg-7">
+                                                    <input class="form-control manfield" id="DOCFile2" name="DOC2" type="file" value="" title="Readable Document">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <label class="control-label col-lg-2"><strong>Revision Reason</strong><span class="mandatory">*</span></label>
                                                 <div class="col-lg-9">
-                                                    <textarea class="form-control manfield" rows="4" id="RevisionReason" style="resize:none;" placeholder="Reason for change..."></textarea>
+                                                    <textarea class="form-control manfield" rows="2" id="RevisionReason" style="resize:none;" placeholder="Reason for change..."></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -137,7 +151,7 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 control-label" style=""><strong>Comments</strong></label>
                                                 <div class="col-lg-9" style="">
-                                                    <textarea class="form-control" rows="8" id="txtComments" style="resize:none;" placeholder="Comments..."></textarea>
+                                                    <textarea class="form-control" rows="5" id="txtComments" style="resize:none;" placeholder="Comments..."></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -270,12 +284,15 @@
                                 $("#lblProject").text(docDetails.ProjectName);
                                 $("#lblDepartment").text(docDetails.DepartmentName);
                                 $("#lblSection").text(docDetails.SectionName);
+                                $("#lblFunction").text(docDetails.FunctionName);
                                 $("#divCatCode").text(docDetails.DocumentCategoryCode);
                                 $("#divProjCode").text(docDetails.ProjectCode);
                                 $("#divProjectTypeID").text(docDetails.ProjectTypeID);
                                 $("#divProjectTypeCode").text(docDetails.ProjectTypecode);
                                 $("#divProjectID").text(docDetails.ProjectID);
                                 $("#divSectionID").text(docDetails.SectionID);
+                                $("#divFunctionID").text(docDetails.FunctionID);
+                                $("#divFunctionCode").text(docDetails.FunctionCode);
                                 $("#divDeptCode").text(docDetails.DepartmentCode);
                                 $("#divDepartmentID").text(docDetails.DepartmentID);
                                 $("#divSectionCode").text(docDetails.SectionCode);
@@ -316,6 +333,9 @@
                 fileData.append('DepartmentID', $("#divDepartmentID").text());
                 fileData.append("DepartmentCode", $("#divDeptCode").text());
                 fileData.append("DepartmentName", $("#lblDepartment").text());
+                fileData.append('FunctionID', $("#divFunctionID").text());
+                fileData.append("FunctionCode", $("#divFunctionCode").text());
+                fileData.append("FunctionName", $("#lblFunction").text());
                 fileData.append("SectionCode", $("#divSectionCode").text());
                 fileData.append("SectionName", $("#lblSection").text());
                 fileData.append("DocumentNo", $("#divDocNumber").text());

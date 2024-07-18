@@ -308,6 +308,29 @@ namespace TEPL.QMS.DAL.Database.Component
             }
             return dt;
         }
+        public DataTable GetActiveFunctions()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(QMSConstants.DBCon))
+                {
+                    using (SqlCommand cmd = new SqlCommand(QMSConstants.spGetActiveFunctions, con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        {
+                            sda.Fill(dt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
         public DataTable GetSectionsForDept(Guid strDepartment)
         {
             DataTable dt = new DataTable();

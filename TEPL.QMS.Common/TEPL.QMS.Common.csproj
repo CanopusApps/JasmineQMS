@@ -120,6 +120,7 @@
     <Compile Include="FileConvert.cs" />
     <Compile Include="LoggerBlock.cs" />
     <Compile Include="MailSend.cs" />
+    <Compile Include="Models\Function.cs" />
     <Compile Include="Models\ExternalSubCategory.cs" />
     <Compile Include="Models\ExternalCategory.cs" />
     <Compile Include="Models\ExternalDocument.cs" />

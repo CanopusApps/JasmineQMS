@@ -69,13 +69,13 @@
                                         <div class="form-group">
                                             <label class="col-lg-4 control-label"><strong>Upload Type</strong></label>
                                             @*@if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000" || @ViewBag.Data.DraftVersion.ToString().Split('.')[0] ==1)
-                                            {
-                                                <label class="col-lg-7 control-label text-align-left">New Document</label>
-                                            }
-                                            else
-                                            {
-                                                <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
-                                            }*@
+                    {
+                        <label class="col-lg-7 control-label text-align-left">New Document</label>
+                    }
+                    else
+                    {
+                        <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
+                    }*@
                                             @if (Convert.ToDouble(@ViewBag.Data.DraftVersion.ToString()) > 1)
                                             {
                                                 <label class="col-lg-7 control-label text-align-left"><span style="background-color:yellow;padding:5px;">Existing Document</span></label>
@@ -123,9 +123,9 @@
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4"><strong>Document Number</strong></label>
-                                            <label class=" col-lg-7 control-label text-align-left">
-                                                @ViewBag.Data.DocumentNo
+                                            <label class="col-lg-4 control-label"><strong>Function</strong></label>
+                                            <label class="col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.FunctionName
                                             </label>
                                         </div>
                                     </div>
@@ -133,16 +133,16 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4"><strong>Version</strong></label>
-                                            <label class=" col-lg-7 control-label text-align-left">@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]</label>
+                                            <label class="control-label col-lg-4"><strong>Document Number</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.DocumentNo
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4"><strong>Stage</strong></label>
-                                            <label class=" col-lg-7 control-label text-align-left">
-                                                @ViewBag.Data.CurrentStage
-                                            </label>
+                                            <label class="control-label col-lg-4"><strong>Version</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]</label>
                                         </div>
                                     </div>
                                 </div>
@@ -160,6 +160,26 @@
                                             <label class="control-label col-lg-4"><strong>Created On @*@(@ViewBag.Data.CurrentStage == "Initiated" ? "Created On" : "Uploaded On")*@</strong></label>
                                             <label class=" col-lg-7 control-label text-align-left">
                                                 @ViewBag.Data.CreatedDate
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Document Description</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                <span class="viewfield">@ViewBag.Data.DocumentDescription</span>
+                                                <input title="Document Description" class="form-control editfield" id="DocumentDescription" name="Name"
+                                                       type="text" value="@ViewBag.Data.DocumentDescription">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4"><strong>Stage</strong></label>
+                                            <label class=" col-lg-7 control-label text-align-left">
+                                                @ViewBag.Data.CurrentStage
                                             </label>
                                         </div>
                                     </div>
@@ -217,21 +237,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4"><strong>Document Description</strong></label>
-                                            <label class=" col-lg-7 control-label text-align-left">
-                                                <span class="viewfield">@ViewBag.Data.DocumentDescription</span>
-                                                <input title="Document Description" class="form-control editfield" id="DocumentDescription" name="Name"
-                                                       type="text" value="@ViewBag.Data.DocumentDescription">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-6 col-xs-12">
 
-                                    </div>
-                                </div>
                                 @if (@ViewBag.Data.DocumentPublishID.ToString() == "00000000-0000-0000-0000-000000000000")
                                 {
                                     <span></span>

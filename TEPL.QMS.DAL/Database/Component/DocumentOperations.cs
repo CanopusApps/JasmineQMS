@@ -21,9 +21,14 @@ namespace TEPL.QMS.DAL.Database.Component
         {
             try
             {
+                string spName = "";
+                if (objDoc.DocumentLevel == "Level 1")
+                    spName = QMSConstants.spGenerateDocumentNoLevel1;
+                else
+                    spName = QMSConstants.spGenerateDocumentNo;
                 using (SqlConnection con = new SqlConnection(QMSConstants.DBCon))
                 {
-                    using (SqlCommand cmd = new SqlCommand(QMSConstants.spGenerateDocumentNo, con))
+                    using (SqlCommand cmd = new SqlCommand(spName, con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@WorkflowID", SqlDbType.UniqueIdentifier).Value = objDoc.WorkflowID;
@@ -32,8 +37,11 @@ namespace TEPL.QMS.DAL.Database.Component
                         cmd.Parameters.Add("@DepartmentCode", SqlDbType.NVarChar, 10).Value = objDoc.DepartmentCode;
                         cmd.Parameters.Add("@SectionCode", SqlDbType.NVarChar, 10).Value = objDoc.SectionCode;
                         cmd.Parameters.Add("@ProjectCode", SqlDbType.NVarChar, 10).Value = objDoc.ProjectCode;
+                        cmd.Parameters.Add("@FunctionCode", SqlDbType.NVarChar, 10).Value = objDoc.FunctionCode;
                         cmd.Parameters.Add("@DocumentCategoryCode", SqlDbType.NVarChar, 10).Value = objDoc.DocumentCategoryCode;
                         cmd.Parameters.Add("@CreatedID", SqlDbType.UniqueIdentifier).Value = objDoc.UploadedUserID;
+                        if (objDoc.DocumentLevel == "Level 1")
+                            cmd.Parameters.Add("@DocumentLevel", SqlDbType.NVarChar, 10).Value = objDoc.DocumentLevel;
 
                         var DocumentNo = cmd.Parameters.Add("@DocumentNo", SqlDbType.NVarChar, 50);
                         DocumentNo.Direction = ParameterDirection.Output;
@@ -467,29 +475,29 @@ namespace TEPL.QMS.DAL.Database.Component
             }
             return dt;
         }
-        public string UploadDocument(string StoragePath, string baseFolder, string folderPath, string filename, Decimal DocVerions, byte[] byteArray)
-        {
-            try
-            {
-                string filePath = CommonMethods.CombineUrl(StoragePath, baseFolder, folderPath);
-                if (File.Exists(filePath + "\\" + filename))
-                {
-                    BackUpFile(StoragePath, "History", baseFolder, folderPath, filename, DocVerions);
-                }
-                else if (!Directory.Exists(filePath))
-                {
-                    CreateFolders(filePath);
-                }
-                string cryptFile = CommonMethods.CombineUrl(QMSConstants.StoragePath, baseFolder, folderPath, filename);
-                cryptFile = UploadEncryptedDocument(cryptFile, byteArray);//UploadAESEncryptedDocument(cryptFile, byteArray);
-                return cryptFile;
-            }
-            catch (Exception ex)
-            {
-                LoggerBlock.WriteTraceLog(ex);
-                throw ex;
-            }
-        }
+        //public string UploadDocument(string StoragePath, string baseFolder, string folderPath, string filename, Decimal DocVerions, byte[] byteArray)
+        //{
+        //    try
+        //    {
+        //        string filePath = CommonMethods.CombineUrl(StoragePath, baseFolder, folderPath);
+        //        if (File.Exists(filePath + "\\" + filename))
+        //        {
+        //            BackUpFile(StoragePath, "History", baseFolder, folderPath, filename, DocVerions);
+        //        }
+        //        else if (!Directory.Exists(filePath))
+        //        {
+        //            CreateFolders(filePath);
+        //        }
+        //        string cryptFile = CommonMethods.CombineUrl(QMSConstants.StoragePath, baseFolder, folderPath, filename);
+        //        cryptFile = UploadEncryptedDocument(cryptFile, byteArray);//UploadAESEncryptedDocument(cryptFile, byteArray);
+        //        return cryptFile;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LoggerBlock.WriteTraceLog(ex);
+        //        throw ex;
+        //    }
+        //}
         public string UploadExternalDocument(string StoragePath, string baseFolder, string folderPath, string filename, string DocVerions, byte[] byteArray)
         {
             try
@@ -533,9 +541,18 @@ namespace TEPL.QMS.DAL.Database.Component
                     while (File.Exists(desFilePath + "/" + tepmFileName))
                     {
                         tepmFileName = desFileName.Replace(extn, "_V" + i + extn);
+                        i++;
                     }
+                    //if (i != 0)
+                    //    desFileName = desFileName.Replace(extn, "_V" + i + extn);
+                    //if (i == 0)
+                    //    desFileName = desFileName.Replace(extn, "_V" + i + extn);
+                    //else
+                    //    desFileName = tepmFileName;// desFileName.Replace(extn, "_V" + i + extn);
+
                     if (i != 0)
-                        desFileName = desFileName.Replace(extn, "_V" + i + extn);
+                        desFileName = tepmFileName;
+
                 }
                 File.Move(srcFilePath + "/" + srcFilename, desFilePath + "/" + desFileName);
             }
@@ -604,7 +621,7 @@ namespace TEPL.QMS.DAL.Database.Component
         {
             try
             {
-                byte[] byteArray = DownloadDrecrytedDocument(DocURL, DocVersion);// DownloadAESDrecrytedDocument(DocURL, DocVersion);
+                byte[] byteArray = DownloadWithOutDecryptedDocument(DocURL, DocVersion); //DownloadDrecrytedDocument(DocURL, DocVersion);
                 return byteArray;
             }
             catch (Exception ex)

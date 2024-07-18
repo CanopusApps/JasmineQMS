@@ -210,7 +210,7 @@ function BindDropdown(data, ctrl, defaultOption) {
     ctrl.find("option").remove();
     ctrl.append('<option title="' + defaultOption + '" value="0">' + defaultOption+'</option>');
     for (var i = 0; i < data.length; i++) {
-        var code = ''; var wfid = '', Condition = ''; var projTypeCode = '';
+        var code = ''; var wfid = '', Condition = ''; var projTypeCode = ''; var documentLevel = '';
         if (data[i].Code != undefined && data[i].Code != null) {
             code = data[i].Code;
         }
@@ -223,10 +223,13 @@ function BindDropdown(data, ctrl, defaultOption) {
         if (data[i].ProjectTypeCode != undefined && data[i].ProjectTypeCode != null) {
             projTypeCode = data[i].ProjectTypeCode;
         }
-        ctrl.append('<option projType="' + data[i].ProjectType+'" projTypeCode="' + projTypeCode +'" projTypeID="' + data[i].ProjectTypeID +'" workflowID = "' + wfid + '" code="' + code + '" condition="' + Condition + '" title="' + data[i].Title + '" value="' + data[i].ID + '">' + data[i].Title + '</option>');
+        if (data[i].DocumentLevel != undefined && data[i].DocumentLevel != null) {
+            documentLevel = data[i].DocumentLevel;
+        }
+        ctrl.append('<option documentLevel="' + documentLevel +'" projType="' + data[i].ProjectType+'" projTypeCode="' + projTypeCode +'" projTypeID="' + data[i].ProjectTypeID +'" workflowID = "' + wfid + '" code="' + code + '" condition="' + Condition + '" title="' + data[i].Title + '" value="' + data[i].ID + '">' + data[i].Title + '</option>');
     }
 }
-function BindDropDownBoxes(cururl, $ctrl1, $ctrl2, $ctrl3, defaultOption, IsProjectActive) {
+function BindDropDownBoxes(cururl, $ctrl1, $ctrl2, $ctrl3, $ctrl4, defaultOption, IsProjectActive) {
     $.ajax({
         url: cururl,
         dataType: "json",
@@ -245,6 +248,8 @@ function BindDropDownBoxes(cururl, $ctrl1, $ctrl2, $ctrl3, defaultOption, IsProj
                     BindDropdown(data.message2, $ctrl2, defaultOption);
                 if ($ctrl3 != '')
                     BindDropdown(data.message3, $ctrl3, defaultOption);
+                if ($ctrl4 != '')
+                    BindDropdown(data.message4, $ctrl4, defaultOption);
             }
         },
         error: function (xhr) {
