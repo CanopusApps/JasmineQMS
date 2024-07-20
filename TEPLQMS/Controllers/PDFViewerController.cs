@@ -17,17 +17,22 @@ namespace TEPLQMS.Controllers
         // GET: PDFViewer
         public ActionResult Index(string docURL)
         {
-            DocumentURL = ConfigurationManager.AppSettings["PDFViewerURL"].ToString() + "documentURL=" + TempData["docURL"].ToString() + "&random=" + DateTime.UtcNow.ToString();
-            //DocumentURL = ConfigurationManager.AppSettings["PDFViewerURL"].ToString() + "documentURL=" + docURL + "&random=" + DateTime.UtcNow.ToString();
+            DocumentURL = ConfigurationManager.AppSettings["PDFViewerURL"].ToString() + "documentURL=" + TempData["docURL"].ToString() + "&random=" + Guid.NewGuid().ToString();
             ViewBag.DocURL = DocumentURL;
-            
-
             return View();
         }
 
         public ActionResult SetURL(string docURL)
         {
             TempData["docURL"] = docURL;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SetHistoryURL(string docURL, string docName, string version)
+        {
+            string intVersion = version.Split('.')[0].ToString();
+            string DocumentName = docName.Split('.')[0].ToString() + "_V" + intVersion + "." + docName.Split('.')[1].ToString();
+            TempData["docURL"] = docURL + "/" + DocumentName;
             return RedirectToAction("Index");
         }
 

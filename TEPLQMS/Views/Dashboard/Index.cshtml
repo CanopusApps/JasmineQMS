@@ -164,8 +164,8 @@
                                 }
                                 else
                                 {
-                                    <a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href='@TEPL.QMS.Common.Constants.QMSConstants.ViewerURL?stage=Publish&version=@txt.OriginalVersion.ToString().Split('.')[0]&documentid=@txt.DocumentID'>View</a>
-                            @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@txt.ReadableFilePath/@txt.ReadableDocumentName&random=@ViewBag.UTCTIME '> View </a>*@
+                                    @*<a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href='@TEPL.QMS.Common.Constants.QMSConstants.ViewerURL?stage=Publish&version=@txt.OriginalVersion.ToString().Split('.')[0]&documentid=@txt.DocumentID'>View</a>*@
+                                    <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@txt.ReadableFilePath/@txt.ReadableDocumentName'> View </a>
                                 }
                             </td>
                         </tr>

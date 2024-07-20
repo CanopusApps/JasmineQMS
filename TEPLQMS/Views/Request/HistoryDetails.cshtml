@@ -211,7 +211,9 @@
                                                 {
                                                     if (ViewBag.Data.DocumentCategoryCode != "FR")
                                                     {
-                                                        <a target="_blank" class="anc2" id="ancLink2" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.EditVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        @*<a target="_blank" class="anc2" id="ancLink2" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.EditVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        <br />*@
+                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
                                                     }
                                                     else
                                                     {
@@ -224,7 +226,9 @@
 
                                                     if (ViewBag.Data.DocumentCategoryCode != "FR")
                                                     {
-                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=History&version=@ViewBag.Data.EditVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=History&version=@ViewBag.Data.EditVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        <br />*@
+                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetHistoryURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.HistoryPath/@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@ViewBag.Data.ReadableFilePath&docName=@ViewBag.Data.ReadableDocumentName&version=@ViewBag.Data.EditVersion'> @ViewBag.Data.ReadableDocumentName </a>
                                                     }
                                                     else
                                                     {

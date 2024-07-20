@@ -208,8 +208,9 @@
                                                 @{
                                                     if (@ViewBag.Data.CurrentStage == "Completed")
                                                     {
-                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
-                                                        @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>*@
+                                                        @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        <br />*@
+                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
                                                         if (ViewBag.isQMSAdmin == true)
                                                         {
                                                             <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.OriginalVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
@@ -217,8 +218,9 @@
                                                     }
                                                     else
                                                     {
-                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Draft&version=@ViewBag.Data.DraftVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
-                                                        @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.DraftFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>*@
+                                                        @*<a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Draft&version=@ViewBag.Data.DraftVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                                                        <br />*@
+                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.DraftFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
                                                         if (ViewBag.isQMSAdmin == true)
                                                         {
                                                             <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
