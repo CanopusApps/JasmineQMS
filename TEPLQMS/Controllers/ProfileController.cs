@@ -96,6 +96,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
+                LoggerBlock.WriteTraceLog(ex);
                 result = "failed";
                 //throw ex;
             }

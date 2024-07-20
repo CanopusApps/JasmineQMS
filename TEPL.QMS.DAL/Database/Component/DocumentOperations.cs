@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using TEPL.QMS.Common;
 using TEPL.QMS.Common.Constants;
 using TEPL.QMS.Common.Models;
@@ -630,7 +631,6 @@ namespace TEPL.QMS.DAL.Database.Component
                 throw ex;
             }
         }
-
         public string UploadWithOutEncryptedDocument(string StoragePath, string baseFolder, string folderPath, string filename, Decimal DocVerions, byte[] byteArray)
         {
             try

@@ -157,6 +157,9 @@ namespace TEPL.QMS.BLL.Component
                 throw ex;
             }
         }
+
+        
+
         public string ApproveDocument(DraftDocument objDoc, bool isDocumentUploaded, bool IsMultiApproversChanged)
         {
             string strResult = string.Empty;
@@ -169,6 +172,7 @@ namespace TEPL.QMS.BLL.Component
                     docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
                 }
+
                 docOperObj.DocumentDescriptionUpdate(objDoc);
 
                 string strResponse = objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID);

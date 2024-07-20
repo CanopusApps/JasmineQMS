@@ -49,6 +49,10 @@ namespace TEPLQMS.Controllers
                         blAccess = true;
                     }
                 }
+                if(ProjectCode == "QM")
+                {
+                    blAccess = true;
+                }
                 if (blAccess)
                 {
                     Object[] ArrayOfObjects = new Object[3];

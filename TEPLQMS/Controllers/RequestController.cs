@@ -194,7 +194,7 @@ namespace TEPLQMS.Controllers
                 for (int i = 0; i < files.Count; i++)
                 {
                     HttpPostedFileBase file = files[i];
-                    string flname; string temFileName = "";
+                    string flname; //string temFileName = "";
 
                     // Checking for Internet Explorer  
                     if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")

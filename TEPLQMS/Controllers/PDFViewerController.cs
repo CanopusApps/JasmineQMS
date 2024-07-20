@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TEPL.QMS.BLL.Component;
+using TEPL.QMS.Common;
 using TEPL.QMS.Common.Constants;
 using TEPL.QMS.Common.Models;
 
@@ -58,7 +59,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
-                
+                LoggerBlock.WriteTraceLog(ex);
                 return Json(new { success = true, message = "" }, JsonRequestBehavior.AllowGet);
             }
         }

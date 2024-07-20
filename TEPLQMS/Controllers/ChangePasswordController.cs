@@ -126,6 +126,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
+                LoggerBlock.WriteTraceLog(ex);
                 result = "failed";
             }
             finally
@@ -162,6 +163,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
+                LoggerBlock.WriteTraceLog(ex);
                 result = "failed";
             }
             finally

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TEPL.QMS.Common.Constants;
+using TEPL.QMS.Common;
 
 namespace TEPLQMS.Controllers
 {
@@ -37,7 +38,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
-
+                LoggerBlock.WriteTraceLog(ex);
             }
             finally
             {
@@ -72,8 +73,8 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
+                LoggerBlock.WriteTraceLog(ex);
                 result = "Error while saving User.";
-                //throw ex;
             }
 
             return Json(new { success = true, message = result }, JsonRequestBehavior.AllowGet);
@@ -103,7 +104,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
-
+                LoggerBlock.WriteTraceLog(ex);
             }
             finally
             {
@@ -141,7 +142,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
-
+                LoggerBlock.WriteTraceLog(ex);
             }
             finally
             {
@@ -164,6 +165,7 @@ namespace TEPLQMS.Controllers
             catch (Exception ex)
             {
                 IsExists = false;
+                LoggerBlock.WriteTraceLog(ex);
             }
             return IsExists;
         }
@@ -184,6 +186,7 @@ namespace TEPLQMS.Controllers
             }
             catch (Exception ex)
             {
+                LoggerBlock.WriteTraceLog(ex);
                 return Json(new { success = true, message = "Failed" }, JsonRequestBehavior.AllowGet);
             }
             finally

@@ -176,7 +176,7 @@
                 cache: false,
                 data: JSON.stringify({ department: dept, section: sec, category: category, project: project, DocumentDescription: $("#txtDescription").val().trim(), IsProjectActive: false }),
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     var fileName = "PendingDocuments.xlsx";
                     var bytes = Base64ToBytes(data);
 

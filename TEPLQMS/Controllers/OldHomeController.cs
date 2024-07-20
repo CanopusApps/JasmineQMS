@@ -110,10 +110,10 @@ namespace TEPLQMS.Controllers
         {
             return View();
         }
-        public ActionResult Profile()
-        {
-            return View();
-        }
+        //public ActionResult Profile()
+        //{
+        //    return View();
+        //}
         public ActionResult Calendar()
         {
             return View();
