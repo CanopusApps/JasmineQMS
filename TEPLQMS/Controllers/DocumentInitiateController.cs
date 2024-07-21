@@ -161,14 +161,14 @@ namespace TEPLQMS.Controllers
                             objDoc.EditableByteArray = fileByteArray;
                             objDoc.EditableDocumentName = objDoc.DocumentNo + Path.GetExtension(file.FileName);
                             //objDoc.EditableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.EditableFolder, objDoc.DepartmentID.ToString(), objDoc.SectionID.ToString(), objDoc.DocumentCategoryID.ToString());
-                            objDoc.EditableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.EditableFolder, objDoc.DepartmentID.ToString());
+                            objDoc.EditableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.EditableFolder);
                         }
                         else if (i == 1)
                         {
                             objDoc.ReadableByteArray = fileByteArray;
                             objDoc.ReadableDocumentName = objDoc.DocumentNo + Path.GetExtension(file.FileName);
                             //objDoc.ReadableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.ReadableFolder, objDoc.DepartmentID.ToString(), objDoc.SectionID.ToString(), objDoc.DocumentCategoryID.ToString());
-                            objDoc.ReadableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.ReadableFolder, objDoc.DepartmentID.ToString());
+                            objDoc.ReadableFilePath = CommonMethods.CombineUrl(objDoc.ProjectID.ToString(), QMSConstants.ReadableFolder);
                         }
                     }
                 }

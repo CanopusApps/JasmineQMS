@@ -673,6 +673,53 @@ namespace TEPL.QMS.DAL.Database.Component
             }
         }
 
+        public string UploadWOEncryptWOBackup(string StoragePath, string baseFolder, string folderPath, string filename, Decimal DocVerions, byte[] byteArray)
+        {
+            try
+            {
+                string filePath = CommonMethods.CombineUrl(StoragePath, baseFolder, folderPath);
+                //if (File.Exists(filePath + "\\" + filename))
+                //{
+                //    BackUpFile(StoragePath, "History", baseFolder, folderPath, filename, DocVerions);
+                //}
+                //else if (!Directory.Exists(filePath))
+                //{
+                //    CreateFolders(filePath);
+                //}
+                
+                if (!Directory.Exists(filePath))
+                {
+                    CreateFolders(filePath);
+                }
+                string cryptFile = CommonMethods.CombineUrl(QMSConstants.StoragePath, baseFolder, folderPath, filename);
+                FileStream fsCrypt = new FileStream(cryptFile, FileMode.Create);
+
+                try
+                {
+                    foreach (byte bt in byteArray)
+                    {
+                        fsCrypt.WriteByte(bt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LoggerBlock.WriteTraceLog(ex);
+                    File.Delete(cryptFile);
+                    throw ex;
+                }
+                finally
+                {
+                    fsCrypt.Close();
+                }
+                return cryptFile;
+            }
+            catch (Exception ex)
+            {
+                LoggerBlock.WriteTraceLog(ex);
+                throw ex;
+            }
+        }
+
         public byte[] DownloadWithOutDecryptedDocument(string DocURL, int DocVersion)
         {
             try

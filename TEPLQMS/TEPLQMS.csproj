@@ -246,7 +246,8 @@
     <Reference Include="T4MVCExtensions">
       <HintPath>..\TEPL.QMS.Workflow\bin\Debug\T4MVCExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="TEPL.QMS.BLL">
+    <Reference Include="TEPL.QMS.BLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\TEPL.QMS.BLL\bin\Debug\TEPL.QMS.BLL.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">

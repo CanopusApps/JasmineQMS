@@ -25,7 +25,7 @@
                                         <i class="fa fa-history"></i> Revision History
                                     </a>
                                 }
-                    <a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-sm add">
+                    <a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-sm add" style="display:none;">
                         <i class="fa fa-remove"></i>Delete Document
                     </a>
 
@@ -260,7 +260,7 @@
                                     </div>
                                 }
 
-                                <div class="row">
+                                @*<div class="row">
                                     <div class="col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
@@ -269,7 +269,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
 
                                 @if (ViewBag.isHistory == false)
                                 {
@@ -279,8 +279,8 @@
                                                 <label class="col-lg-4 control-label"><strong>Editable Document</strong></label>
                                                 <label class="col-lg-7 control-label text-align-left">
                                                     <input id="DOCFile" class="form-control manfield" name="DOC" type="file" value="" title="Editable Document">
-                                                </label>
-                                            </div>
+                                                </label>                                                
+                                            </div>                                            
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             @if (@ViewBag.Data.DocumentCategoryCode != "FR")
@@ -293,13 +293,24 @@
                                                 </div>
                                             }
 
-                                        </div>
+                                        </div>                                        
                                     </div>
+                                    
                                     if (ViewBag.IsInProgress != "inprogress")
                                     {
+                            <div class="row" style="display:none;">
+                                <div class="col-lg-2 col-sm-2 col-xs-12">
+
+                                </div>
+                                <div class="col-lg-10 col-sm-10 col-xs-12">
+                                    <div>
+                                        <label style="color:red;">Note: Version will not be maintained if you upload the documentd here, system will replace the latest version of Documents.</label>
+                                    </div>
+                                </div>
+                            </div>
                                         <div class="row">
                                             <div class="col-lg-12 col-sm-12 col-xs-12">
-                                                <div style="float:right;margin-right:150px;">
+                                                <div style="float:right;margin-right:150px;display:none;">
                                                     <button class="btn btn-azure " type="submit" id="btnEdit">Edit Document</button>
 
                                                     <button class="btn btn-azure" type="submit" id="btnUpdate">Update</button>

@@ -287,7 +287,7 @@
                                     </div>
                                 }
 
-                                <div class="row">
+                                @*<div class="row">
                                     <div class="col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
@@ -296,7 +296,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
 
                                 @if (ViewBag.LoggedUsedID == @ViewBag.Data.UploadedUserID && (@ViewBag.Data.CurrentStage == "Initiated" || @ViewBag.Data.CurrentStage == "Re-Initiated"))//Initiator - If it is rejected, allow user to upload the doc and enter comments
                                 {
