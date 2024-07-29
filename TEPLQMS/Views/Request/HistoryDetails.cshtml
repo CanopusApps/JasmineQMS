@@ -6,7 +6,7 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="cuwidget-header bordered-bottom bordered-blue">
-                <span class="cuwidget-caption"> <b>Request Details - Version @{ @ViewBag.Data.DraftVersion.ToString().Split('.')[0] }</b></span>
+                <span class="cuwidget-caption"> <b>Request Details - Revision @{ @ViewBag.Data.DraftVersion.ToString().Split('.')[0] }</b></span>
                 @*<div style="display:inline-block;line-height:36px;background-color:antiquewhite;">
                 <span class="cuwidget-caption" style="font-size:24px !important;padding-left:5px;padding-right:5px;"> <b>Stage - @ViewBag.Data.CurrentStage</b></span>
             </div>*@
@@ -141,7 +141,7 @@
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4"><strong>Version</strong></label>
+                                            <label class="control-label col-lg-4"><strong>Revision</strong></label>
                                             <label class=" col-lg-7 control-label text-align-left">@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]</label>
                                         </div>
                                     </div>

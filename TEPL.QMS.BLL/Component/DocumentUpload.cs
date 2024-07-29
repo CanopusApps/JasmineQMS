@@ -14,6 +14,10 @@ using System.Text.RegularExpressions;
 using TEPL.QMS.Workflow.Models;
 using TEPL.QMS.DAL.Database.Component;
 using System.Web;
+using PdfSharp.Drawing.Layout;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf.IO;
+using PdfSharp.Pdf;
 
 namespace TEPL.QMS.BLL.Component
 {
@@ -77,7 +81,7 @@ namespace TEPL.QMS.BLL.Component
                 else
                     objDoc.DocumentLevel = "";
                 DocumentApprover objApprover = GetDocumentApprover(objDoc.ProjectTypeID, objDoc.ProjectID, objSt.NextStageID, objDoc.DocumentLevel, objDoc.SectionID);
-                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID);
+                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID, false);
                 objWF.CreateAction(objDoc.WFExecutionID, objSt.NextStageID, objApprover.ApprovalUser, "", objDoc.UploadedUserID);
                 bool blAppLink = objDoc.ProjectTypeCode == "MP" ? true : false;
                 //Send email - Doc Name, Doc Num, DOc ID, receipt email, stage, uploaded by ,
@@ -111,7 +115,7 @@ namespace TEPL.QMS.BLL.Component
                 if (objSt.IsDocumentLevelRequired)
                     objDoc.DocumentLevel = GetDocumentLevel(objDoc.DocumentCategoryCode);
                 DocumentApprover objApprover = GetDocumentApprover(objDoc.ProjectTypeID, objDoc.ProjectID, objSt.NextStageID, objDoc.DocumentLevel, objDoc.SectionID);
-                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID);
+                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID, false);
                 objWF.CreateAction(objDoc.WFExecutionID, objSt.NextStageID, objApprover.ApprovalUser, "", objDoc.UploadedUserID);
 
                 bool blAppLink = objDoc.ProjectTypeCode == "MP" ? true : false;
@@ -145,7 +149,7 @@ namespace TEPL.QMS.BLL.Component
                 if (objSt.IsDocumentLevelRequired)
                     objDoc.DocumentLevel = GetDocumentLevel(objDoc.DocumentCategoryCode);
                 DocumentApprover objApprover = GetDocumentApprover(objDoc.ProjectTypeID, objDoc.ProjectID, objSt.NextStageID, objDoc.DocumentLevel, objDoc.SectionID);
-                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID);
+                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID, false);
                 objWF.CreateAction(objDoc.WFExecutionID, objSt.NextStageID, objApprover.ApprovalUser, "", objDoc.UploadedUserID);
 
                 bool blAppLink = objDoc.ProjectTypeCode == "MP" ? true : false;
@@ -175,9 +179,15 @@ namespace TEPL.QMS.BLL.Component
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
                 }
 
+                if (objDoc.CurrentStage == "QMS Approver")
+                {
+                    string filePath = CommonMethods.CombineUrl(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName);
+                    AddWatermarkonPDF(filePath);
+                }
+
                 docOperObj.DocumentDescriptionUpdate(objDoc);
 
-                string strResponse = objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID);
+                string strResponse = objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID, false);
                 List<Response> objRes = BindModels.ConvertJSON<Response>(strResponse);
                 if (objRes[0].Status == "A")
                 {
@@ -271,7 +281,7 @@ namespace TEPL.QMS.BLL.Component
                 }
                 docOperObj.DocumentDescriptionUpdate(objDoc);
                 Stage objSt = objWF.GetWorkflowStage(QMSConstants.WorkflowID, objDoc.CurrentStageID);
-                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID);
+                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID, false);
                 objWF.CreateAction(objDoc.WFExecutionID, objSt.PreviousStageID, objDoc.UploadedUserID.ToString(), "", objDoc.ActionedID);
                 QMSAdmin objAdmin = new QMSAdmin();
                 LoginUser objUser = new LoginUser();
@@ -286,6 +296,123 @@ namespace TEPL.QMS.BLL.Component
                 throw ex;
             }
         }
+
+        public void AddWatermarkonPDF(string ipFilename)
+        {
+            try
+            {
+                //Watermark text
+                string cntrWatermark = "TCPL CONFIDENTIAL";
+                string rgtTopWatermark = "MP CONFIDENTIAL";
+                string rgtBtmWatermark = "TCPL Confidential" + System.Environment.NewLine +
+                    "No Copy/Reproduction allowed" + System.Environment.NewLine + System.Environment.NewLine +
+                    "CONTROLLED COPY" + System.Environment.NewLine + "ISSUED BY DMS" +
+                    System.Environment.NewLine + System.Environment.NewLine + DateTime.Now.ToString("dd-MM-yyyy") +
+                    System.Environment.NewLine + "TCPL-DCC";
+
+                //Create a new PDF document
+                PdfDocument document = new PdfDocument();
+
+                //string ipFilename = Path.GetFullPath("Data/ToTestPPT1.pdf");
+                //string FilePath = Server.MapPath("ToTestPPT1.pdf");
+                //string ipFilename = "D:\\Sample.pdf";
+
+                //Open PDF document
+                document = PdfReader.Open(ipFilename);
+
+                // Set version to PDF 1.4 (Acrobat 5) because we use transparency.
+                if (document.Version < 14)
+                    document.Version = 14;
+
+                // Create a font
+                XFont cntrFont = new XFont("Arial", 40, XFontStyleEx.Bold);
+                XFont rgtFont = new XFont("Arial", 12, XFontStyleEx.Bold);
+
+                for (int idx = 0; idx < document.Pages.Count; idx++)
+                {
+                    var page = document.Pages[idx];
+
+                    //-- Page Center watermark
+                    // Get an XGraphics object for drawing beneath the existing content.
+                    var gfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
+
+                    // Get the size (in points) of the text.
+                    var cntrTxtSize = gfx.MeasureString(cntrWatermark, cntrFont);
+
+                    // Define a rotation transformation at the center of the page.
+                    gfx.TranslateTransform(page.Width / 2, page.Height / 2);
+                    gfx.RotateTransform(-Math.Atan(page.Height / page.Width) * 180 / Math.PI);
+                    gfx.TranslateTransform(-page.Width / 2, -page.Height / 2);
+
+                    // Create a string format.
+                    var cntrFormat = new XStringFormat();
+                    cntrFormat.Alignment = XStringAlignment.Near;
+                    cntrFormat.LineAlignment = XLineAlignment.Near;
+
+                    // Create a colored brush.
+                    XBrush cntrBrush = new XSolidBrush(XColor.FromArgb(128, 69, 69, 69)); //light black
+                    XBrush rgtBrush = new XSolidBrush(XColor.FromArgb(128, 0, 110, 255)); //blue 
+
+                    // Format text and add rectangle border
+                    XTextFormatter cntrTf = new XTextFormatter(gfx);
+                    XRect cntrRect = new XRect((page.Width - cntrTxtSize.Width) / 2, (page.Height - cntrTxtSize.Height) / 2, 450, 20); //rgt pos, vertical pos of textbox, width, height
+                    cntrTf.Alignment = XParagraphAlignment.Center;
+                    XPen cntrPen = new XPen(XColors.Black, 1);
+                    gfx.DrawRectangle(cntrPen, (page.Width - cntrTxtSize.Width) / 2, (page.Height - cntrTxtSize.Height) / 2, 450, 40);
+                    cntrTf.DrawString(cntrWatermark, cntrFont, cntrBrush, cntrRect, cntrFormat);
+                    gfx.Dispose();
+
+                    //-- Page Right top watermark
+                    // Get an XGraphics object for drawing beneath the existing content.
+                    var rgtTopGfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
+
+                    // Get the size (in points) of the text.
+                    var rgtTopTxtSize = rgtTopGfx.MeasureString(rgtTopWatermark, rgtFont);
+
+                    // Format text and add rectangle border at right top corner
+                    XTextFormatter rgtTopTf = new XTextFormatter(rgtTopGfx);
+                    //XRect rgtTopRect = new XRect((page.Width - rgtTopTxtSize.Width) - 33, (rgtTopTxtSize.Height) - 10, 200, 15);//rgt pos, vertical pos of textbox, width, height
+                    XRect rgtTopRect = new XRect((page.Width - rgtTopTxtSize.Width) - 35, (rgtTopTxtSize.Height) - 9, rgtTopTxtSize.Width + 62, rgtTopTxtSize.Height);//rgt pos, vertical pos of textbox, width, height
+                    rgtTopTf.Alignment = XParagraphAlignment.Center;
+                    XPen rgtTopPen = new XPen(XColors.Black, 1);
+                    rgtTopGfx.DrawRectangle(rgtTopPen, (page.Width - rgtTopTxtSize.Width) - 5, (rgtTopTxtSize.Height) - 10, rgtTopTxtSize.Width + 2, rgtTopTxtSize.Height + 2);
+                    rgtTopTf.DrawString(rgtTopWatermark, rgtFont, rgtBrush, rgtTopRect, XStringFormats.TopLeft);
+                    rgtTopGfx.Dispose();
+
+                    ////without rectangle border
+                    //rgtTopGfx.DrawString(rgtTopWatermark, rgtFont, rgtBrush,
+                    //    new XPoint((page.Width - rgtTopTxtSize.Width) - 5, (rgtTopTxtSize.Height) + 2)); //new XPoint((page.Width - 200), 30));
+                    //rgtTopGfx.Dispose();
+
+                    //-- Page Right bottom watermark
+                    // Get an XGraphics object for drawing beneath the existing content.
+                    var rgtBtmGfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
+
+                    // Format text and add rectangle border at right bottom corner
+                    XTextFormatter rgtBtmTf = new XTextFormatter(rgtBtmGfx);
+                    XRect rect = new XRect((page.Width - 260), (page.Height - 120), 318, 1020);//rgt pos, vertical pos of textbox, width, height
+                    rgtBtmTf.Alignment = XParagraphAlignment.Center;
+                    XPen pen = new XPen(XColors.Black, 1);
+                    //rgtBtmGfx.DrawRectangle(pen, (page.Width - 240), (page.Height - 124), 237, 120);
+                    rgtBtmGfx.DrawRectangle(pen, (page.Width - 200), (page.Height - 124), 197, 120);
+                    rgtBtmTf.DrawString(rgtBtmWatermark, rgtFont, rgtBrush, rect, XStringFormats.TopLeft);
+                    //rgtBtmTf.DrawString(rgtBtmWatermark, rgtFont, XBrushes.Blue, rect, XStringFormats.TopLeft);
+                }
+
+                // Save the document...
+                //string opFilename = Path.GetFullPath("Data/Watermark_tempfile.pdf");
+                //string FilePath = Server.MapPath("Watermark_tempfile.pdf");
+                string opFilename = ipFilename; //"D:\\Sample_2.pdf";
+                document.Save(opFilename);
+            }
+            catch (Exception ex)
+            {
+                LoggerBlock.WriteTraceLog(ex);
+                throw ex;
+            }
+        }
+
+
         public DraftDocument DocumentPublish(DraftDocument objDoc, bool isDocumentUploaded)
         {
             try
@@ -302,9 +429,14 @@ namespace TEPL.QMS.BLL.Component
                     docOperObj.UploadWOEncryptWOBackup(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.DraftVersion, objDoc.EditableByteArray);
                     docOperObj.UploadWOEncryptWOBackup(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.DraftVersion, objDoc.ReadableByteArray);
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
+
+                    string filePath = CommonMethods.CombineUrl(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName);
+                    AddWatermarkonPDF(filePath);
+                    string filePath2 = CommonMethods.CombineUrl(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName);
+                    AddWatermarkonPDF(filePath2);
                 }
                 docOperObj.DocumentDescriptionUpdate(objDoc);
-                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID);
+                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID, isDocumentUploaded);
                 objDoc = docOperObj.DocumentPublish(objDoc);
 
                 QMSAdmin objAdmin = new QMSAdmin();
@@ -322,7 +454,7 @@ namespace TEPL.QMS.BLL.Component
             return objDoc;
         }
 
-        public string ReplaceDocument(DraftDocument objDoc, bool isDocumentUploaded)
+        public string ReplaceDocument(DraftDocument objDoc, bool isDocumentUploaded, string Comments)
         {
             string result = "";
             try
@@ -335,7 +467,7 @@ namespace TEPL.QMS.BLL.Component
                     docOperObj.UploadWOEncryptWOBackup(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
                 }
                 objDoc.EditVersion = objDoc.EditVersion + 0.001m;
-                docOperObj.DocumentUpdatePublised(objDoc);
+                docOperObj.DocumentUpdatePublised(objDoc, isDocumentUploaded, Comments);
                 result = "success";
             }
             catch (Exception ex)
@@ -643,6 +775,23 @@ namespace TEPL.QMS.BLL.Component
             }
             return objDocList;
         }
+        public List<DraftDocument> GetArchivedDocuments(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode, string DocumentDescription, Guid UserID, bool IsProjectActive)
+        {
+            List<DraftDocument> objDocList = null;
+            try
+            {
+                DataTable dt;
+                dt = objAdminDAL.GetArchivedDocuments(DepartmentCode, SectionCode, ProjectCode, DocumentCategoryCode, DocumentDescription, UserID);
+                objDocList = new List<DraftDocument>();
+                objDocList = GetDocuments(dt, IsProjectActive);
+                //GetApprovalMailTempate();
+            }
+            catch (Exception ex)
+            {
+                LoggerBlock.WriteTraceLog(ex);
+            }
+            return objDocList;
+        }
         public byte[] GetExportPublishedDocuments(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode, string DocumentDescription, Guid UserID, bool IsProjectActive)
         {
             byte[] fileContent = null;
@@ -732,7 +881,7 @@ namespace TEPL.QMS.BLL.Component
                 else
                     objDoc.DocumentLevel = "";
                 DocumentApprover objApprover = GetDocumentApprover(objDoc.ProjectTypeID, objDoc.ProjectID, objSt.NextStageID, objDoc.DocumentLevel, objDoc.SectionID);
-                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID);
+                objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.UploadedUserID, objDoc.Action, objDoc.Comments, objDoc.UploadedUserID, false);
                 objWF.CreateAction(objDoc.WFExecutionID, objSt.NextStageID, objApprover.ApprovalUser, "", objDoc.UploadedUserID);
                 bool blAppLink = objDoc.ProjectTypeCode == "MP" ? true : false;
                 //Send email - Doc Name, Doc Num, DOc ID, receipt email, stage, uploaded by ,

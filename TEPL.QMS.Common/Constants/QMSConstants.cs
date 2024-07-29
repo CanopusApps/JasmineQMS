@@ -36,6 +36,7 @@ namespace TEPL.QMS.Common.Constants
         public static string ExtDocumentFolder = Convert.ToString(ConfigurationManager.AppSettings["ExtDocumentFolder"]);
         public static string EncryptionKey = Convert.ToString(ConfigurationManager.AppSettings["EncryptionKey"]);
         public static Guid WorkflowID = Guid.Parse(ConfigurationManager.AppSettings["WorkflowID"]);
+        public static string QMSHeadEmail = Convert.ToString(ConfigurationManager.AppSettings["QMSHeadEmail"]);
 
         public const string LoggedInUserID = "LoggedInUserID";
         public const string LoggedInUserDisplayName = "LoggedInUserDisplayName";
@@ -55,6 +56,7 @@ namespace TEPL.QMS.Common.Constants
         public static string spGetRequestedDocuments = "spGetRequestedDocuments";
         public static string spGetDocumentDetailsByID = "spGetDocumentDetailsByID";
         public static string spGetPublishedDocuments = "spGetPublishedDocuments";
+        public static string spGetArchivedDocuments = "spGetArchivedDocuments";
         public static string spGetPublishedDocumentDetailsByID = "spGetPublishedDocumentDetailsByID";
         public static string spGetPublishedDocumentHistoryByID = "spGetPublishedDocumentHistoryByID";
         public static string spGetPublishedDocumentHistoryDetailsByID = "spGetPublishedDocumentHistoryDetailsByID";
@@ -104,6 +106,7 @@ namespace TEPL.QMS.Common.Constants
         public static string spUpdateProject = "spUpdateProject";
         public static string spUpdateMultipleApprovers = "spUpdateMultipleApprovers";
         public static string spDeleteDocument = "spDeleteDocument";
+        public static string spArchiveDocument = "spArchiveDocument";
         public static string spGetAllExternalDocuments = "spGetAllExternalDocuments";
         public static string spGetExternalDocumentSeqNumber = "spGetExternalDocumentSeqNumber";
         public static string spGetExternalDocumentDetailsForID = "spGetExternalDocumentDetailsForID";

@@ -106,6 +106,33 @@ namespace TEPL.QMS.DAL.Database.Component
             }
             return ds;
         }
+
+        public DataSet ArchiveDocument(Guid UserID, Guid DocumentID, string DocumentNo)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(QMSConstants.DBCon))
+                {
+                    using (SqlCommand cmd = new SqlCommand(QMSConstants.spArchiveDocument, con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+                        cmd.Parameters.Add("@DocumentID", SqlDbType.UniqueIdentifier).Value = DocumentID;
+                        cmd.Parameters.Add("@DocumentNo", SqlDbType.NVarChar, 100).Value = DocumentNo;
+                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        {
+                            sda.Fill(ds);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
         public DataTable AddDepartment(Departments objDept)
         {
             DataTable dt = new DataTable();
@@ -118,6 +145,7 @@ namespace TEPL.QMS.DAL.Database.Component
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@DepartmentCode", SqlDbType.NVarChar, 10).Value = objDept.Code;
                         cmd.Parameters.Add("@DepartmentName", SqlDbType.NVarChar, 100).Value = objDept.Title;
+                        cmd.Parameters.Add("@DeptHODID", SqlDbType.UniqueIdentifier).Value = objDept.HODID;
                         using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
                             sda.Fill(dt);
@@ -144,6 +172,7 @@ namespace TEPL.QMS.DAL.Database.Component
                         cmd.Parameters.Add("@DepartmentID", SqlDbType.UniqueIdentifier).Value = objDept.ID;
                         cmd.Parameters.Add("@DepartmentCode", SqlDbType.NVarChar, 10).Value = objDept.Code;
                         cmd.Parameters.Add("@DepartmentName", SqlDbType.NVarChar, 100).Value = objDept.Title;
+                        cmd.Parameters.Add("@DeptHODID", SqlDbType.UniqueIdentifier).Value = objDept.HODID;
                         cmd.Parameters.Add("@Active", SqlDbType.Bit).Value = objDept.Active;
                         using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
@@ -717,6 +746,35 @@ namespace TEPL.QMS.DAL.Database.Component
                 using (SqlConnection con = new SqlConnection(QMSConstants.DBCon))
                 {
                     using (SqlCommand cmd = new SqlCommand(QMSConstants.spGetPublishedDocuments, con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@DepartmentCode", SqlDbType.NVarChar, 10).Value = DepartmentCode;
+                        cmd.Parameters.Add("@SectionCode", SqlDbType.NVarChar, 10).Value = SectionCode;
+                        cmd.Parameters.Add("@ProjectCode", SqlDbType.NVarChar, 10).Value = ProjectCode;
+                        cmd.Parameters.Add("@DocumentCategoryCode", SqlDbType.NVarChar, 10).Value = DocumentCategoryCode;
+                        cmd.Parameters.Add("@DocumentDescription", SqlDbType.NVarChar, 500).Value = DocumentDescription;
+                        cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        {
+                            sda.Fill(dt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+        public DataTable GetArchivedDocuments(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode, string DocumentDescription, Guid UserID)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(QMSConstants.DBCon))
+                {
+                    using (SqlCommand cmd = new SqlCommand(QMSConstants.spGetArchivedDocuments, con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@DepartmentCode", SqlDbType.NVarChar, 10).Value = DepartmentCode;

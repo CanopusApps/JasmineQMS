@@ -49,17 +49,34 @@
                             <tr>
                                 <td>@txt.RNo</td>
                                 <td>@txt.ID</td>
-                                <td nowrap>@txt.StageName</td>
-                                <td nowrap>@txt.ActionUserName</td>
-                                <td>
-                                    @if (@txt.WFActionMandatory)
+                                <td nowrap>
+                                    @if (@txt.StageName != null)
                                     {
-                                        <span>Mandatory Approver</span>
+                                        @txt.StageName
                                     }
                                     else
                                     {
-                                        <span>Default Approver</span>
+                                        <span>QMS Admin</span>
                                     }
+                                </td>
+                                <td nowrap>@txt.ActionUserName</td>
+                                <td>
+                                    @if (@txt.StageName != null)
+                                    {
+                                        if (@txt.WFActionMandatory)
+                                        {
+                                            <span>Mandatory Approver</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Default Approver</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span></span>
+                                    }
+
                                 </td>
                                 <td nowrap>@txt.WFActionDate</td>
                                 <td nowrap>@txt.WFAction</td>

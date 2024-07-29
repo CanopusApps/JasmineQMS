@@ -7,7 +7,7 @@
     <div class="col-xs-12 col-md-12">
         <div class="widget">
             <div class="widget-header">
-                <span class="widget-caption topfocus" tabindex='1' style="font-size:25px !important;"><b><span id="spanTitle">Document Versions</span></b></span>
+                <span class="widget-caption topfocus" tabindex='1' style="font-size:25px !important;"><b><span id="spanTitle">Document Revisions</span></b></span>
             </div>            
             <div class="widget-body">
                 <table class="table table-striped table-hover table-bordered" id="editabledatatable">
@@ -19,11 +19,11 @@
                                 Document Number
                             </th>
                             <th>
-                                Version
+                                Revision
                             </th>
-                            <th>
+                            @*<th>
                                 Edit Version
-                            </th>
+                            </th>*@
                             <th>
                                 Document Description
                             </th>
@@ -64,13 +64,13 @@
                                     @*<a target="_blank" style="text-decoration: underline; white-space:nowrap;" href="/Request/Details?IsHistory=true&ID=@txt.DocumentPublishID">@txt.OriginalVersion.ToString().Split('.')[0]</a>*@
                                 }
                             </td>
-                            <td>
-                                @if (@txt.EditVersion != null)
-                                {
-                                    @txt.EditVersion.ToString()
-                                    @*<a target="_blank" style="text-decoration: underline; white-space:nowrap;" href="/Request/Details?IsHistory=true&ID=@txt.DocumentPublishID">@txt.OriginalVersion.ToString().Split('.')[0]</a>*@
-                                }
-                            </td>
+                            @*<td>
+        @if (@txt.EditVersion != null)
+        {
+            @txt.EditVersion.ToString()
+            <a target="_blank" style="text-decoration: underline; white-space:nowrap;" href="/Request/Details?IsHistory=true&ID=@txt.DocumentPublishID">@txt.OriginalVersion.ToString().Split('.')[0]</a>
+                            }
+                            </td>*@
                             <td>@txt.DocumentDescription</td>
                             <td nowrap>@txt.PublishedOn</td>
 

@@ -12,6 +12,7 @@
 		<mvcSiteMapNode title="Approval Matrix" controller="ApprovalMatrix" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="USER,ADMIN,QPADM,QADM" roles="USER,ADMIN,QPADM,QMSADMIN" />
 		<mvcSiteMapNode title="Admin" controller="Admin" action="Index" imageUrl="glyphicon glyphicon-tasks" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QMSADMIN" >
 			<mvcSiteMapNode title="Pending Documents" controller="PendingDocuments" area="Admin" action="Index" imageUrl="glyphicon glyphicon-dashboard" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QADM" />
+			<mvcSiteMapNode title="Archived Documents" controller="ArchivedDocuments" area="Admin" action="Index" imageUrl="glyphicon glyphicon-dashboard" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QADM" />
 			<mvcSiteMapNode title="Archive Projects" controller="ArchiveProjects" area="Admin" action="Index" imageUrl="glyphicon glyphicon-dashboard" description="ADMIN,QPADM,QADM" roles="ADMIN,QPADM,QADM" />
 			<mvcSiteMapNode title="Document Upload" controller="DirectUpload" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />
 			<mvcSiteMapNode title="Template Upload" controller="TemplateDocument" area="Admin" action="Index" imageUrl="glyphicon glyphicon-upload" description="ADMIN,QADM" roles="ADMIN,QMSADMIN" />

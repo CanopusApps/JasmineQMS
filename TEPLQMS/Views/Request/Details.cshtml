@@ -6,7 +6,7 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="cuwidget-header bordered-bottom bordered-blue">
-                <span class="cuwidget-caption"> <b>Request Details - Version @{ @ViewBag.Data.DraftVersion.ToString().Split('.')[0] }</b></span>
+                <span class="cuwidget-caption"> <b>Request Details - Revision @{ @ViewBag.Data.DraftVersion.ToString().Split('.')[0] }</b></span>
                 @*<div style="display:inline-block;line-height:36px;background-color:antiquewhite;">
                 <span class="cuwidget-caption" style="font-size:24px !important;padding-left:5px;padding-right:5px;"> <b>Stage - @ViewBag.Data.CurrentStage</b></span>
             </div>*@
@@ -14,22 +14,43 @@
                     <div id="adddiv">
                         @if (ViewBag.isHistory == false)
                         {
-                            <a id="ancBack" href="../Dashboard" class="btn btn-azure btn-sm">
-                                <i class="fa fa-arrow-circle-left"></i> Back to Dashboard
-                            </a>
-                            if (ViewBag.isQMSAdmin == true)
+                            if (ViewBag.isArchived == false)
                             {
-                                if (Convert.ToInt32(@ViewBag.Data.DraftVersion.ToString().Split('.')[0].ToString()) > 1)
+                                <a id="ancBack" href="../Dashboard" class="btn btn-azure btn-sm">
+                                    <i class="fa fa-arrow-circle-left"></i> Back to Dashboard
+                                </a>
+                                if (ViewBag.isQMSAdmin == true)
                                 {
-                                    <a id="ancReplaceUser" href="History?ID=@ViewBag.Data.DocumentID" class="btn btn-azure btn-sm">
-                                        <i class="fa fa-history"></i> Revision History
+                                    if (Convert.ToInt32(@ViewBag.Data.DraftVersion.ToString().Split('.')[0].ToString()) > 1)
+                                    {
+                                        <a id="ancReplaceUser" href="History?ID=@ViewBag.Data.DocumentID" class="btn btn-azure btn-sm">
+                                            <i class="fa fa-history"></i> Revision History
+                                        </a>
+                                    }
+                                    <a href="javascript:ArchiveDocument();" class="btn btn-redcolor btn-sm add">
+                                        <i class="fa fa-remove"></i>Archive Document
                                     </a>
                                 }
-                    <a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-sm add" style="display:none;">
-                        <i class="fa fa-remove"></i>Delete Document
-                    </a>
-
                             }
+                            else
+                            {
+                                <a id="ancBack" href="../Admin/ArchivedDocuments" class="btn btn-azure btn-sm">
+                                    <i class="fa fa-arrow-circle-left"></i> Back to Archived List
+                                </a>
+                                if (ViewBag.isQMSAdmin == true)
+                                {
+                                    if (Convert.ToInt32(@ViewBag.Data.DraftVersion.ToString().Split('.')[0].ToString()) > 1)
+                                    {
+                                        <a id="ancReplaceUser" href="History?ID=@ViewBag.Data.DocumentID" class="btn btn-azure btn-sm">
+                                            <i class="fa fa-history"></i> Revision History
+                                        </a>
+                                    }
+                                    <a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-sm add">
+                                        <i class="fa fa-remove"></i>Delete Document
+                                    </a>
+                                }
+                            }
+
                         }
                     </div>
                 </div>
@@ -41,6 +62,7 @@
                     {
                 <div style="display:none;">
                     <div id="divDocumentID">@ViewBag.Data.DocumentID</div>
+                    <div id="divDocumentNo">@ViewBag.Data.DocumentNo</div>
                     <div id="divEditableDocumentName">@ViewBag.Data.EditableDocumentName</div>
                     <div id="divReadableDocumentName">@ViewBag.Data.ReadableDocumentName</div>
                     <div id="divDocumentNumber">@ViewBag.Data.DocumentNo</div>
@@ -142,7 +164,7 @@
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4"><strong>Version</strong></label>
+                                            <label class="control-label col-lg-4"><strong>Revision</strong></label>
                                             <label class=" col-lg-7 control-label text-align-left">@ViewBag.Data.DraftVersion.ToString().Split('.')[0]</label>
                                         </div>
                                     </div>
@@ -213,7 +235,7 @@
                                                     if (ViewBag.Data.DocumentCategoryCode != "FR")
                                                     {
                                                         @*<a target="_blank" class="anc2" id="ancLink2" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
-                                                        <br />*@
+                                <br />*@
                                                         <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
                                                     }
                                                     else
@@ -261,15 +283,15 @@
                                 }
 
                                 @*<div class="row">
-                                    <div class="col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
-                                            <label class=" col-lg-9 control-label text-align-left" style="">
-                                                @ViewBag.Data.Comments
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>*@
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
+                    <label class=" col-lg-9 control-label text-align-left" style="">
+                        @ViewBag.Data.Comments
+                    </label>
+                </div>
+            </div>
+        </div>*@
 
                                 @if (ViewBag.isHistory == false)
                                 {
@@ -279,8 +301,8 @@
                                                 <label class="col-lg-4 control-label"><strong>Editable Document</strong></label>
                                                 <label class="col-lg-7 control-label text-align-left">
                                                     <input id="DOCFile" class="form-control manfield" name="DOC" type="file" value="" title="Editable Document">
-                                                </label>                                                
-                                            </div>                                            
+                                                </label>
+                                            </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             @if (@ViewBag.Data.DocumentCategoryCode != "FR")
@@ -293,28 +315,43 @@
                                                 </div>
                                             }
 
-                                        </div>                                        
+                                        </div>
                                     </div>
-                                    
+
                                     if (ViewBag.IsInProgress != "inprogress")
                                     {
-                            <div class="row" style="display:none;">
-                                <div class="col-lg-2 col-sm-2 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-sm-2 col-xs-12">
 
-                                </div>
-                                <div class="col-lg-10 col-sm-10 col-xs-12">
-                                    <div>
-                                        <label style="color:red;">Note: Version will not be maintained if you upload the documentd here, system will replace the latest version of Documents.</label>
-                                    </div>
-                                </div>
-                            </div>
+                                            </div>
+                                            <div class="col-lg-10 col-sm-10 col-xs-12 editfield">
+                                                <div>
+                                                    <label style="color:red;">Note: Version will not be maintained if you upload the documents here, 
+                                                    system will replace the documents for the latest revision.</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-lg-12 col-sm-12 col-xs-12">
-                                                <div style="float:right;margin-right:150px;display:none;">
-                                                    <button class="btn btn-azure " type="submit" id="btnEdit">Edit Document</button>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2 editfield" style=""><strong>Comments</strong></label>
+                                                    <label class=" col-lg-9 control-label text-align-left" style="">
+                                                        <textarea class="form-control editfield" rows="4" id="txtComments" style="resize:none;" placeholder="Comments..."></textarea>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                <div style="float:right;margin-right:150px;">
+                                                    @if (ViewBag.isArchived == false)
+                                                    {
+                                                        <button class="btn btn-azure " type="submit" id="btnEdit">Edit Document</button>
 
-                                                    <button class="btn btn-azure" type="submit" id="btnUpdate">Update</button>
-                                                    <button class="btn btn-azure" type="submit" id="btnCancel">Cancel</button>
+                                                        <button class="btn btn-azure" type="submit" id="btnUpdate">Update</button>
+                                                        <button class="btn btn-azure" type="submit" id="btnCancel">Cancel</button>
+                                                    }
+
                                                 </div>
                                             </div>
                                         </div>
@@ -501,8 +538,43 @@
             return false;
         }
 
+        function ArchiveDocument() {
+            bootbox.confirm("Are you sure to Archive the Document?", function (result) {
+                if (result) {
+                    var DocumentID = $("#divDocumentID").text();
+                    var DocumentNo = $("#divDocumentNo").text();
+
+                    $.ajax({
+                        url: '/Request/ArchiveDocument',
+                        dataType: "json",
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        beforeSend: ShowProgressBar(),
+                        complete: HideProgressBar(),
+                        cache: false,
+                        async: true,
+                        data: JSON.stringify({ DocumentID: DocumentID, DocumentNo: DocumentNo }),
+                        success: function (data) {
+                            if (data.success) {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);
+
+                                //redirect after success altert close
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Dashboard';
+                                })
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('error ' + xhr.message);
+                        }
+                    });
+                }
+            });
+        }
+
         function DeleteDocument() {
-            bootbox.confirm("Are you sure to Delete?", function (result) {
+            bootbox.confirm("System will permanently deletes the document, Are you sure to Delete?", function (result) {
                 if (result) {
                     var DocumentID = $("#divDocumentID").text();
                    
@@ -523,7 +595,7 @@
 
                                 //redirect after success altert close
                                 $('#modal-success').on('hide.bs.modal', function () {
-                                    window.location = '/Dashboard';
+                                    window.location = '/ArchivedDocuments';
                                 })
                             }
                         },
@@ -609,9 +681,18 @@
                     //File Size Check
                     isProceed = IsFileSizeAllowed(fileSize, $("#divAllowedFileSize").text());
                     if (isProceed == false) { return false; }
+
+                    if ($("#txtComments").val().trim() == "") {
+                        isProceed == false;
+                        $("#txtComments").addClass("manfieldredborder");
+                        $('.btn-warning').trigger('click');
+                        $('.modal-body').html('Please provide Comments');
+                        return false;
+                    }
                 }
             }
             fileData.append('EditableDocumentUploaded', isExist);
+            fileData.append('Comments', $("#txtComments").val().trim());
             isExist = 'no';
             //Files - Readable Document            
             var ext2 = ''; var fileSize2 = 0;

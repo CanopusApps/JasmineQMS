@@ -288,6 +288,7 @@
     <Compile Include="Areas\Admin\Controllers\ApprovalMatrixController.cs" />
     <Compile Include="Controllers\ApproveRequestController.cs" />
     <Compile Include="Controllers\AppUserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ArchivedDocumentsController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -904,6 +905,7 @@
     <Content Include="Views\Request\HistoryDetails.cshtml" />
     <Content Include="Views\ApproveRequest\ViewDocument.cshtml" />
     <Content Include="Views\PDFViewer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ArchivedDocuments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

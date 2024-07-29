@@ -397,7 +397,16 @@
                     if (isProceed == false) { return false; }
                 }
             }            
-            fileData.append('ReadableDocumentUploaded', isExist);            
+            fileData.append('ReadableDocumentUploaded', isExist);  
+            if (isExist == "yes") {
+                if ($("#txtComments").val().trim() == '') {
+                    $("#txtComments").addClass("manfieldredborder");
+                    $('.btn-warning').trigger('click');
+                    $('.modal-body').html('Comments mandatory when you upload the Documents');
+                    isProceed = false;
+                    return false;
+                }                       
+            }
             if (isProceed == true) {
                 $.ajax({
                     url: "/ApproveRequest/PublishDocument",

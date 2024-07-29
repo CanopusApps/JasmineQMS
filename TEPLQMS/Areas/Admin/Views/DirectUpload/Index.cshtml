@@ -174,7 +174,7 @@
     <script>
         $(document).ready(function () {
             $("#btnSubmit").hide();
-            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'), 'Select a value');
+            BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'', 'Select a value');
         });
         $("#ddlDepartment").change(function () {
             BindSectionsForDept("/DocumentInitiate/GetSectionsForDepartment", $('#ddlSection'), $('#ddlDepartment').val(), 'Select a value');

@@ -131,7 +131,7 @@
 
         $(document).ready(function () {
             InitiateArchivalProjectDataTable.init();
-            BindDropDownBoxes("/ArchiveProjects/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'), 'All',false);
+            BindDropDownBoxes("/ArchiveProjects/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'', 'All',false);
             $("#editabledatatable_filter").find('input[type="search"]').css("width", "250px");
             GetPublishedDocuments('', '', '', '', false);
         });

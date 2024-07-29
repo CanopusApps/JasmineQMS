@@ -41,6 +41,8 @@ namespace TEPLQMS.Areas.Admin.Controllers
                     objDept.Code = Request.Form["DepartmentCode"].ToString();
                 if (Request.Form["DepartmentName"].ToString() != "")
                     objDept.Title = Request.Form["DepartmentName"].ToString();
+                if (Request.Form["DepartmentHOD"].ToString() != "")
+                    objDept.HODID = new Guid(Request.Form["DepartmentHOD"].ToString());
                 QMSAdmin objAdmin = new QMSAdmin();
                 result=objAdmin.AddDepartment(objDept);
             }
@@ -70,6 +72,8 @@ namespace TEPLQMS.Areas.Admin.Controllers
                     objDept.Code = Request.Form["DepartmentCode"].ToString();
                 if (Request.Form["DepartmentName"].ToString() != "")
                     objDept.Title = Request.Form["DepartmentName"].ToString();
+                if (Request.Form["DepartmentHOD"].ToString() != "")
+                    objDept.HODID = new Guid(Request.Form["DepartmentHOD"].ToString());
                 if (Request.Form["Active"].ToString().ToLower() == "true")
                     objDept.Active = true;
                 else

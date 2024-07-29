@@ -38,6 +38,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                    <label><strong>Department HOD</strong><span class="mandatory">*</span></label>
+                                    <input title="HOD Name" class="form-control" id="DepartmentHOD" name="HOD" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
                                 <div class="form-group" id="divCheckbox">
                                     <label><strong>Active</strong></label>
                                     <div class="checkbox">
@@ -84,6 +90,9 @@
                                 Department Name
                             </th>
                             <th>
+                                HOD Name
+                            </th>
+                            <th>
                                 Is Active
                             </th>
                             <th>
@@ -98,10 +107,11 @@
                             <td>@txt.ID</td>
                             <td>@txt.Code</td>
                             <td>@txt.Title</td>
+                            <td>@txt.HODName</td>
                             <td>@txt.Active</td>
                             <td>
-                                
-                                <a href="#" class="btn btn-azure btn-xs edit" onclick="EditDepartment('@txt.ID','@txt.Code','@txt.Title','@txt.Active')"><i class="fa fa-edit"></i> Edit</a>
+
+                                <a href="#" class="btn btn-azure btn-xs edit" onclick="EditDepartment('@txt.ID','@txt.Code','@txt.Title','@txt.Active', '@txt.HODName', '@txt.HODID')"><i class="fa fa-edit"></i> Edit</a>
                                 @*<a href="#" class="btn btn-redcolor btn-xs delete" onclick="DeleteDepartment('@txt.ID','@txt.Title')"><i class="fa fa-trash-o"></i> Delete</a>*@
                             </td>
                         </tr>
@@ -112,7 +122,12 @@
         </div>
     </div>
 </div>
-  
+<div style="display:none;">
+    <div id="divselectedUserID"></div>
+    <div id="divselectedLoginID"></div>
+    <div id="divselectedName"></div>
+    <div id="divselectedEmail"></div>
+</div>
 
 @section PageScripts{
 
@@ -130,6 +145,33 @@
         $(document).ready(function () {
             $("#addDiv").hide(); $("#ancbacktoList").hide(); $("#btnUpdate").hide(); $("#divCheckbox").hide();
             InitiateDepartmentDataTable.init();
+
+            $("#DepartmentHOD").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/ExternalDocument/SearchUser",
+                        type: "POST",
+                        dataType: "json",
+                        data: { UserName: request.term },
+                        success: function (data) {
+                            response($.map(data.message, function (item) {
+                                return { label: item.DisplayName, value: item.DisplayName, id: item.ID, email: item.EmailID, loginid: item.LoginID };
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    //alert(ui.item.label + '-' + ui.item.id + '-' + ui.item.email + '-' + ui.item.loginid);
+                    $("#divselectedUserID").text(ui.item.id);
+                    $("#divselectedName").text(ui.item.label);
+                    $("#divselectedEmail").text(ui.item.email);
+                    $("#divselectedLoginID").text(ui.item.loginid);
+                    //GetUserDepartment(ui.item.loginid);
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
         });
         function displayAddDiv() {
             $("#addDiv").show();
@@ -144,7 +186,7 @@
             $("#DepartmentName").val('');
 
         }
-        function EditDepartment(ID, Code, Name, flgActive) {
+        function EditDepartment(ID, Code, Name, flgActive, hodName, hodID) {
             $("#addDiv").show();
             $("#ancbacktoList").show();
             $("#tableDiv").hide();
@@ -157,6 +199,8 @@
             $("#DepartmentID").text(ID);
             $("#DepartmentCode").val(Code).prop("disabled","disabled");
             $("#DepartmentName").val(Name);
+            $("#DepartmentHOD").val(hodName);
+            $("#divselectedUserID").text(hodID);
             
             if (flgActive)
                 $("#chk1").prop("checked", "checked");
@@ -167,6 +211,7 @@
         function ValidateFields() {
             $("#DepartmentCode").removeClass("manfieldredborder");
             $("#DepartmentName").removeClass("manfieldredborder");
+            $("#DepartmentHOD").removeClass("manfieldredborder");
             var errmsg = '';
             if ($("#DepartmentCode").val().trim() == '') {
                 $("#DepartmentCode").addClass("manfieldredborder");
@@ -177,10 +222,17 @@
             }
             if ($("#DepartmentName").val().trim() == '') {
                 $("#DepartmentName").addClass("manfieldredborder");
-                errmsg += 'Department Name';
+                errmsg += 'Department Name <br />';
             }
             else {
                 $("#DepartmentName").removeClass("manfieldredborder");
+            }
+            if ($("#DepartmentHOD").val().trim() == '') {
+                $("#DepartmentHOD").addClass("manfieldredborder");
+                errmsg += 'Department HOD';
+            }
+            else {
+                $("#DepartmentHOD").removeClass("manfieldredborder");
             }
             if (errmsg != '') {
                 $('.btn-warning').trigger('click');
@@ -194,6 +246,7 @@
                 var fileData = new FormData();
                 fileData.append("DepartmentCode", $("#DepartmentCode").val().trim());
                 fileData.append("DepartmentName", $("#DepartmentName").val().trim());
+                fileData.append("DepartmentHOD", $("#divselectedUserID").text());
 
                 $.ajax({
                     url: "/Department/AddDepartment",
@@ -242,6 +295,7 @@
                 fileData.append("DepartmentID", $("#DepartmentID").text().trim());
                 fileData.append("DepartmentCode", $("#DepartmentCode").val().trim());
                 fileData.append("DepartmentName", $("#DepartmentName").val().trim());
+                fileData.append("DepartmentHOD", $("#divselectedUserID").text());
                 if ($("#chk1").prop("checked"))
                     fileData.append("Active", true);
                 else

@@ -136,7 +136,7 @@ namespace TEPL.QMS.DAL.Database.Component
             }
             return objDoc;
         }
-        public DraftDocument DocumentUpdatePublised(DraftDocument objDoc)
+        public DraftDocument DocumentUpdatePublised(DraftDocument objDoc, Boolean isDocUploaded, string Comments)
         {
             try
             {
@@ -151,6 +151,8 @@ namespace TEPL.QMS.DAL.Database.Component
                         cmd.Parameters.Add("@ReadableDocumentName", SqlDbType.NVarChar, 50).Value = objDoc.ReadableDocumentName;
                         cmd.Parameters.Add("@DocumentDescription", SqlDbType.NVarChar, 500).Value = objDoc.DocumentDescription;
                         cmd.Parameters.Add("@RevisionReason", SqlDbType.NVarChar, 500).Value = objDoc.RevisionReason;
+                        cmd.Parameters.Add("@DocsUploaded", SqlDbType.Bit).Value = isDocUploaded;
+                        cmd.Parameters.Add("@Comments", SqlDbType.NVarChar, -1).Value = Comments;
                         SqlParameter EditVersion = cmd.Parameters.Add("@EditVersion", SqlDbType.Decimal);
                         EditVersion.Precision = 18;
                         EditVersion.Scale = 3;

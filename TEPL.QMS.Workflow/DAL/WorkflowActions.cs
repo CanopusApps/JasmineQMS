@@ -175,7 +175,7 @@ namespace TEPL.QMS.Workflow.DAL
             }
             return strReturn;
         }
-        public string ExecuteAction(Guid ExecutionID, Guid WorkflowStageID, Guid ActionedID, string WorkflowAction, string ActionComments, Guid CreatedID)
+        public string ExecuteAction(Guid ExecutionID, Guid WorkflowStageID, Guid ActionedID, string WorkflowAction, string ActionComments, Guid CreatedID, bool isDocumentUploaded)
         {
             string strReturn = string.Empty;
             try
@@ -191,7 +191,7 @@ namespace TEPL.QMS.Workflow.DAL
                         cmd.Parameters.Add("@WorkflowAction", SqlDbType.NVarChar, 50).Value = WorkflowAction;
                         cmd.Parameters.Add("@ActionComments", SqlDbType.NVarChar, -1).Value = ActionComments;
                         cmd.Parameters.Add("@CreatedID", SqlDbType.UniqueIdentifier).Value = CreatedID;
-
+                        cmd.Parameters.Add("@DocsUploaded", SqlDbType.Bit).Value = isDocumentUploaded;
                         using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();

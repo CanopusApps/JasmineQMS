@@ -11,6 +11,8 @@ namespace TEPL.QMS.Common.Models
         public Guid ID { get; set; }
         public string Code { get; set; }
         public string Title { get; set; }
+        public Guid HODID { get; set; }
+        public string HODName { get; set; }
         public bool Active { get; set; }
         public string CreatedBy { get; set; }
         public DateTime Created { get; set; }

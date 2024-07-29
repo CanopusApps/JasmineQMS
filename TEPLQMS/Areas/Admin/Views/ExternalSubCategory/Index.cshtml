@@ -131,7 +131,7 @@
         $(document).ready(function () {
             $("#addDiv").hide(); $("#ancbacktoList").hide(); $("#btnUpdate").hide(); $("#divCheckbox").hide();
             InitiateExtSubCategoryDataTable.init();
-            BindDropDownBoxes('/ExternalSubCategory/GetActiveCategories', $('#Category'), '', '', 'Select a value');
+            BindDropDownBoxes('/ExternalSubCategory/GetActiveCategories', $('#Category'),'', '', '', 'Select a value');
         });
         function displayAddDiv() {
             $("#addDiv").show();

@@ -1426,6 +1426,7 @@ var InitiateDepartmentDataTable = function () {
                     null,
                     null,
                     null,
+                    null,
                     { "bSortable": false }
                 ]
             });
@@ -2366,7 +2367,6 @@ var InitiateDocHistoryDataTable = function () {
                 "aoColumns": [
                     { "bVisible": false },
                     { "bVisible": false },
-                    null,
                     null,
                     null,
                     null,

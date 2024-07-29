@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label class="control-label col-lg-4"><strong>New Version</strong></label>
+                    <label class="control-label col-lg-4"><strong>New Revision</strong></label>
                     <label class=" col-lg-8 control-label text-align-left">
                         @ViewBag.DraftVersion
                     </label>
@@ -117,9 +117,10 @@
                 <div class="form-group">
                     <label class="col-lg-5 control-label"><strong>Readable Document</strong></label>
                     <label class="col-lg-7 control-label text-align-left">
-                        <a target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Draft&version=@ViewBag.Data.DraftVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
+                        @*<a target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Draft&version=@ViewBag.Data.DraftVersion&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>*@
+                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.DraftFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
                         &nbsp;&nbsp;
-                        <a title="Download Document"  style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })' ><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
+                        <a title="Download Document" style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
 
                     </label>
                 </div>
@@ -268,7 +269,7 @@
             </div>
         }
 
-        <div class="row">
+        @*<div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="form-group">
                     <label class="control-label col-lg-2" style=""><strong>User Comments</strong></label>
@@ -277,7 +278,7 @@
                     </label>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="row" style="margin-bottom:10px;">
             <div class="col-lg-3 col-sm-3 col-xs-12">
             </div>
@@ -291,7 +292,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label" style=""><strong><span id="spanComments">Comments</span> </strong></label>
                     <div class="col-lg-9" style="">
-                        <textarea class="form-control" rows="6" placeholder="Comments..." style="resize:none;" id="txtComments"></textarea>
+                        <textarea class="form-control" rows="4" placeholder="Comments..." style="resize:none;" id="txtComments"></textarea>
                     </div>
                 </div>
             </div>

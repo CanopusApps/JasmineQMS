@@ -173,6 +173,10 @@ namespace TEPL.QMS.BLL.Component
                     itm.ID = new Guid(dt.Rows[z]["ID"].ToString());
                     itm.Code = dt.Rows[z]["Code"].ToString();
                     itm.Title = dt.Rows[z]["Title"].ToString();
+                    if (dt.Rows[z]["HODName"] != null)
+                        itm.HODName = dt.Rows[z]["HODName"].ToString();
+                    if (!string.IsNullOrEmpty(dt.Rows[z]["HODID"].ToString()))
+                        itm.HODID = new Guid(dt.Rows[z]["HODID"].ToString());
                     if (Convert.ToBoolean(dt.Rows[z]["IsActive"].ToString()) == true)
                         itm.Active = true;
                     else
@@ -241,6 +245,62 @@ namespace TEPL.QMS.BLL.Component
             }
             return list;
         }
+
+        public string ArchiveDocument(Guid UserID, Guid DocumentID, string DocumentNo, string UserName)
+        {
+            try
+            {
+                string strReturn = string.Empty;
+                DataSet ds = new DataSet();
+                ds = objAdmin.ArchiveDocument(UserID, DocumentID, DocumentNo);
+                string DeptHODEmail = ds.Tables[0].Rows[0][0].ToString();
+                string QMSHead = QMSConstants.QMSHeadEmail.ToString();
+
+                //Send email to QMS Head & Department HOD
+                string subject = DocumentNo + " - " + " Document Archived from the system by " +  UserName;
+                string message = "Document with the number " + DocumentNo + " has been Archived from the System by " + UserName + ". Now this document available in Archived Documents section in the system. <br/>";
+                message += "Please review the document and delete from the system if not required.";
+                PrepareandSendMail(DeptHODEmail + "," + QMSHead, subject, message);
+
+                strReturn = "Document Archived Successfully";
+                return strReturn;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private string GetApprovalMailTempate()
+        {
+            string strMailtemplate = string.Empty;
+            QMSAdminDAL objADM = new QMSAdminDAL();
+            strMailtemplate = objADM.GetConfigValue("ApprovalMailTemplate");
+            return strMailtemplate;
+        }
+
+        private void PrepareandSendMail(string emailIDs, string subject, string mainMessage)
+        {
+            try
+            {
+                StringBuilder body = new StringBuilder();
+                body.Append("Dear User,");
+                body.Append("<br/><br/>");
+                body.Append(mainMessage);
+                body.Append("<br/><br/>");
+                //if (blAppLink)
+                //    body.Append("Link: <a style='text-decoration:underline' target='_blank' href='" + QMSConstants.WebSiteURL + pageName + "?ID= " + docObj.DocumentID + "'>" + "Click here" + "</a>");
+
+                string strMailTemplate = GetApprovalMailTempate();
+                strMailTemplate = strMailTemplate.Replace("@@MailBody@@", body.ToString());
+                CommonMethods.SendMail(emailIDs, subject, strMailTemplate);
+            }
+            catch (Exception ex)
+            {
+                LoggerBlock.WriteTraceLog(ex);
+            }
+        }
+
         public string DeleteDocument(Guid UserID, Guid DocumentID)
         {
             try

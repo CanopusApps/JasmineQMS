@@ -1,11 +1,11 @@
 ﻿@{
-    ViewBag.Title = "DMS - Dashboard";
+    ViewBag.Title = "DMS - Archived Documents";
 }
 <div class="row">
     <div class="col-xs-12 col-md-12">
         <div class="widget">
             <div class="widget-header">
-                <div class="widget-caption topfocus" tabindex='1'><b>All Published Documents</b></div>
+                <div class="widget-caption topfocus" tabindex='1'><b>All Archived Documents</b></div>
                 
                 @if (ViewBag.isQMSAdmin == true)
                 {
@@ -80,7 +80,7 @@
                                             <button class="btn btn-azure" id="btnGetData" type="button">Get Data</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-1 col-sm-1 col-xs-12">
+                                    @*<div class="col-lg-1 col-sm-1 col-xs-12">
                                         <div class="form-group">
                                             @if (ViewBag.isQMSAdmin == true)
                                             {
@@ -88,7 +88,7 @@
                                                 <button class="btn btn-azure" id="btnExportData" type="button">Export Data</button>
                                             }
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
 
                             </div>
@@ -138,7 +138,7 @@
                             <td>
                                 @if (ViewBag.isQMSAdmin == true)
                                 {
-                                    <a style="text-decoration: underline; white-space:nowrap;" href="/Request/Details?IsArchived=false&IsHistory=false&ID=@txt.DocumentID">@txt.DocumentNo</a>
+                                    <a style="text-decoration: underline; white-space:nowrap;" href="/Request/Details?IsArchived=true&IsHistory=false&ID=@txt.DocumentID">@txt.DocumentNo</a>
                                 }
                                 else
                                 {
@@ -300,7 +300,7 @@
             $("#editabledatatable").dataTable().fnDeleteRow();
 
             $.ajax({
-                url: "/Dashboard/GetPublishedDocuments",
+                url: "/ArchivedDocuments/GetArchivedDocuments",
                 dataType: "json",
                 type: "POST",
                 beforeSend: function () {
