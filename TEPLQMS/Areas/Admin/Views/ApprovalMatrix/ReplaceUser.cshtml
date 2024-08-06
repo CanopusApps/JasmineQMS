@@ -592,13 +592,24 @@
                     var nRow = $("#editabledatatable").find('tr:eq(' + j + ')');
                     var aData = oTable.fnGetData(nRow);
 
+                    var secID = null; var stageID = null; var level = null;
+                    if (aData[12] != '00000000-0000-0000-0000-000000000000') {
+                        secID = aData[12];
+                    }
+                    if (aData[11] != '00000000-0000-0000-0000-000000000000') {
+                        stageID = aData[11];
+                    }
+                    if (aData[4] != '00000000-0000-0000-0000-000000000000') {
+                        level = aData[4];
+                    }
+
                     const props = [
                         ['AMID', aData[0]],
                         ['ProjectTypeID', aData[9]],
                         ['ProjectID', aData[10]],
-                        ['StageID', aData[11]],
-                        ['Level', aData[4]],
-                        ['SectionID', aData[12]]
+                        ['StageID', stageID],
+                        ['Level', level],
+                        ['SectionID', secID]
                     ]
                     obj[j - 1] = Object.fromEntries(props)
                 }

@@ -12,8 +12,11 @@
                     @{
                         if (ViewBag.isQMSAdmin == true || ViewBag.isProjectAdmin == true)
                         {
-                            <a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-xs add" style="font-size:13px;font-weight:bold;">
-                                <i class="fa fa-remove"></i>Delete Document
+                            @*<a href="javascript:DeleteDocument();" class="btn btn-redcolor btn-xs add" style="font-size:13px;font-weight:bold;">
+                    <i class="fa fa-remove"></i>Delete Document
+                </a>*@
+                            <a href="javascript:ArchiveDocument();" class="btn btn-redcolor btn-sm add">
+                                <i class="fa fa-remove"></i>Archive Document
                             </a>
                         }
                     }
@@ -647,6 +650,42 @@
                 }
             });
         }
+
+        function ArchiveDocument() {
+            bootbox.confirm("Are you sure to Archive the Document?", function (result) {
+                if (result) {
+                    var DocumentID = $("#divDocumentID").text();
+                    var DocumentNo = $("#divDocumentNo").text();
+
+                    $.ajax({
+                        url: '/Request/ArchiveDocument',
+                        dataType: "json",
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        beforeSend: ShowProgressBar(),
+                        complete: HideProgressBar(),
+                        cache: false,
+                        async: true,
+                        data: JSON.stringify({ DocumentID: DocumentID, DocumentNo: DocumentNo }),
+                        success: function (data) {
+                            if (data.success) {
+                                $('.btn-success').trigger('click');
+                                $('.modal-body').html(data.message);
+
+                                //redirect after success altert close
+                                $('#modal-success').on('hide.bs.modal', function () {
+                                    window.location = '/Dashboard';
+                                })
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('error ' + xhr.message);
+                        }
+                    });
+                }
+            });
+        }
+
 
         function DeleteDocument() {
             bootbox.confirm("Are you sure to Delete?", function (result) {

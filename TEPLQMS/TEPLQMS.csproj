@@ -787,6 +787,10 @@
     <Content Include="favicon.ico" />
     <Content Include="favicon.png" />
     <Content Include="Global.asax" />
+    <Content Include="PDFViewer\Default.htm" />
+    <Content Include="PDFViewer\pdf.min.js" />
+    <Content Include="PDFViewer\pdf.worker.min.js" />
+    <Content Include="PDFViewer\pdf_viewer.min.css" />
     <Content Include="References\Bootstrap.dll" />
     <Content Include="References\DocumentFormat.OpenXml.dll" />
     <Content Include="References\Microsoft.Office.Interop.Excel.dll" />
