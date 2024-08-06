@@ -47,13 +47,13 @@ namespace TEPLQMS.Areas.Admin.Controllers
             string base64 = Convert.ToBase64String(fileContent, 0, fileContent.Length);
             return Content(base64);
         }
-        public ActionResult GetPublishedDocuments(string department, string section, string project, string category, string DocumentDescription, bool IsProjectActive)
+        public ActionResult GetArchivedProjectDocuments(string department, string section, string project, string category, string DocumentDescription, bool IsProjectActive)
         {
             try
             {
                 Guid LoggedInUserID = (Guid)System.Web.HttpContext.Current.Session[QMSConstants.LoggedInUserID];
                 DocumentUpload obj = new DocumentUpload();
-                var objDocs = obj.GetPublishedDocuments(department, section, project, category, DocumentDescription, LoggedInUserID, IsProjectActive);
+                var objDocs = obj.GetArchivedProjectDocuments(department, section, project, category, DocumentDescription, LoggedInUserID, IsProjectActive);
                 return Json(new { success = true, message = objDocs }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

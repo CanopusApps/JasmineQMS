@@ -97,6 +97,7 @@ namespace TEPLQMS.Areas.Admin.Controllers
                     objProj.ProjectActive = true;
                 else
                     objProj.ProjectActive = false;
+                objProj.ModifiedID = (Guid)System.Web.HttpContext.Current.Session[QMSConstants.LoggedInUserID];
                 QMSAdmin objAdmin = new QMSAdmin();
                 result = objAdmin.UpdateProject(objProj);
             }

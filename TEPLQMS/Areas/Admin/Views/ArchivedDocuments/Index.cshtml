@@ -104,9 +104,6 @@
                             <th>
                                 Document Number
                             </th>
-                            <th>
-                                Document Description
-                            </th>
                             <th nowrap>
                                 Published On
                             </th>
@@ -126,7 +123,10 @@
                                 Project
                             </th>
                             <th>
-                                View
+                                Archived User
+                            </th>
+                            <th>
+                                Archived Date
                             </th>
                         </tr>
                     </thead>
@@ -145,7 +145,6 @@
                                     <span style="white-space:nowrap;">@txt.DocumentNo</span>
                                 }
                             </td>
-                            <td>@txt.DocumentDescription</td>
                             <td nowrap>@txt.PublishedOn</td>
                             <td>
                                 @if (@txt.OriginalVersion != null)
@@ -157,17 +156,25 @@
                             <td>@txt.SectionName</td>
                             <td>@txt.DocumentCategoryName</td>
                             <td>@txt.ProjectName</td>
-                            <td style="text-align:center" nowrap>
-                                @if (@txt.DocumentCategoryCode == "FR")
+                            <td>@txt.ArchivedUserName</td>
+                            <td>
+                                
+                                                        @if (@txt.ArchivedDate != null)
+                                                        {
+                                                            @txt.ArchivedDate.ToString().Split('.')[0]
+                                                        }
+                                                    </td>
+                            @*<td style="text-align:center" nowrap>
+                                @if (@txt.DocumentLevel == "Level 4")
                                 {
-                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @txt.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo = @txt.OriginalVersion, fileName = @txt.ReadableDocumentName })'>Download</a>
+                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "../Dashboard", new { folderPath = @txt.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo = @txt.OriginalVersion, fileName = @txt.ReadableDocumentName })'>Download</a>
                                 }
                                 else
                                 {
-                                    @*<a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href='@TEPL.QMS.Common.Constants.QMSConstants.ViewerURL?stage=Publish&version=@txt.OriginalVersion.ToString().Split('.')[0]&documentid=@txt.DocumentID'>View</a>*@
+                                    <a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href='@TEPL.QMS.Common.Constants.QMSConstants.ViewerURL?stage=Publish&version=@txt.OriginalVersion.ToString().Split('.')[0]&documentid=@txt.DocumentID'>View</a>
                                     <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@txt.ReadableFilePath/@txt.ReadableDocumentName'> View </a>
                                 }
-                            </td>
+                            </td>*@
                         </tr>
                         }
                     </tbody>
@@ -194,7 +201,7 @@
     <script>
 
         $(document).ready(function () {
-            InitiatePublishedDataTable.init();
+            InitiateArchivedDocsDataTable.init();
             BindDropDownBoxes("/DocumentInitiate/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'', 'All');
             $("#editabledatatable_filter").find('input[type="search"]').css("width", "250px");
         });
@@ -336,7 +343,7 @@
                                 if ($("#divQMSAdmin").text() == 'yes') {
                                     detailsLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="showDetails(\'' + data.message[z].DocumentID + '\');">' + data.message[z].DocumentNo + '</a>';
                                 }
-                                var record = [data.message[z].DocumentPublishID, detailsLink, data.message[z].DocumentDescription, data.message[z].PublishedOn, data.message[z].OriginalVersion, data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].DocumentCategoryName, data.message[z].ProjectName, downloadLink];
+                                var record = [data.message[z].DocumentPublishID, detailsLink, data.message[z].PublishedOn, data.message[z].OriginalVersion, data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].DocumentCategoryName, data.message[z].ProjectName, data.message[z].ArchivedUserName, data.message[z].ArchivedDate];
                                 var nRow = $("#editabledatatable").dataTable().fnAddData(record);
                             }
                         }
@@ -361,7 +368,8 @@
         }
         function showDetails(pubID) {
             var windhref = '/Request/Details?IsHistory=false&ID=' + pubID;
-            window.open(windhref);
+            //window.open(windhref);
+            window.location = windhref;
         }
         function showPendingDetails(docID) {
             //var windhref = '/Request?ID=' + docID;

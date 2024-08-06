@@ -158,7 +158,7 @@
                             <td>@txt.DocumentCategoryName</td>
                             <td>@txt.ProjectName</td>
                             <td style="text-align:center" nowrap>
-                                @if (@txt.DocumentCategoryCode == "FR")
+                                @if (@txt.DocumentLevel == "Level 4")
                                 {
                                     <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @txt.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo = @txt.OriginalVersion, fileName = @txt.ReadableDocumentName })'>Download</a>
                                 }
@@ -217,7 +217,7 @@
                 category = $("#ddlDocCategory option:selected").attr('code');
             if ($("#ddlProject option:selected").text() != 'All')
                 project = $("#ddlProject option:selected").attr('code');
-            
+
             GetPublishedDocuments(dept, sec, category, project);
         });
         $("#btnExportData").click(function () {
@@ -296,7 +296,7 @@
             return bytes;
         };
         function GetPublishedDocuments(dept, sec, category, project) {
-            
+
             $("#editabledatatable").dataTable().fnDeleteRow();
 
             $.ajax({
@@ -329,9 +329,15 @@
                                 var pth = data.message[z].ReadableFilePath;
                                 var version = data.message[z].OriginalVersion;
                                 var docName = data.message[z].ReadableDocumentName;
-                                //var allprams = pth + '$##$' + version + '$##$' + docName;
-                                //var downloadLink = '<a style="text-decoration:underline;" href="@Url.Action("DownloadPublishedDocument", "Dashboard", new { folderPath = "AA", versionNo= 1, fileName= "AAA" })">' + docName +'</a>';
-                                var downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadPublishedDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
+                                var downloadLink = '';
+                                if (data.message[z].DocumentLevel == "Level 4") {
+                                    downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadPublishedDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">Download</a>';
+                                }
+                                else {
+                                    //View Document Link
+                                    downloadLink = '<a target="_blank" title="View Document" style="text-decoration:underline;white-space:nowrap;" href="/PDFViewer/SetURL?docURL=PublishedDocuments/'+pth+'/'+docName+'">View</a>';
+                                }
+
                                 var detailsLink = '<span style="white-space:nowrap;">' + data.message[z].DocumentNo+'</span>'; //data.message[z].DocumentNo;
                                 if ($("#divQMSAdmin").text() == 'yes') {
                                     detailsLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="showDetails(\'' + data.message[z].DocumentID + '\');">' + data.message[z].DocumentNo + '</a>';
@@ -352,12 +358,13 @@
             //alert('Hi ' + fpath);
             return false;
         }
-       
+
         function DownloadPublishedDocument(path, vNo, name) {
             if (path.indexOf("&") > -1) {
                 path = path.replace("&", "%26");
             }
-            window.location.href = '@Url.Action("DownloadPublishedDocument", "Dashboard")' + '?folderPath=' + path + '&versionNo=' + vNo + '&fileName=' + name;
+            var folder = "PublishedDocuments";
+            window.location.href = '@Url.Action("DownloadDocument", "Dashboard")' + '?folderPath=' + path + '&folder=' + folder + '&versionNo=' + vNo + '&fileName=' + name;
         }
         function showDetails(pubID) {
             var windhref = '/Request/Details?IsHistory=false&ID=' + pubID;
@@ -388,7 +395,7 @@
         //        GetPublishedDocuments('', '', '', '');
         //    }
         //});
-               
+
 
         function resetValue() {
             $("#ddlDepartment").val(0);

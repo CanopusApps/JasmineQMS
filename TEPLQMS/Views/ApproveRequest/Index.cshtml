@@ -41,6 +41,7 @@
                     <div id="divUploadedUserID">@ViewBag.Data.UploadedUserID</div>
                     <div id="divDocumentCategoryCode">@ViewBag.Data.DocumentCategoryCode</div>
                     <div id="divDocumentCategoryName">@ViewBag.Data.DocumentCategoryName</div>
+                    <div id="divDocumentLevel">@ViewBag.Data.DocumentLevel</div>
                     <div id="divFunctionCode">@ViewBag.Data.FunctionCode</div>
                     <div id="divFunctionName">@ViewBag.Data.FunctionName</div>
                     <div id="divDepartmentCode">@ViewBag.Data.DepartmentCode</div>
@@ -332,8 +333,9 @@
             fileData.append('SectionID', $("#divSectionID").text());
             fileData.append('WFExecutionID', $("#divWFExecutionID").text());
             fileData.append('WorkflowID', $("#divWorkflowID").text());
-            fileData.append('DocumentCategoryCode', $("#divDocumentCategoryCode").text());
+            fileData.append('DocumentCategoryCode', $("#divDocumentCategoryCode").text()); 
             fileData.append('DocumentCategoryName', $("#divDocumentCategoryName").text());
+            fileData.append('DocumentLevel', $("#divDocumentLevel").text());
             fileData.append('FunctionCode', $("#divFunctionCode").text());
             fileData.append('FunctionName', $("#divFunctionName").text());
             fileData.append('DepartmentCode', $("#divDepartmentCode").text());
@@ -599,6 +601,7 @@
             fileData.append('WFExecutionID', $("#divWFExecutionID").text());
             fileData.append('WorkflowID', $("#divWorkflowID").text());
             fileData.append('DocumentCategoryCode', $("#divDocumentCategoryCode").text());
+            fileData.append('DocumentLevel', $("#divDocumentLevel").text());
             fileData.append('DepartmentCode', $("#divDepartmentCode").text());
             fileData.append('SectionCode', $("#divSectionCode").text());
             fileData.append('DocumentDescription', $("#DocumentDescription").val().trim());

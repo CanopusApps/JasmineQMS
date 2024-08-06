@@ -41,8 +41,7 @@ namespace TEPL.QMS.DAL.Database.Component
                         cmd.Parameters.Add("@FunctionCode", SqlDbType.NVarChar, 10).Value = objDoc.FunctionCode;
                         cmd.Parameters.Add("@DocumentCategoryCode", SqlDbType.NVarChar, 10).Value = objDoc.DocumentCategoryCode;
                         cmd.Parameters.Add("@CreatedID", SqlDbType.UniqueIdentifier).Value = objDoc.UploadedUserID;
-                        if (objDoc.DocumentLevel == "Level 1")
-                            cmd.Parameters.Add("@DocumentLevel", SqlDbType.NVarChar, 10).Value = objDoc.DocumentLevel;
+                        cmd.Parameters.Add("@DocumentLevel", SqlDbType.NVarChar, 10).Value = objDoc.DocumentLevel;
 
                         var DocumentNo = cmd.Parameters.Add("@DocumentNo", SqlDbType.NVarChar, 50);
                         DocumentNo.Direction = ParameterDirection.Output;
@@ -502,6 +501,30 @@ namespace TEPL.QMS.DAL.Database.Component
         //    }
         //}
         public string UploadExternalDocument(string StoragePath, string baseFolder, string folderPath, string filename, string DocVerions, byte[] byteArray)
+        {
+            try
+            {
+                string filePath = CommonMethods.CombineUrl(StoragePath, baseFolder, folderPath);
+                if (File.Exists(filePath + "\\" + filename))
+                {
+                    //filename = (new Guid()).ToString() + "_" + filename;
+                    BackUpFileExtDocument(StoragePath, "History", baseFolder, folderPath, filename, DocVerions);
+                }
+                else if (!Directory.Exists(filePath))
+                {
+                    CreateFolders(filePath);
+                }
+                string cryptFile = CommonMethods.CombineUrl(QMSConstants.StoragePath, baseFolder, folderPath, filename);
+                cryptFile = UploadWOEncryptWOBackup(StoragePath,baseFolder,folderPath, filename, Convert.ToDecimal(DocVerions), byteArray);//UploadAESEncryptedDocument(cryptFile, byteArray);
+                return cryptFile;
+            }
+            catch (Exception ex)
+            {
+                LoggerBlock.WriteTraceLog(ex);
+                throw ex;
+            }
+        }
+        public string UploadExternalDocumentWOEncrypt(string StoragePath, string baseFolder, string folderPath, string filename, string DocVerions, byte[] byteArray)
         {
             try
             {

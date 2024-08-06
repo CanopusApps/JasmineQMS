@@ -182,7 +182,7 @@ namespace TEPL.QMS.BLL.Component
                 if (objDoc.CurrentStage == "QMS Approver")
                 {
                     string filePath = CommonMethods.CombineUrl(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName);
-                    AddWatermarkonPDF(filePath);
+                    AddWatermarkonPDF(filePath, objDoc.DocumentLevel);
                 }
 
                 docOperObj.DocumentDescriptionUpdate(objDoc);
@@ -228,7 +228,7 @@ namespace TEPL.QMS.BLL.Component
                                 {
                                     strMultiApprovers += ua.ID + ",";
                                     if (!objApprover.ApprovalUserEmail.Contains(ua.EmailID))
-                                        objApprover.ApprovalUserEmail = objApprover.ApprovalUserEmail.Trim(';') + ';' + ua.EmailID;
+                                        objApprover.ApprovalUserEmail = objApprover.ApprovalUserEmail.Trim(';') + ',' + ua.EmailID;
                                 }
                             }
                             strMultiApprovers = strMultiApprovers.Trim(',');
@@ -297,7 +297,7 @@ namespace TEPL.QMS.BLL.Component
             }
         }
 
-        public void AddWatermarkonPDF(string ipFilename)
+        public void AddWatermarkonPDF(string ipFilename, string docLevel)
         {
             try
             {
@@ -362,47 +362,50 @@ namespace TEPL.QMS.BLL.Component
                     cntrTf.DrawString(cntrWatermark, cntrFont, cntrBrush, cntrRect, cntrFormat);
                     gfx.Dispose();
 
-                    //-- Page Right top watermark
-                    // Get an XGraphics object for drawing beneath the existing content.
-                    var rgtTopGfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
+                    if(docLevel != "Level 4")
+                    {
+                        //-- Page Right top watermark
+                        // Get an XGraphics object for drawing beneath the existing content.
+                        var rgtTopGfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
 
-                    // Get the size (in points) of the text.
-                    var rgtTopTxtSize = rgtTopGfx.MeasureString(rgtTopWatermark, rgtFont);
+                        // Get the size (in points) of the text.
+                        var rgtTopTxtSize = rgtTopGfx.MeasureString(rgtTopWatermark, rgtFont);
 
-                    // Format text and add rectangle border at right top corner
-                    XTextFormatter rgtTopTf = new XTextFormatter(rgtTopGfx);
-                    //XRect rgtTopRect = new XRect((page.Width - rgtTopTxtSize.Width) - 33, (rgtTopTxtSize.Height) - 10, 200, 15);//rgt pos, vertical pos of textbox, width, height
-                    XRect rgtTopRect = new XRect((page.Width - rgtTopTxtSize.Width) - 35, (rgtTopTxtSize.Height) - 9, rgtTopTxtSize.Width + 62, rgtTopTxtSize.Height);//rgt pos, vertical pos of textbox, width, height
-                    rgtTopTf.Alignment = XParagraphAlignment.Center;
-                    XPen rgtTopPen = new XPen(XColors.Black, 1);
-                    rgtTopGfx.DrawRectangle(rgtTopPen, (page.Width - rgtTopTxtSize.Width) - 5, (rgtTopTxtSize.Height) - 10, rgtTopTxtSize.Width + 2, rgtTopTxtSize.Height + 2);
-                    rgtTopTf.DrawString(rgtTopWatermark, rgtFont, rgtBrush, rgtTopRect, XStringFormats.TopLeft);
-                    rgtTopGfx.Dispose();
+                        // Format text and add rectangle border at right top corner
+                        XTextFormatter rgtTopTf = new XTextFormatter(rgtTopGfx);
+                        //XRect rgtTopRect = new XRect((page.Width - rgtTopTxtSize.Width) - 33, (rgtTopTxtSize.Height) - 10, 200, 15);//rgt pos, vertical pos of textbox, width, height
+                        XRect rgtTopRect = new XRect((page.Width - rgtTopTxtSize.Width) - 35, (rgtTopTxtSize.Height) - 9, rgtTopTxtSize.Width + 62, rgtTopTxtSize.Height);//rgt pos, vertical pos of textbox, width, height
+                        rgtTopTf.Alignment = XParagraphAlignment.Center;
+                        XPen rgtTopPen = new XPen(XColors.Black, 1);
+                        rgtTopGfx.DrawRectangle(rgtTopPen, (page.Width - rgtTopTxtSize.Width) - 5, (rgtTopTxtSize.Height) - 10, rgtTopTxtSize.Width + 2, rgtTopTxtSize.Height + 2);
+                        rgtTopTf.DrawString(rgtTopWatermark, rgtFont, rgtBrush, rgtTopRect, XStringFormats.TopLeft);
+                        rgtTopGfx.Dispose();
 
-                    ////without rectangle border
-                    //rgtTopGfx.DrawString(rgtTopWatermark, rgtFont, rgtBrush,
-                    //    new XPoint((page.Width - rgtTopTxtSize.Width) - 5, (rgtTopTxtSize.Height) + 2)); //new XPoint((page.Width - 200), 30));
-                    //rgtTopGfx.Dispose();
+                        ////without rectangle border
+                        //rgtTopGfx.DrawString(rgtTopWatermark, rgtFont, rgtBrush,
+                        //    new XPoint((page.Width - rgtTopTxtSize.Width) - 5, (rgtTopTxtSize.Height) + 2)); //new XPoint((page.Width - 200), 30));
+                        //rgtTopGfx.Dispose();
 
-                    //-- Page Right bottom watermark
-                    // Get an XGraphics object for drawing beneath the existing content.
-                    var rgtBtmGfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
+                        //-- Page Right bottom watermark
+                        // Get an XGraphics object for drawing beneath the existing content.
+                        var rgtBtmGfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append);
 
-                    // Format text and add rectangle border at right bottom corner
-                    XTextFormatter rgtBtmTf = new XTextFormatter(rgtBtmGfx);
-                    XRect rect = new XRect((page.Width - 260), (page.Height - 120), 318, 1020);//rgt pos, vertical pos of textbox, width, height
-                    rgtBtmTf.Alignment = XParagraphAlignment.Center;
-                    XPen pen = new XPen(XColors.Black, 1);
-                    //rgtBtmGfx.DrawRectangle(pen, (page.Width - 240), (page.Height - 124), 237, 120);
-                    rgtBtmGfx.DrawRectangle(pen, (page.Width - 200), (page.Height - 124), 197, 120);
-                    rgtBtmTf.DrawString(rgtBtmWatermark, rgtFont, rgtBrush, rect, XStringFormats.TopLeft);
-                    //rgtBtmTf.DrawString(rgtBtmWatermark, rgtFont, XBrushes.Blue, rect, XStringFormats.TopLeft);
+                        // Format text and add rectangle border at right bottom corner
+                        XTextFormatter rgtBtmTf = new XTextFormatter(rgtBtmGfx);
+                        XRect rect = new XRect((page.Width - 260), (page.Height - 120), 318, 1020);//rgt pos, vertical pos of textbox, width, height
+                        rgtBtmTf.Alignment = XParagraphAlignment.Center;
+                        XPen pen = new XPen(XColors.Black, 1);
+                        //rgtBtmGfx.DrawRectangle(pen, (page.Width - 240), (page.Height - 124), 237, 120);
+                        rgtBtmGfx.DrawRectangle(pen, (page.Width - 200), (page.Height - 124), 197, 120);
+                        rgtBtmTf.DrawString(rgtBtmWatermark, rgtFont, rgtBrush, rect, XStringFormats.TopLeft);
+                        //rgtBtmTf.DrawString(rgtBtmWatermark, rgtFont, XBrushes.Blue, rect, XStringFormats.TopLeft);
+                    }
                 }
 
                 // Save the document...
                 //string opFilename = Path.GetFullPath("Data/Watermark_tempfile.pdf");
                 //string FilePath = Server.MapPath("Watermark_tempfile.pdf");
-                string opFilename = ipFilename; //"D:\\Sample_2.pdf";
+                string opFilename = ipFilename;
                 document.Save(opFilename);
             }
             catch (Exception ex)
@@ -431,9 +434,9 @@ namespace TEPL.QMS.BLL.Component
                     objDoc.DraftVersion = objDoc.DraftVersion + 0.001m;
 
                     string filePath = CommonMethods.CombineUrl(QMSConstants.StoragePath, QMSConstants.DraftFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName);
-                    AddWatermarkonPDF(filePath);
+                    AddWatermarkonPDF(filePath, objDoc.DocumentLevel);
                     string filePath2 = CommonMethods.CombineUrl(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName);
-                    AddWatermarkonPDF(filePath2);
+                    AddWatermarkonPDF(filePath2, objDoc.DocumentLevel);
                 }
                 docOperObj.DocumentDescriptionUpdate(objDoc);
                 objWF.ExecuteAction(objDoc.WFExecutionID, objDoc.CurrentStageID, objDoc.ActionedID, objDoc.Action, objDoc.ActionComments, objDoc.ActionedID, isDocumentUploaded);
@@ -464,7 +467,11 @@ namespace TEPL.QMS.BLL.Component
                     //docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
                     //docOperObj.UploadWithOutEncryptedDocument(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
                     docOperObj.UploadWOEncryptWOBackup(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.EditableFilePath, objDoc.EditableDocumentName, objDoc.EditVersion, objDoc.EditableByteArray);
+                    
                     docOperObj.UploadWOEncryptWOBackup(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName, objDoc.EditVersion, objDoc.ReadableByteArray);
+                                        
+                    string filePath = CommonMethods.CombineUrl(QMSConstants.StoragePath, QMSConstants.PublishedFolder, objDoc.ReadableFilePath, objDoc.ReadableDocumentName);
+                    AddWatermarkonPDF(filePath, objDoc.DocumentLevel);
                 }
                 objDoc.EditVersion = objDoc.EditVersion + 0.001m;
                 docOperObj.DocumentUpdatePublised(objDoc, isDocumentUploaded, Comments);
@@ -765,6 +772,23 @@ namespace TEPL.QMS.BLL.Component
             {
                 DataTable dt;
                 dt = objAdminDAL.GetPublishedDocuments(DepartmentCode, SectionCode, ProjectCode, DocumentCategoryCode, DocumentDescription, UserID);
+                objDocList = new List<DraftDocument>();
+                objDocList = GetDocuments(dt, IsProjectActive);
+                GetApprovalMailTempate();
+            }
+            catch (Exception ex)
+            {
+                LoggerBlock.WriteTraceLog(ex);
+            }
+            return objDocList;
+        }
+        public List<DraftDocument> GetArchivedProjectDocuments(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode, string DocumentDescription, Guid UserID, bool IsProjectActive)
+        {
+            List<DraftDocument> objDocList = null;
+            try
+            {
+                DataTable dt;
+                dt = objAdminDAL.GetArchivedProjectDocuments(DepartmentCode, SectionCode, ProjectCode, DocumentCategoryCode, DocumentDescription, UserID);
                 objDocList = new List<DraftDocument>();
                 objDocList = GetDocuments(dt, IsProjectActive);
                 GetApprovalMailTempate();

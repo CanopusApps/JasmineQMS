@@ -74,6 +74,7 @@
                     <div id="divWFExecutionID">@ViewBag.Data.WFExecutionID</div>
                     <div id="divCatCode">@ViewBag.Data.DocumentCategoryCode</div>
                     <div id="divCatName">@ViewBag.Data.DocumentCategoryName</div>
+                    <div id="divDocumentLevel">@ViewBag.Data.DocumentLevel</div>
                     <div id="divDeptCode">@ViewBag.Data.DepartmentCode</div>
                     <div id="divDeptName">@ViewBag.Data.DepartmentName</div>
                     <div id="divSecCode">@ViewBag.Data.SectionCode</div>
@@ -232,29 +233,13 @@
                                             <label class="col-lg-7 control-label text-align-left">
                                                 @if (ViewBag.isHistory == false)
                                                 {
-                                                    if (ViewBag.Data.DocumentCategoryCode != "FR")
-                                                    {
-                                                        @*<a target="_blank" class="anc2" id="ancLink2" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=Publish&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
-                                <br />*@
-                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
-                                                    }
-                                                    else
-                                                    {
-                                                        @ViewBag.Data.ReadableDocumentName
-                                                    }
+                                                    <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
                                                     <a class="anc2" title="View Document" style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.OriginalVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
                                                 }
                                                 else
                                                 {
 
-                                                    if (ViewBag.Data.DocumentCategoryCode != "FR")
-                                                    {
-                                                        <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=History&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
-                                                    }
-                                                    else
-                                                    {
-                                                        @ViewBag.Data.ReadableDocumentName
-                                                    }
+                                                    <a title="View Document" target="_blank" style="text-decoration:underline;" href='@ViewBag.ViewerURL?stage=History&version=@ViewBag.Data.OriginalVersion.ToString().Split('.')[0]&documentid=@ViewBag.Data.DocumentID'>@ViewBag.Data.ReadableDocumentName</a>
                                                     <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadHistoryDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.PublishedFolder, versionNo= @ViewBag.Data.DraftVersion, fileName= @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
                                                 }
 
@@ -305,15 +290,16 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            @if (@ViewBag.Data.DocumentCategoryCode != "FR")
-                                            {
-                                                <div class="form-group" id="divDoc2">
-                                                    <label class="col-lg-4 control-label"><strong>Readable Document</strong></label>
-                                                    <label class="col-lg-7 control-label text-align-left">
-                                                        <input id="DOCFile2" class="form-control manfield" name="DOC2" type="file" value="" title="Readable Document">
-                                                    </label>
-                                                </div>
-                                            }
+                                            @*@if (@ViewBag.Data.DocumentCategoryCode != "FR")
+        {
+
+        }*@
+                                            <div class="form-group" id="divDoc2">
+                                                <label class="col-lg-4 control-label"><strong>Readable Document</strong></label>
+                                                <label class="col-lg-7 control-label text-align-left">
+                                                    <input id="DOCFile2" class="form-control manfield" name="DOC2" type="file" value="" title="Readable Document">
+                                                </label>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -595,7 +581,7 @@
 
                                 //redirect after success altert close
                                 $('#modal-success').on('hide.bs.modal', function () {
-                                    window.location = '/ArchivedDocuments';
+                                    window.location = '/Admin/ArchivedDocuments';
                                 })
                             }
                         },
@@ -658,9 +644,9 @@
             fileData.append("OriginalVersion", $("#divOriginalVersion").text());
             fileData.append("EditVersion", $("#divEditVersion").text());
             fileData.append("DocumentCategoryCode", $("#divCatCode").text());
-            fileData.append("DocumentDescription", $("#DocumentDescription").val().trim());
+            fileData.append("DocumentDescription", $("#DocumentDescription").val().trim()); 
             fileData.append("RevisionReason", $("#RevisionReason").val().trim());
-         
+            fileData.append("DocumentLevel", $("#divDocumentLevel").text());
             //File - Editable            
             var ext = ''; var isExist = 'no'; var fileSize = 0; var isProceed = true;
             if (files.length > 0) {

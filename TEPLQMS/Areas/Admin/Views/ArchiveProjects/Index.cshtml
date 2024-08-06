@@ -79,9 +79,6 @@
                             <th>
                                 Document Number
                             </th>
-                            <th>
-                                Document Description
-                            </th>
                             <th nowrap>
                                 Published On
                             </th>
@@ -101,8 +98,11 @@
                                 Project
                             </th>
                             <th>
-                                View
+                                Function
                             </th>
+                            @*<th>
+            Archived Date
+        </th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -133,7 +133,7 @@
             InitiateArchivalProjectDataTable.init();
             BindDropDownBoxes("/ArchiveProjects/GetDropDownBoxes", $('#ddlDepartment'), $('#ddlDocCategory'), $('#ddlProject'),'', 'All',false);
             $("#editabledatatable_filter").find('input[type="search"]').css("width", "250px");
-            GetPublishedDocuments('', '', '', '', false);
+            GetArchivedProjectDocuments('', '', '', '', false);
         });
         $("#ddlDepartment").change(function () {
             if ($('#ddlDepartment').val() != 0)
@@ -155,7 +155,7 @@
             if ($("#ddlProject option:selected").text() != 'All')
                 project = $("#ddlProject option:selected").attr('code');
 
-            GetPublishedDocuments(dept, sec, category, project, false);
+            GetArchivedProjectDocuments(dept, sec, category, project, false);
         });
         $("#btnExportData").click(function () {
             var dept = ''; var sec = ''; var category = ''; var project = '';
@@ -225,10 +225,10 @@
             window.open(windhref);
         }
 
-        function GetPublishedDocuments(dept, sec, category, project, IsProjectActive) {
+        function GetArchivedProjectDocuments(dept, sec, category, project, IsProjectActive) {
             $("#editabledatatable").dataTable().fnDeleteRow();
             $.ajax({
-                url: "/ArchiveProjects/GetPublishedDocuments",
+                url: "/ArchiveProjects/GetArchivedProjectDocuments",
                 dataType: "json",
                 type: "POST",
                 beforeSend: function () {
@@ -258,14 +258,14 @@
                                 var docName = data.message[z].DocumentName;
                                 var stage = '<span style="white-space:nowrap;">' + data.message[z].CurrentStage +'</span>';
                                 var downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadPublishedDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
-                                if (data.message[z].DocumentCategoryCode == "FR")
-                                    downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadPublishedDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
-                                else
-                                    downloadLink = '<a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href="#" onclick="showDocumentViewer(\'' + version + '\',\'' + data.message[z].DocumentID + '\');">View</a>';
+                                //if (data.message[z].DocumentLevel == "Level 4")
+                                //    downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadPublishedDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
+                                //else
+                                //    downloadLink = '<a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href="#" onclick="showDocumentViewer(\'' + version + '\',\'' + data.message[z].DocumentID + '\');">View</a>';
                                 var detailsLink = data.message[z].DocumentNo;
                                 detailsLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="showDetails(\'' + data.message[z].DocumentID + '\');">' + data.message[z].DocumentNo + '</a>';
-                                var record = [data.message[z].DocumentID, detailsLink, data.message[z].DocumentDescription, data.message[z].PublishedOn, version, data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].DocumentCategoryName, data.message[z].ProjectName, downloadLink];
-                                var nRow = $("#editabledatatable").dataTable().fnAddData(record);
+                              var record = [data.message[z].DocumentID, detailsLink, data.message[z].PublishedOn, version, data.message[z].DepartmentName, data.message[z].SectionName, data.message[z].DocumentCategoryName, data.message[z].ProjectName, data.message[z].FunctionName]; //data.message[z].ArchivedUserName, data.message[z].ArchivedDate
+                              var nRow = $("#editabledatatable").dataTable().fnAddData(record);
                             }
                         }
                     }

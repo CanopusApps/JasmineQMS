@@ -13,7 +13,7 @@ namespace TEPL.QMS.DAL.Database.Component
 {
     public class QMSAdminDAL
     {
-        public DataTable GetDocumentNumbers(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode)
+        public DataTable GetDocumentNumbers(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode, string FunctionCode)
         {
             DataTable dt = new DataTable();
             try
@@ -27,6 +27,7 @@ namespace TEPL.QMS.DAL.Database.Component
                         cmd.Parameters.Add("@SectionCode", SqlDbType.NVarChar, 10).Value = SectionCode;
                         cmd.Parameters.Add("@ProjectCode", SqlDbType.NVarChar, 10).Value = ProjectCode;
                         cmd.Parameters.Add("@DocumentCategoryCode", SqlDbType.NVarChar, 10).Value = DocumentCategoryCode;
+                        cmd.Parameters.Add("@FunctionCode", SqlDbType.NVarChar, 10).Value = FunctionCode;
                         using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
                             sda.Fill(dt);
@@ -767,6 +768,35 @@ namespace TEPL.QMS.DAL.Database.Component
             }
             return dt;
         }
+        public DataTable GetArchivedProjectDocuments(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode, string DocumentDescription, Guid UserID)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(QMSConstants.DBCon))
+                {
+                    using (SqlCommand cmd = new SqlCommand("spGetArchivedProjectDocuments", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@DepartmentCode", SqlDbType.NVarChar, 10).Value = DepartmentCode;
+                        cmd.Parameters.Add("@SectionCode", SqlDbType.NVarChar, 10).Value = SectionCode;
+                        cmd.Parameters.Add("@ProjectCode", SqlDbType.NVarChar, 10).Value = ProjectCode;
+                        cmd.Parameters.Add("@DocumentCategoryCode", SqlDbType.NVarChar, 10).Value = DocumentCategoryCode;
+                        cmd.Parameters.Add("@DocumentDescription", SqlDbType.NVarChar, 500).Value = DocumentDescription;
+                        cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+                        using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        {
+                            sda.Fill(dt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
         public DataTable GetArchivedDocuments(string DepartmentCode, string SectionCode, string ProjectCode, string DocumentCategoryCode, string DocumentDescription, Guid UserID)
         {
             DataTable dt = new DataTable();
@@ -1399,6 +1429,7 @@ namespace TEPL.QMS.DAL.Database.Component
                         cmd.Parameters.Add("@ProjectID", SqlDbType.UniqueIdentifier).Value = entObject.ID;
                         cmd.Parameters.Add("@txtName", SqlDbType.NVarChar, 100).Value = entObject.Title;
                         cmd.Parameters.Add("@flgActive", SqlDbType.Bit).Value = entObject.ProjectActive;
+                        cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = entObject.ModifiedID;
                         using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                         {
                             sda.Fill(dt);

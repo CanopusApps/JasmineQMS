@@ -266,7 +266,7 @@
                                 var pendingDays = data.message[z].PendingDays;
                                 var stage = '<span style="white-space:nowrap;">' + data.message[z].CurrentStage +'</span>';
                                 var downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadDraftDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
-                                if (data.message[z].DocumentCategoryCode == "FR")
+                                if (data.message[z].DocumentLevel == "Level 4")
                                     downloadLink = '<a style="text-decoration:underline;white-space:nowrap;" href="#" onclick="DownloadDraftDocument(\'' + pth + '\', \'' + version + '\', \'' + docName + '\');">View Document</a>';
                                 else
                                     downloadLink = '<a class="anc2" title="View Document" target="_blank" style="text-decoration:underline;" href="#" onclick="showDocumentViewer(\'' + version + '\',\'' + data.message[z].DocumentID + '\');">View</a>';

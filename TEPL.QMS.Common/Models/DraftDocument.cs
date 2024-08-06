@@ -64,6 +64,11 @@ namespace TEPL.QMS.Common.Models
         public string WFStatus { get; set; }
         public int PendingDays { get; set; }
 
+        public bool IsArchived { get; set; }
+        public Guid ArchivedUserID { get; set; }
+        public string ArchivedUserName { get; set; }
+        public string ArchivedDate { get; set; }
+
         public List<WorkflowStages> WorkflowStages;
     }
 

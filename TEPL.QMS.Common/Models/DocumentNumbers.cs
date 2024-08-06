@@ -17,6 +17,7 @@ namespace TEPL.QMS.Common.Models
         public string ProjectName { get; set; }
         public string FunctionCode { get; set; }
         public string FunctionName { get; set; }
+        public string DocumentLevel { get; set; }
         public string DocumentCategoryCode { get; set; }
         public string DocumentCategoryName { get; set; }
         public string SerialNo { get; set; }

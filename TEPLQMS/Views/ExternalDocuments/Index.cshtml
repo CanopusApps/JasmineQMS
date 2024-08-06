@@ -60,8 +60,9 @@
                                 @*<a style="text-decoration:underline" href="@txt.FileURL" target="_blank">Download</a>*@
                                 @if (@txt.FileName != "")
                                 {
-                                    @*<a style="text-decoration:underline" href="@txt.FileName" target="_blank">@txt.FileName</a>*@
-                                    <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "ExternalDocument", new { filePath = @txt.FilePath,fileName=@txt.FileName })'>@txt.DocumentName</a>
+                                    @*<a style="text-decoration:underline" href="@txt.FileName" target="_blank">@txt.FileName</a>
+            <a style="text-decoration:underline;white-space:nowrap;" href='@Url.Action("DownloadDocument", "ExternalDocument", new { filePath = @txt.FilePath,fileName=@txt.FileName })'>@txt.DocumentName</a>*@
+                                    <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.ExtDocumentFolder/@txt.FilePath/@txt.FileName'> View </a>
                                 }
                                 else
                                 {

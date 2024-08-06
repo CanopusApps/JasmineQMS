@@ -18,7 +18,7 @@ namespace TEPLQMS.Areas.Admin.Controllers
             try
             {
                 QMSAdmin objAdm = new QMSAdmin();
-                ViewBag.Data = objAdm.GetDocumentNumbers("", "", "", "");
+                ViewBag.Data = objAdm.GetDocumentNumbers("", "", "", "","");
                 //int i =  0,j=1,k=j/i;
             }
             catch (Exception ex)
@@ -28,12 +28,12 @@ namespace TEPLQMS.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult GetDocumentNumbers(string department, string section, string project, string category)
+        public ActionResult GetDocumentNumbers(string department, string section, string project, string category, string function)
         {
             try
             {
                 QMSAdmin objAdm = new QMSAdmin();
-                var objDocs = objAdm.GetDocumentNumbers(department, section, project, category);
+                var objDocs = objAdm.GetDocumentNumbers(department, section, project, category, function);
                 return Json(new { success = true, message = objDocs }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

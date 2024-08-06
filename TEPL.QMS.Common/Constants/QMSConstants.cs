@@ -28,6 +28,7 @@ namespace TEPL.QMS.Common.Constants
         public static string StoragePath = Convert.ToString(ConfigurationManager.AppSettings["StoragePath"]);
         public static string BackUpPath = Convert.ToString(ConfigurationManager.AppSettings["BackUpPath"]);
         public static string HistoryPath = Convert.ToString(ConfigurationManager.AppSettings["HistoryPath"]);
+        public static string HistoryBackUpPath = Convert.ToString(ConfigurationManager.AppSettings["HistoryBackUpPath"]);
         public static string DraftFolder = Convert.ToString(ConfigurationManager.AppSettings["DraftFolder"]);
         public static string PublishedFolder = Convert.ToString(ConfigurationManager.AppSettings["PublishedFolder"]);
         public static string EditableFolder = Convert.ToString(ConfigurationManager.AppSettings["EditableFolder"]);

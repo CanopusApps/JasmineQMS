@@ -1150,6 +1150,55 @@ var InitiatePublishedDataTable = function () {
     };
 }();
 
+var InitiateArchivedDocsDataTable = function () {
+    return {
+        init: function () {
+            //Datatable Initiating
+            var oTable = $('#editabledatatable').dataTable({
+                "aLengthMenu": [
+                    [5, 10, 20, 100, -1],
+                    [5, 10, 20, 100, "All"]
+                ],
+                "iDisplayLength": 10,
+                "sPaginationType": "bootstrap",
+                "sDom": "Tflt<'row DTTTFooter'<'col-sm-6'i><'col-sm-6'p>>",
+                "oTableTools": {
+                    "aButtons": [
+                        //"copy",
+                        //"print",                           
+                        //{
+                        //    "sExtends": "collection",
+                        //    "sButtonText": "Save <i class=\"fa fa-angle-down\"></i>",
+                        //    "aButtons": ["csv", "xls", "pdf"]
+                        //}
+                    ],
+                    "sSwfPath": "assets/swf/copy_csv_xls_pdf.swf"
+                },
+                "language": {
+                    "search": "",
+                    "sLengthMenu": "_MENU_",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                "aoColumns": [
+                    { "bVisible": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]
+            });
+        }
+    };
+}();
+
 var InitiatePendingDataTable = function () {
     return {
         init: function () {
@@ -1233,7 +1282,6 @@ var InitiateArchivalProjectDataTable = function () {
                 },
                 "aoColumns": [
                     { "bVisible": false },
-                    null,
                     null,
                     null,
                     null,
@@ -1375,9 +1423,7 @@ var InitiateDocumentNoDataTable = function () {
                 "aoColumns": [
                     { "bVisible": false },
                     null,
-                    null,
-                    null,
-                    null,
+                    null,                    
                     null,
                     null,
                     null,

@@ -118,7 +118,7 @@
                     <label class="col-lg-4 control-label"><strong>Editable Document</strong></label>
                     <label class="col-lg-7 control-label text-align-left">
                         @ViewBag.Data.EditableDocumentName
-                        @if (@ViewBag.Data.CurrentStage == "QMS Approver")
+                        @if (@ViewBag.Data.CurrentStage == "QMS Approver" || ViewBag.Data.DocumentLevel == "Level 4")
                         {
                             <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.EditableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo = @ViewBag.Data.DraftVersion, fileName = @ViewBag.Data.EditableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
                         }
@@ -143,7 +143,7 @@
                         <br />*@
                         <a title="View Document" target="_blank" style="text-decoration:underline;" href='~/PDFViewer/SetURL?docURL=@TEPL.QMS.Common.Constants.QMSConstants.DraftFolder/@ViewBag.Data.ReadableFilePath/@ViewBag.Data.ReadableDocumentName'> @ViewBag.Data.ReadableDocumentName </a>
 
-                        @if (@ViewBag.Data.CurrentStage == "QMS Approver")
+                        @if (@ViewBag.Data.CurrentStage == "QMS Approver" || ViewBag.Data.DocumentLevel == "Level 4")
                         {
                             <a style="text-decoration:underline;" href='@Url.Action("DownloadDocument", "Dashboard", new { folderPath = @ViewBag.Data.ReadableFilePath, folder = TEPL.QMS.Common.Constants.QMSConstants.DraftFolder, versionNo = @ViewBag.Data.DraftVersion, fileName = @ViewBag.Data.ReadableDocumentName })'><i class="menu-icon glyphicon glyphicon-download eye-open-font-size"></i></a>
                         }

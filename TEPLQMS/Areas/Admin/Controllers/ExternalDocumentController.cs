@@ -29,7 +29,7 @@ namespace TEPLQMS.Areas.Admin.Controllers
             QMSAdmin objAdm = new QMSAdmin();
             int seqNo = objAdm.GetExternalDocumentSeqNumber();
             ViewBag.SequenceNumber = seqNo;
-            ViewBag.DocumentNumber = "TEPL-EXT-" + seqNo.ToString().PadLeft(4, '0');
+            ViewBag.DocumentNumber = QMSConstants.CompanyCode + "-EXT-" + seqNo.ToString().PadLeft(4, '0');
             return View();
         }
 
